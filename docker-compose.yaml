@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  webserver:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx-config:/etc/nginx/conf.d:ro
+      - ./src:/usr/share/nginx/html:ro
+    networks:
+      - application
+    depends_on:
+      - php
+
+  php:
+    build: ./php-docker
+    networks:
+      - application
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./sql-migrations:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_USER: person
+      MYSQL_PASSWORD: example
+      MYSQL_DATABASE: aged_care
+      TZ: Australia/Melbourne
+    networks:
+      - application
+      - dev
+
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
+    networks:
+      - dev
+
+networks:
+  application:
+  dev:
