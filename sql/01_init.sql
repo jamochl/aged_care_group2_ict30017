@@ -8,8 +8,7 @@ CREATE TABLE Authentication (
     StaffId INT PRIMARY KEY,
     Username VARCHAR(255),
     PasswordHash VARCHAR(255),
-    RoleId INT,
-    FOREIGN KEY (RoleId) REFERENCES Roles(Id)
+    RoleId INT
 );
 
 CREATE TABLE Members (
@@ -18,10 +17,8 @@ CREATE TABLE Members (
     LastName VARCHAR(255),
     Contact VARCHAR(255),
     FamilyContact VARCHAR(255),
-    RoomId INT,
     MedicalHistory TEXT,
-    BillingPerYear DECIMAL(10, 2),
-    FOREIGN KEY (RoomId) REFERENCES Room(Id)
+    BillingPerYear DECIMAL(10, 2)
 );
 
 CREATE TABLE Inventory (
@@ -32,8 +29,7 @@ CREATE TABLE Inventory (
     OwnerType VARCHAR(255),
     Description TEXT,
     Quantity INT,
-    ManagedLocationId INT,
-    FOREIGN KEY (ManagedLocationId) REFERENCES ManagedLocations(Id)
+    ManagedLocationId INT
 );
 
 CREATE TABLE Staff (
@@ -47,8 +43,7 @@ CREATE TABLE Availabilities (
     Id INT PRIMARY KEY,
     StartTime DATETIME,
     EndTime DATETIME,
-    StaffId INT,
-    FOREIGN KEY (StaffId) REFERENCES Staff(Id)
+    StaffId INT
 );
 
 CREATE TABLE ManagedLocations (
@@ -65,9 +60,7 @@ CREATE TABLE Room (
     Availability VARCHAR(255),
     BookedFor INT,
     MaintenanceStatus VARCHAR(255),
-    ManagedLocationId INT,
-    FOREIGN KEY (BookedFor) REFERENCES Members(Id),
-    FOREIGN KEY (ManagedLocationId) REFERENCES ManagedLocations(Id)
+    ManagedLocationId INT
 );
 
 CREATE TABLE Utilities (
@@ -77,9 +70,7 @@ CREATE TABLE Utilities (
     Availability VARCHAR(255),
     BookedFor INT,
     MaintenanceStatus VARCHAR(255),
-    ManagedLocationId INT,
-    FOREIGN KEY (BookedFor) REFERENCES Members(Id),
-    FOREIGN KEY (ManagedLocationId) REFERENCES ManagedLocations(Id)
+    ManagedLocationId INT
 );
 
 CREATE TABLE ServiceRecords (
@@ -90,10 +81,7 @@ CREATE TABLE ServiceRecords (
     StartTime DATETIME,
     EndTime DATETIME,
     ManagedLocationId INT,
-    Notes TEXT,
-    FOREIGN KEY (MemberId) REFERENCES Members(Id),
-    FOREIGN KEY (StaffId) REFERENCES Staff(Id),
-    FOREIGN KEY (ManagedLocationId) REFERENCES ManagedLocations(Id)
+    Notes TEXT
 );
 
 CREATE TABLE BillingReports (
@@ -103,16 +91,34 @@ CREATE TABLE BillingReports (
     TransactionType VARCHAR(255),
     Amount DECIMAL(10, 2),
     MemberId INT,
-    ServiceId INT,
-    FOREIGN KEY (MemberId) REFERENCES Members(Id),
-    FOREIGN KEY (ServiceId) REFERENCES ServiceRecords(Id)
+    ServiceId INT
 );
 
 CREATE TABLE BillingItem (
     Id INT PRIMARY KEY,
     BillingReportId INT,
     MemberId INT,
-    Amount DECIMAL(10, 2),
-    FOREIGN KEY (BillingReportId) REFERENCES BillingReports(Id),
-    FOREIGN KEY (MemberId) REFERENCES Members(Id)
+    Amount DECIMAL(10, 2)
 );
+
+ALTER TABLE Authentication ADD FOREIGN KEY (RoleId) REFERENCES Roles(Id);
+
+ALTER TABLE Inventory ADD FOREIGN KEY (ManagedLocationId) REFERENCES ManagedLocations(Id);
+
+ALTER TABLE Availabilities ADD FOREIGN KEY (StaffId) REFERENCES Staff(Id);
+
+ALTER TABLE Room ADD FOREIGN KEY (BookedFor) REFERENCES Members(Id);
+ALTER TABLE Room ADD FOREIGN KEY (ManagedLocationId) REFERENCES ManagedLocations(Id);
+
+ALTER TABLE Utilities ADD FOREIGN KEY (BookedFor) REFERENCES Members(Id);
+ALTER TABLE Utilities ADD FOREIGN KEY (ManagedLocationId) REFERENCES ManagedLocations(Id);
+
+ALTER TABLE ServiceRecords ADD FOREIGN KEY (MemberId) REFERENCES Members(Id);
+ALTER TABLE ServiceRecords ADD FOREIGN KEY (StaffId) REFERENCES Staff(Id);
+ALTER TABLE ServiceRecords ADD FOREIGN KEY (ManagedLocationId) REFERENCES ManagedLocations(Id);
+
+ALTER TABLE BillingReports ADD FOREIGN KEY (MemberId) REFERENCES Members(Id);
+ALTER TABLE BillingReports ADD FOREIGN KEY (ServiceId) REFERENCES ServiceRecords(Id);
+
+ALTER TABLE BillingItem ADD FOREIGN KEY (BillingReportId) REFERENCES BillingReports(Id);
+ALTER TABLE BillingItem ADD FOREIGN KEY (MemberId) REFERENCES Members(Id);
