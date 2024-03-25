@@ -30,9 +30,9 @@ services:
     volumes:
       - ./sql:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_ROOT_PASSWORD: example
-      MYSQL_USER: person
-      MYSQL_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
       MYSQL_DATABASE: aged_care
       TZ: Australia/Melbourne
     networks:
