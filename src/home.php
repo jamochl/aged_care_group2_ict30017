@@ -58,7 +58,6 @@ $tables = array("Roles", "Members", "Inventory", "Staff", "Availabilities", "Man
         // Output the data in tables
         echo "<div class='row'>";
         echo "<div class='col-md-6'>";
-        echo "<h2>Upcoming Services</h2>";
         echo "<table class='table'>";
         echo "<thead>";
         echo "<tr>";
@@ -175,7 +174,6 @@ $tables = array("Roles", "Members", "Inventory", "Staff", "Availabilities", "Man
         <h2>My Past services</h2>
         <?php
         echo "<div class='col-md-6'>";
-        echo "<h2>Past Services</h2>";
         echo "<table class='table'>";
         echo "<thead>";
         echo "<tr>";
