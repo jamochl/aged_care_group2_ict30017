@@ -1,7 +1,8 @@
 <?php
 // Database connection details
-$servername = "localhost";
-$username = "admin";
+$host = "db";
+$port = "3306";
+$user = "admin";
 $password = "admin";
 $database = "aged_care";
 
@@ -27,37 +28,43 @@ if ($mysqli->connect_errno)
 </head>
 <body>
     <div class="container mt-5">
-        <h1>Member Data</h1>
+        <h1>Database Data</h1>
         <hr>
         <?php
+            $table = "Members";
+            echo "<h2>$table</h2>";
+            // SQL query to select all data from the table
+            $query = "SELECT * FROM $table";
+            // Execute query
+            $result = $mysqli->query($query);
+            // Check if there are any rows returned
+            if ($result->num_rows > 0) {
+                // Display data in a table
+                echo "<table class='table'>";
+                echo "<thead><tr>";
+                // Fetch table column names
+                $field_names = $result->fetch_fields();
+                foreach ($field_names as $field) {
+                    echo "<th>$field->name</th>";
+                }
+                echo "</tr></thead><tbody>";
+                // Fetch and display table data
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>";
+                    foreach ($row as $value) {
+                        echo "<td>$value</td>";
+                    }
+                    echo "</tr>";
+                }
+                echo "</tbody></table>";
+            } else {
+                echo "No data available in $table";
+            }
+            // Free result set
+            $result->free();
 
-        //query to retreive all member details
-        $sql = "SELECT * FROM members";
-        $result = $conn->query($sql);
-
-       echo "<table width='100%' border='1'>";
-       echo "<tr><th>Id</th><th>FirstName</th><th>LastName</th><th>DateOfBirth</th><th>Contact</th><th>FamilyContact</th><th>MedicalHistory</th><th>BillingPerYear</th></tr>";
-       $row = mysqli_fetch_row($result);
-       while ($row) 
-       {
-           echo "<tr><td>{$row[0]}</td>";
-           echo "<td>{$row[1]}</td>";
-           echo "<td>{$row[2]}</td>";
-           echo "<td>{$row[3]}</td>";
-           echo "<td>{$row[4]}</td>";
-           echo "<td>{$row[5]}</td>";
-           echo "<td>{$row[6]}</td>";
-           echo "<td>{$row[7]}</td></tr>";
-
-           $row = mysqli_fetch_row($result);
-       }
-       echo "</table>";
-        
-    // Free result set
-    $result->free();
-
-    // Close connection
-    $mysqli->close();
+        // Close connection
+        $mysqli->close();
         ?>
     </div>
 </body>
