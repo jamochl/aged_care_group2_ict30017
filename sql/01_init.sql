@@ -37,17 +37,6 @@ CREATE TABLE Staff (
     RoleId INT
 );
 
-CREATE TABLE Roster (
-    Id INT PRIMARY KEY,
-    StaffId INT,
-    MemberId INT,
-    ServiceType VARCHAR(255),
-    StartTime DATETIME,
-    EndTime DATETIME,
-    ManagedLocationId INT,
-    Notes TEXT
-);
-
 CREATE TABLE Availabilities (
     Id INT PRIMARY KEY,
     StartTime DATETIME,
@@ -83,14 +72,24 @@ CREATE TABLE Utilities (
 );
 
 CREATE TABLE ServiceRecords (
-    Id INT PRIMARY KEY,
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    RosterId INT ,
     MemberId INT,
     StaffId INT,
     ServiceType VARCHAR(255),
     StartTime DATETIME,
     EndTime DATETIME,
     ManagedLocationId INT,
-    Completed BOOLEAN DEFAULT 0,
+    Notes TEXT
+);
+
+CREATE TABLE Rosters (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    StaffId INT,
+    ServiceType VARCHAR(255),
+    StartTime DATETIME,
+    EndTime DATETIME,
+    ManagedLocationId INT,
     Notes TEXT
 );
 
@@ -124,6 +123,8 @@ ALTER TABLE Utilities ADD FOREIGN KEY (ManagedLocationId) REFERENCES ManagedLoca
 ALTER TABLE ServiceRecords ADD FOREIGN KEY (MemberId) REFERENCES Members(Id);
 ALTER TABLE ServiceRecords ADD FOREIGN KEY (StaffId) REFERENCES Staff(Id);
 ALTER TABLE ServiceRecords ADD FOREIGN KEY (ManagedLocationId) REFERENCES ManagedLocations(Id);
+ALTER TABLE ServiceRecords ADD FOREIGN KEY (RosterId) REFERENCES Rosters(Id);
+
 
 ALTER TABLE BillingItem ADD FOREIGN KEY (BillingReportId) REFERENCES BillingReports(Id);
 ALTER TABLE BillingItem ADD FOREIGN KEY (MemberId) REFERENCES Members(Id);
