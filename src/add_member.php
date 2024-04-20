@@ -1,3 +1,21 @@
+<?php
+// Database connection parameters
+$host = "db";
+$port = "3306";
+$user = "admin";
+$password = "admin";
+$database = "aged_care";
+
+// Connect to the database
+$mysqli = new mysqli($host, $user, $password, $database, $port);
+
+// Check connection
+if ($mysqli->connect_errno) {
+    echo "Failed to connect to MySQL: " . $mysqli->connect_error;
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,8 +43,6 @@
     }
 </style>
 <?php
-
-
 $checkerror = 0; 
 $memberId = "";
 $fname = "";
@@ -41,19 +57,9 @@ $pattern1 = "/^\d+$/"; //validation pattern for only numbers
 $pattern2 = "/^[a-zA-Z\s]+$/"; // validation pattern for only alphanumerics
 $pattern3 = "/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{2}$/"; //date of birth validation
 $pattern4 = "/[\w]+(@)[a-zA-Z]+?(\.[a-zA-Z]+)+/"; // validation pattern for email 
-
-// Database connection details
-$host = "db";
-$port = "3306";
-$user = "admin";
-$password = "admin";
-$database = "aged_care";
-
-// Connect to the database
-$mysqli = new mysqli($host, $user, $password, $database, $port);
 ?>
 
-    <form action=AddMember.php method="POST">
+    <form action=add_member.php method="POST">
     
     <?php
         if(!empty($_POST["submit"]))
@@ -161,7 +167,7 @@ $mysqli = new mysqli($host, $user, $password, $database, $port);
     ?>
 
         <label class="label" for="dob"> Date of Birth: </label>
-        <input type="text" name="dob" id="dob" value="<?php echo $dob; ?>"> <br><br>
+        <input type="date" name="dob" id="dob" value=""> <br><br>
 
         <?php
         if(!empty($_POST["submit"]))
