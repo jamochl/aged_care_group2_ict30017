@@ -1,3 +1,30 @@
+<?php
+
+// Start session to access the user
+session_start();
+
+// Checks that user is logged in and is an admin
+if (!isset($_SESSION["role"]) || $_SESSION["role"] != 2) {
+    // If not logged in then redirect back to login
+    header("Location: index.php");
+    exit;
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logout"])) {
+    // Unset all sessions variables
+    $_SESSION = array();
+
+    // Destroy session
+    session_destroy();
+
+    // Redirect to the login page 
+    header("Location: index.php");
+    exit;
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,11 +39,36 @@
             text-decoration: none;
             color: inherit;
         }
+
+        /* Logout button styles */
+        .logout-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
     </style>
 </head>
 
 <body>
+
+    
+
     <div class="container mt-5">
+
+            <!-- Log out button  -->
+            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                <button class="logout-button" type="submit" name="logout">Log out</button>
+            </form>
+
         <h1>Welcome to Staff Home</h1>
         <div class="row row-cols-1 row-cols-md-2 g-4">
             <div class="col">

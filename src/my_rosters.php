@@ -1,22 +1,45 @@
 <?php
-// Get the staff ID from the query string
-$staffId = isset($_GET['staffid']) ? intval($_GET['staffid']) : 1;
 
-// Database connection parameters
-$host = "db";
-$port = "3306";
-$user = "admin";
-$password = "admin";
-$database = "aged_care";
+    // Start session to access the user
+    session_start();
 
-// Connect to the database
-$mysqli = new mysqli($host, $user, $password, $database, $port);
+    // Checks that user is logged in and is an admin
+    if (!isset($_SESSION["role"]) || $_SESSION["role"] != 2) {
+        // If not logged in then redirect back to login
+        header("Location: index.php");
+        exit;
+    }
 
-// Check connection
-if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: " . $mysqli->connect_error;
-    exit();
-}
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logout"])) {
+        // Unset all sessions variables
+        $_SESSION = array();
+
+        // Destroy session
+        session_destroy();
+
+        // Redirect to the login page 
+        header("Location: index.php");
+        exit;
+    }
+
+    // Get the staff ID from the query string
+    $staffId = isset($_GET['staffid']) ? intval($_GET['staffid']) : 1;
+
+    // Database connection parameters
+    $host = "db";
+    $port = "3306";
+    $user = "admin";
+    $password = "admin";
+    $database = "aged_care";
+
+    // Connect to the database
+    $mysqli = new mysqli($host, $user, $password, $database, $port);
+
+    // Check connection
+    if ($mysqli->connect_errno) {
+        echo "Failed to connect to MySQL: " . $mysqli->connect_error;
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>
