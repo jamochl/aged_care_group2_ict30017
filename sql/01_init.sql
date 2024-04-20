@@ -34,6 +34,17 @@ CREATE TABLE Staff (
     RoleId INT
 );
 
+CREATE TABLE Roster (
+    Id INT PRIMARY KEY,
+    StaffId INT,
+    MemberId INT,
+    ServiceType VARCHAR(255),
+    StartTime DATETIME,
+    EndTime DATETIME,
+    ManagedLocationId INT,
+    Notes TEXT
+);
+
 CREATE TABLE Availabilities (
     Id INT PRIMARY KEY,
     StartTime DATETIME,
@@ -76,6 +87,7 @@ CREATE TABLE ServiceRecords (
     StartTime DATETIME,
     EndTime DATETIME,
     ManagedLocationId INT,
+    Completed BOOLEAN DEFAULT 0,
     Notes TEXT
 );
 
