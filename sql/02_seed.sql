@@ -52,12 +52,15 @@ INSERT INTO Utilities (Id, Name, Description, Availability, BookedFor, Maintenan
 (3, 'Printer', 'HP LaserJet Pro M402n', 'Available', NULL, 'Functional', 2),
 (4, 'Scanner', 'Epson WorkForce ES-500W', 'Available', NULL, 'Functional', 2);
 
+INSERT INTO Rosters (Id, StaffId, ServiceType, StartTime, EndTime, ManagedLocationId, Notes) VALUES
+(1, 1 , 'Checkup', '2024-03-25 10:00:00', '2024-03-25 11:00:00', 1, 'roster for staff');
+
 -- ServiceRecords
-INSERT INTO ServiceRecords (Id, MemberId, StaffId, ServiceType, StartTime, EndTime, ManagedLocationId, Notes) VALUES
-(1, 1, 2, 'Checkup', '2024-03-25 10:00:00', '2024-03-25 11:00:00', 1, 'Routine checkup'),
-(2, 2, 2, 'Consultation', '2024-03-25 14:00:00', '2024-03-25 15:00:00', 1, 'Discussing treatment options'),
-(3, 3, 2, 'Checkup', '2024-03-26 10:00:00', '2024-03-26 11:00:00', 2, 'Routine checkup'),
-(4, 4, 2, 'Consultation', '2024-03-26 14:00:00', '2024-03-26 15:00:00', 2, 'Discussing treatment options');
+INSERT INTO ServiceRecords (Id, RosterId, MemberId, StaffId, ServiceType, StartTime, EndTime, ManagedLocationId, Notes) VALUES
+(1, 1,2 ,1 , 'Checkup', '2024-03-25 10:00:00', '2024-03-25 11:00:00', 1, 'Routine checkup'),
+(2,1 ,2 ,2 , 'Consultation', '2024-03-25 14:00:00', '2024-03-25 15:00:00', 1, 'Discussing treatment options'),
+(3,1,3 ,2 , 'Checkup', '2024-03-26 10:00:00', '2024-03-26 11:00:00', 2, 'Routine checkup'),
+(4,1 , 4, 2, 'Consultation', '2024-03-26 14:00:00', '2024-03-26 15:00:00', 2, 'Discussing treatment options');
 
 -- BillingReports
 INSERT INTO BillingReports (Id, StartTime, EndTime, TransactionType, Amount) VALUES
