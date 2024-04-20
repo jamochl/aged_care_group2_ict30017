@@ -67,5 +67,7 @@ if ($mysqli->connect_errno)
         $mysqli->close();
         ?>
     </div>
+
+    <a href ="add_member.php"><button>Add new member</button></a>    
 </body>
 </html>
