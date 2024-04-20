@@ -31,19 +31,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Database Data</title>
+    <title>Staff Info</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <h1>Employee Information</h1>
     <?php
+    $date = $row['BirthDate'];
     echo "<div class='container mt-5'>";
     echo "<div class='row'>";
     echo "<div class='col-md-6 offset-md-3'>";
     echo "<div class='card'>";
     echo "<div class='card-header'>
-                Employee Details
+                <h2>Employee Details</h2>
     </div>";
     echo "<div class='card-body'>";
     echo "<div class='form-group'>";
@@ -63,6 +64,15 @@
     echo "</div>";
     echo "<div class='form-group'>";
     echo "<label for='email'>Email: {$row['Contact']}</label>";
+    echo "</div>";
+    echo "<div class='form-group'>";
+    echo "<label for='phone'>Phone Number: {$row['PhoneNumber']}</label>";
+    echo "</div>";
+    echo "<div class='form-group'>";
+    echo "<label for='nationality'>Nationality: {$row['Nationality']}</label>";
+    echo "</div>";
+    echo "<div class='form-group'>";
+    echo "<label for='Birthdate'>Birthdate: $date</label>";
     echo "</div>";
     echo "</div>";
     echo "</div>";

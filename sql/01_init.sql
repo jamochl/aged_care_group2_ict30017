@@ -27,10 +27,13 @@ CREATE TABLE Inventory (
 );
 
 CREATE TABLE Staff (
-    Id INT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
     PasswordHash VARCHAR(255),
     Contact VARCHAR(255),
+    BirthDate DATETIME,
+    Nationality VARCHAR(255),
+    PhoneNumber VARCHAR(255),
     RoleId INT
 );
 
