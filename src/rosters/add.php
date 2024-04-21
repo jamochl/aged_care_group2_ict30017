@@ -1,5 +1,4 @@
 <?php include '../config.php'; ?>
-
 <?php
 // Initialize variables for form input
 $staffId = $managedLocationId = $serviceType = $startTime = $endTime = $notes = "";
@@ -14,7 +13,7 @@ function sanitize_input($data) {
 
 // Function to redirect to all_rosters.php
 function redirect_to_rosters() {
-    header("Location: /rosters/all.php");
+    header("Location: /rosters/index.php");
     exit();
 }
 
@@ -68,9 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -127,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <hr>
 
         <!-- Roster form -->
-        <form id="add-roster-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        <form id="add-roster-form" method="post" action="#">
             <div class="mb-3">
                 <label for="staff-select" class="form-label">Select Staff:</label>
                 <select class="form-select" id="staff-select" name="staff_id" required>

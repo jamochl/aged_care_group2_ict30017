@@ -58,10 +58,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option value="">Please select roster</option>
                     <?php
                     // Fetch Roster details (start time, end time, and staff name)
-                    $roster_query = "SELECT R.Id, R.StaffId, R.StartTime, R.EndTime, S.Name FROM Rosters R INNER JOIN Staff S ON R.StaffId = S.Id";
+                    $roster_query = "SELECT R.Id, R.StaffId, R.StartTime, R.EndTime, S.Name, R.ServiceType FROM Rosters R INNER JOIN Staff S ON R.StaffId = S.Id";
                     $roster_result = $mysqli->query($roster_query);
                     while ($row = $roster_result->fetch_assoc()) {
-                        $rosterInfo = "{$row['StartTime']} - {$row['EndTime']} ({$row['Name']})";
+                        $rosterInfo = "{$row['StartTime']} - {$row['EndTime']} - {$row['ServiceType']} ({$row['Name']})";
                         echo "<option staffid='" . $row['StaffId'] . "' starttime='" . $row['StartTime'] . "' endtime='" . $row["EndTime"] . "' value='" . $row['Id'] . "'>$rosterInfo</option>";
                     }
                     ?>

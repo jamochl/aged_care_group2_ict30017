@@ -1,5 +1,4 @@
 <?php include '../config.php'; ?>
-
 <?php
 // Define variables and initialize with empty values
 $firstName = $lastName = $dateOfBirth = $contact = $familyContact = $medicalHistory = $billingPerYear = "";
@@ -85,7 +84,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if($stmt->execute()){
                 // Records updated successfully. Redirect to landing page
-                header("location: /members/my.php");
+                header("location: /members/index.php");
                 exit();
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
@@ -98,7 +97,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // Close connection
     $mysqli->close();
-} else{
+} else {
     // Prepare a select statement
     $sql = "SELECT * FROM Members WHERE Id = ?";
     
@@ -161,7 +160,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <body>
     <div class="wrapper p-3">
         <h2>Edit Member</h2>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <form action="#" method="post">
             <input required type="hidden" name="id" value="<?php echo $_GET["id"]; ?>">
             <div class="form-group mb-3">
                 <label>First Name</label>

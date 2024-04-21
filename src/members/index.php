@@ -55,6 +55,8 @@
         // Close connection
         $mysqli->close();
         ?>
+
+        <a href="/members/add.php" class="btn btn-primary add-button button-gap">Create Member</a>
     </div>
 </body>
 </html>

@@ -1,5 +1,4 @@
 <?php include '../config.php'; ?>
-
 <?php
 // Initialize variables for form input
 $rosterId = $staffId = $managedLocationId = $serviceType = $startTime = $endTime = $notes = "";
@@ -12,9 +11,8 @@ function sanitize_input($data) {
     return $data;
 }
 
-// Function to redirect to all_rosters.php
 function redirect_to_rosters() {
-    header("Location: /rosters/all.php");
+    header("Location: /rosters/index.php");
     exit();
 }
 
@@ -147,7 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <hr>
 
         <!-- Roster form -->
-        <form id="edit-roster-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        <form id="edit-roster-form" method="post" action="#">
             <input required type="hidden" name="roster_id" value="<?php echo $rosterId; ?>">
             <div class="mb-3">
                 <label for="staff-select" class="form-label">Select Staff:</label>

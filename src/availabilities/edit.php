@@ -39,7 +39,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if($stmt->execute()){
                 // Records updated successfully. Redirect to landing page
-                header("location: /rosters/my.php");
+                header("location: /rosters/index.php");
                 exit();
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
@@ -49,28 +49,28 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         // Close statement
         $stmt->close();
     }
-}
-// Retrieve availability data
-$id = $_GET["id"];
-$sql = "SELECT StartTime, EndTime FROM Availabilities WHERE Id = ?";
-if($stmt = $mysqli->prepare($sql)){
-    $stmt->bind_param("i", $param_id);
-    $param_id = $id;
-    if($stmt->execute()){
-        $stmt->store_result();
-        if($stmt->num_rows == 1){
-            $stmt->bind_result($startTime, $endTime);
-            $stmt->fetch();
+} else {
+    // Retrieve availability data
+    $id = $_GET["id"];
+    $sql = "SELECT StartTime, EndTime FROM Availabilities WHERE Id = ?";
+    if($stmt = $mysqli->prepare($sql)){
+        $stmt->bind_param("i", $param_id);
+        $param_id = $id;
+        if($stmt->execute()){
+            $stmt->store_result();
+            if($stmt->num_rows == 1){
+                $stmt->bind_result($startTime, $endTime);
+                $stmt->fetch();
+            } else{
+                echo "No records found.";
+            }
         } else{
-            echo "No records found.";
+            echo "Oops! Something went wrong. Please try again later.";
         }
-    } else{
-        echo "Oops! Something went wrong. Please try again later.";
+        $stmt->close();
     }
-    $stmt->close();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -87,7 +87,7 @@ if($stmt = $mysqli->prepare($sql)){
 <body>
     <div class="wrapper p-3">
         <h2>Edit Availability</h2>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <form action="#" method="post">
             <input required type="hidden" name="id" value="<?php echo $_GET["id"]; ?>">
             <div class="mb-3">
                 <label for="startTime" class="form-label">Start Time</label>

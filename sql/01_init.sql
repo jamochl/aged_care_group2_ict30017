@@ -1,11 +1,11 @@
 CREATE TABLE Roles (
-    Id INT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
     Description VARCHAR(255)
 );
 
 CREATE TABLE Members (
-    Id INT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
     FirstName VARCHAR(255),
     LastName VARCHAR(255),
     DateOfBirth DATETIME,
@@ -16,7 +16,7 @@ CREATE TABLE Members (
 );
 
 CREATE TABLE Inventory (
-    Id INT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
     Purpose VARCHAR(255),
     OwnerDetails VARCHAR(255),
@@ -45,14 +45,14 @@ CREATE TABLE Availabilities (
 );
 
 CREATE TABLE ManagedLocations (
-    Id INT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
     Address VARCHAR(255),
     Description TEXT
 );
 
 CREATE TABLE Room (
-    Id INT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
     Description TEXT,
     Availability VARCHAR(255),
@@ -62,7 +62,7 @@ CREATE TABLE Room (
 );
 
 CREATE TABLE Utilities (
-    Id INT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
     Description TEXT,
     Availability VARCHAR(255),
@@ -94,7 +94,7 @@ CREATE TABLE Rosters (
 );
 
 CREATE TABLE BillingReports (
-    Id INT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
     StartTime DATETIME,
     EndTime DATETIME,
     TransactionType VARCHAR(255),
@@ -102,13 +102,11 @@ CREATE TABLE BillingReports (
 );
 
 CREATE TABLE BillingItem (
-    Id INT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
     BillingReportId INT,
     MemberId INT,
     Amount DECIMAL(10, 2)
 );
-
-
 
 ALTER TABLE Staff ADD FOREIGN KEY (RoleId) REFERENCES Roles(Id);
 
