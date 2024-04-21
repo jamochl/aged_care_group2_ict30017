@@ -1,6 +1,7 @@
 <?php
+session_start();
 // Get the staff ID from the query string
-$staffId = isset($_GET['staffid']) ? intval($_GET['staffid']) : 1;
+$staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
 
 // Database connection parameters
 $host = "db";
@@ -47,7 +48,6 @@ if ($mysqli->connect_errno) {
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Staff</th>
                             <th>Service Type</th>
                             <th>Start Time</th>
                             <th>End Time</th>
@@ -63,7 +63,6 @@ if ($mysqli->connect_errno) {
                             // Construct the URL with rosterId as query parameter
                             $url = "my_services.php?rosterid=" . $row['Id'];
                             echo "<tr>";
-                            echo "<td>{$row['StaffName']}</td>";
                             echo "<td>{$row['ServiceType']}</td>";
                             echo "<td>{$row['StartTime']}</td>";
                             echo "<td>{$row['EndTime']}</td>";

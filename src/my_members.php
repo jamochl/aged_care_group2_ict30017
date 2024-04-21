@@ -1,4 +1,8 @@
 <?php
+// Start the session
+session_start();
+$staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : null;
+
 // Database connection parameters
 $host = "db";
 $port = "3306";
@@ -49,7 +53,9 @@ if ($mysqli->connect_errno) {
                         $currentDateTime = date("Y-m-d H:i:s");
 
                         // Query to fetch data for all services and related member details
-                        $query = "SELECT s.MemberId, s.StartTime AS StartDate, s.EndTime AS EndDate, s.Id AS ServiceRecordId, m.FirstName, m.LastName, m.MedicalHistory, m.Contact, m.FamilyContact FROM ServiceRecords s INNER JOIN Members m ON s.MemberId = m.Id";
+                        $query = "SELECT s.MemberId, s.StartTime AS StartDate, s.EndTime AS EndDate, s.Id AS ServiceRecordId, m.FirstName, m.LastName, m.MedicalHistory, m.Contact, m.FamilyContact FROM ServiceRecords s
+                            INNER JOIN Members m ON s.MemberId = m.Id
+                            WHERE s.StaffId = {$staffId}";
                         $result = $mysqli->query($query);
 
                         while ($row = $result->fetch_assoc()) {

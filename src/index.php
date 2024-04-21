@@ -40,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Start the session and set user role
             session_start();
             $_SESSION["role"] = $row["RoleId"];
+            $_SESSION["staffid"] = $row["Id"];
 
             // Redirect users based on their roles
             switch ($_SESSION["role"]) {

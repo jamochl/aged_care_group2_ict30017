@@ -1,6 +1,8 @@
 <?php
+session_start();
 // Get the roster ID from the query string
 $rosterId = isset($_GET['rosterid']) ? intval($_GET['rosterid']) : null;
+$staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : null;
 
 // Database connection parameters
 $host = "db";
