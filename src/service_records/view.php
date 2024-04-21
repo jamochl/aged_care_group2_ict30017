@@ -38,26 +38,26 @@ $mysqli->close();
     <div class="container mt-5">
         <div>
             <!-- Display the generated breadcrumbs -->
-            &gt; <?php generateBreadcrumbs(); ?>
+            <?php generateBreadcrumbs(); ?>
         </div>
         <h1>Service Record</h1>
         <form>
             <div class="mb-3">
                 <label for="serviceType" class="form-label">Service Type</label>
-                <input type="text" class="form-control" id="serviceType" name="serviceType" value="<?php echo $serviceDetails['ServiceType']; ?>" disabled>
+                <input required type="text" class="form-control" id="serviceType" name="serviceType" value="<?php echo $serviceDetails['ServiceType']; ?>" disabled>
             </div>
             <div class="mb-3">
                 <label for="startTime" class="form-label">Start Time</label>
-                <input type="datetime-local" class="form-control" id="startTime" name="startTime" value="<?php echo date('Y-m-d\TH:i', strtotime($serviceDetails['StartTime'])); ?>" disabled>
+                <input required type="datetime-local" class="form-control" id="startTime" name="startTime" value="<?php echo date('Y-m-d\TH:i', strtotime($serviceDetails['StartTime'])); ?>" disabled>
             </div>
             <div class="mb-3">
                 <label for="endTime" class="form-label">End Time</label>
-                <input type="datetime-local" class="form-control" id="endTime" name="endTime" value="<?php echo date('Y-m-d\TH:i', strtotime($serviceDetails['EndTime'])); ?>" disabled>
+                <input required type="datetime-local" class="form-control" id="endTime" name="endTime" value="<?php echo date('Y-m-d\TH:i', strtotime($serviceDetails['EndTime'])); ?>" disabled>
             </div>
             <div class="mb-3">
                 <label for="managedLocation" class="form-label">Managed Location</label>
-                <input type="text" class="form-control" id="managedLocation" name="managedLocation" value="<?php echo $serviceDetails['ManagedLocationName']; ?>" disabled>
-                <input type="hidden" name="managedLocationId" value="<?php echo $serviceDetails['ManagedLocationId']; ?>">
+                <input required type="text" class="form-control" id="managedLocation" name="managedLocation" value="<?php echo $serviceDetails['ManagedLocationName']; ?>" disabled>
+                <input required type="hidden" name="managedLocationId" value="<?php echo $serviceDetails['ManagedLocationId']; ?>">
             </div>
             <div class="mb-3">
                 <label for="notes" class="form-label">Notes</label>

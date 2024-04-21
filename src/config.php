@@ -15,6 +15,7 @@ if(isset($_POST['logout'])) {
     header("Location: /login.php");
     exit;
 }
+
 // Function to generate breadcrumbs
 function generateBreadcrumbs() {
     // Get the current URL path
@@ -23,17 +24,20 @@ function generateBreadcrumbs() {
     $breadcrumbs = array_filter($urlParts);
 
     // Create breadcrumbs array
-    $breadcrumbsArray = [];
+    $breadcrumbsArray = ['<li class="breadcrumb-item"><a href="/home">Home</a></li>'];
     $breadcrumbPath = '';
 
     foreach ($breadcrumbs as $breadcrumb) {
-        $breadcrumbPath .= '/' . $breadcrumb;
-        $breadcrumbsArray[] = "<a href='$breadcrumbPath'>$breadcrumb</a>";
+        if ($breadcrumb != "index") {
+            $breadcrumbPath .= '/' . $breadcrumb;
+            $breadcrumbsArray[] = "<li class='breadcrumb-item'><a href='$breadcrumbPath'>$breadcrumb</a></li>";
+        }
     }
 
     // Output breadcrumbs
-    echo implode(' / ', $breadcrumbsArray);
+    echo '<nav aria-label="breadcrumb"><ol class="breadcrumb">' . implode(' ', $breadcrumbsArray) . '</ol></nav>';
 }
+
 
 // Database connection parameters
 $host = "db";

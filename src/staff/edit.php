@@ -50,16 +50,16 @@ if (!empty($_GET['id'])) {
     <div class="container">
     <h2>Update Staff Details</h2>
     <form action="/staff/edit.php" method="post">
-        <input type="hidden" name="id" value="<?php echo $id; ?>"> <!-- Hidden field to submit ID -->
+        <input required type="hidden" name="id" value="<?php echo $id; ?>"> <!-- Hidden field to submit ID -->
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="<?php echo $name; ?>" required><br><br>
+        <input required type="text" id="name" name="name" value="<?php echo $name; ?>" ><br><br>
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="<?php echo $email; ?>" required><br><br>
+        <input required type="email" id="email" name="email" value="<?php echo $email; ?>" ><br><br>
         <label for="pswrd">Password:</label>
-        <input type="password" id="pswrd" name="pswrd" value="<?php echo $pswrd; ?>" required><br><br>
+        <input required type="password" id="pswrd" name="pswrd" value="<?php echo $pswrd; ?>" ><br><br>
         <label for="roleID">Role ID:</label>
-        <input type="text" id="roleID" name="roleID" value="<?php echo $roleID; ?>" required><br><br>
-        <input type="submit" name="update" value="Update">
+        <input required type="text" id="roleID" name="roleID" value="<?php echo $roleID; ?>" ><br><br>
+        <input required type="submit" name="update" value="Update">
     </form>
     
     <?php

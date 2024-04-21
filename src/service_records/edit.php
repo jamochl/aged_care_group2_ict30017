@@ -105,7 +105,7 @@ if($result = $mysqli->query($sql)){
     <div class="wrapper p-3">
         <h2>Edit Service Record</h2>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . "?id=" . htmlspecialchars($id); ?>" method="post">
-            <input type="hidden" name="id" value="<?php echo $_GET["id"]; ?>">
+            <input required type="hidden" name="id" value="<?php echo $_GET["id"]; ?>">
             <div class="mb-3">
                 <label for="memberId" class="form-label">Member</label>
                 <select name="memberId" id="memberId" class="form-select">
@@ -118,15 +118,15 @@ if($result = $mysqli->query($sql)){
             </div>
             <div class="mb-3">
                 <label for="serviceType" class="form-label">Service Type</label>
-                <input type="text" name="serviceType" id="serviceType" class="form-control" value="<?php echo htmlspecialchars($serviceType); ?>">
+                <input required type="text" name="serviceType" id="serviceType" class="form-control" value="<?php echo htmlspecialchars($serviceType); ?>">
             </div>
             <div class="mb-3">
                 <label for="startTime" class="form-label">Start Time</label>
-                <input type="datetime-local" name="startTime" id="startTime" class="form-control" value="<?php echo htmlspecialchars($startTime); ?>">
+                <input required type="datetime-local" name="startTime" id="startTime" class="form-control" value="<?php echo htmlspecialchars($startTime); ?>">
             </div>
             <div class="mb-3">
                 <label for="endTime" class="form-label">End Time</label>
-                <input type="datetime-local" name="endTime" id="endTime" class="form-control" value="<?php echo htmlspecialchars($endTime); ?>">
+                <input required type="datetime-local" name="endTime" id="endTime" class="form-control" value="<?php echo htmlspecialchars($endTime); ?>">
             </div>
             <div class="mb-3">
                 <label for="managedLocationId" class="form-label">Managed Location</label>
@@ -141,6 +141,6 @@ if($result = $mysqli->query($sql)){
                 <label for="notes" class="form-label">Notes</label>
                 <textarea name="notes" id="notes" class="form-control"><?php echo htmlspecialchars($notes); ?></textarea>
             </div>
-            <input type="hidden" name="staffId" value="<?php echo htmlspecialchars($staffId); ?>"/>
+            <input required type="hidden" name="staffId" value="<?php echo htmlspecialchars($staffId); ?>"/>
             <button type="submit" class="btn btn-primary">Submit</button>
             <a href="/service_records/edit.php" class

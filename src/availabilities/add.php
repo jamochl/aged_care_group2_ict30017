@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container mt-5">
         <div>
             <!-- Display the generated breadcrumbs -->
-            &gt; <?php generateBreadcrumbs(); ?>
+            <?php generateBreadcrumbs(); ?>
         </div>
         <h2>Add New Availability</h2>
         <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
@@ -60,12 +60,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="mb-3">
                 <label for="start_time" class="form-label">Start Time:</label>
-                <input type="datetime-local" id="start_time" name="start_time" class="form-control" required>
+                <input required type="datetime-local" id="start_time" name="start_time" class="form-control" >
             </div>
 
             <div class="mb-3">
                 <label for="end_time" class="form-label">End Time:</label>
-                <input type="datetime-local" id="end_time" name="end_time" class="form-control" required>
+                <input required type="datetime-local" id="end_time" name="end_time" class="form-control" >
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>

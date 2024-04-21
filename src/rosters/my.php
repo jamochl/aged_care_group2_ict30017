@@ -19,7 +19,7 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
     <div class="container mt-5">
         <div>
             <!-- Display the generated breadcrumbs -->
-            &gt; <?php generateBreadcrumbs(); ?>
+            <?php generateBreadcrumbs(); ?>
         </div>
         <h1>Rosters</h1>
         <?php
@@ -109,12 +109,11 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
         }
         $availabilitiesResult->free();
         
-        // Button to add a new availability
-        echo "<button onclick=\"window.location.href='/availabilities/add.php'\" class=\"btn btn-primary add-button button-gap\">Add Availability</button>";
-
         // Close connection
         $mysqli->close();
         ?>
+
+        <a href="/availabilities/add.php" class="btn btn-primary add-button button-gap">Add Availability</a>
     </div>
 </body>
 

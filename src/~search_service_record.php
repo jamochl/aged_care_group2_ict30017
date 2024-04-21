@@ -55,7 +55,7 @@ if ($selectedStaffId) {
     <div class="container mt-5">
         <div>
             <!-- Display the generated breadcrumbs -->
-            &gt; <?php generateBreadcrumbs(); ?>
+            <?php generateBreadcrumbs(); ?>
         </div>
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2>Service Records for <?php echo isset($selectedStaffName) ? $selectedStaffName : ''; ?></h2>

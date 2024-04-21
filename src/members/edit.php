@@ -162,30 +162,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <div class="wrapper p-3">
         <h2>Edit Member</h2>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <input type="hidden" name="id" value="<?php echo $_GET["id"]; ?>">
+            <input required type="hidden" name="id" value="<?php echo $_GET["id"]; ?>">
             <div class="form-group mb-3">
                 <label>First Name</label>
-                <input type="text" name="firstName" class="form-control <?php echo (!empty($firstName_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $firstName; ?>">
+                <input required type="text" name="firstName" class="form-control <?php echo (!empty($firstName_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $firstName; ?>">
                 <span class="invalid-feedback"><?php echo $firstName_err; ?></span>
             </div>
             <div class="form-group mb-3">
                 <label>Last Name</label>
-                <input type="text" name="lastName" class="form-control <?php echo (!empty($lastName_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $lastName; ?>">
+                <input required type="text" name="lastName" class="form-control <?php echo (!empty($lastName_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $lastName; ?>">
                 <span class="invalid-feedback"><?php echo $lastName_err; ?></span>
             </div>
             <div class="form-group mb-3">
                 <label>Date of Birth</label>
-                <input type="datetime-local" name="dateOfBirth" class="form-control <?php echo (!empty($dateOfBirth_err)) ? 'is-invalid' : ''; ?>" value="<?php echo htmlspecialchars($dateOfBirth); ?>">
+                <input required type="datetime-local" name="dateOfBirth" class="form-control <?php echo (!empty($dateOfBirth_err)) ? 'is-invalid' : ''; ?>" value="<?php echo htmlspecialchars($dateOfBirth); ?>">
                 <span class="invalid-feedback"><?php echo $dateOfBirth_err; ?></span>
             </div>
             <div class="form-group mb-3">
                 <label>Contact</label>
-                <input type="text" name="contact" class="form-control <?php echo (!empty($contact_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $contact; ?>">
+                <input required type="text" name="contact" class="form-control <?php echo (!empty($contact_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $contact; ?>">
                 <span class="invalid-feedback"><?php echo $contact_err; ?></span>
             </div>
             <div class="form-group mb-3">
                 <label>Family Contact</label>
-                <input type="text" name="familyContact" class="form-control <?php echo (!empty($familyContact_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $familyContact; ?>">
+                <input required type="text" name="familyContact" class="form-control <?php echo (!empty($familyContact_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $familyContact; ?>">
                 <span class="invalid-feedback"><?php echo $familyContact_err; ?></span>
             </div>
             <div class="form-group mb-3">
@@ -195,11 +195,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
             <div class="form-group mb-3">
                 <label>Billing Per Year</label>
-                <input type="text" name="billingPerYear" class="form-control <?php echo (!empty($billingPerYear_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $billingPerYear; ?>">
+                <input required type="text" name="billingPerYear" class="form-control <?php echo (!empty($billingPerYear_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $billingPerYear; ?>">
                 <span class="invalid-feedback"><?php echo $billingPerYear_err; ?></span>
             </div>
-            <input type="hidden" name="id" value="<?php echo $_GET["id"]; ?>"/>
-            <input type="submit" class="btn btn-primary" value="Submit">
+            <input required type="hidden" name="id" value="<?php echo $_GET["id"]; ?>"/>
+            <input required type="submit" class="btn btn-primary" value="Submit">
             <a href="my_members.php" class="btn btn-secondary ml-2">Cancel</a>
         </form>
     </div>

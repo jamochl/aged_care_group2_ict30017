@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container mt-5">
         <div>
             <!-- Display the generated breadcrumbs -->
-            &gt; <?php generateBreadcrumbs(); ?>
+            <?php generateBreadcrumbs(); ?>
         </div>
         <h1>Add Roster</h1>
 
@@ -158,15 +158,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="mb-3">
                 <label for="service-type" class="form-label">Service Type:</label>
-                <input type="text" class="form-control" id="service-type" name="service_type" required>
+                <input required type="text" class="form-control" id="service-type" name="service_type" >
             </div>
             <div class="mb-3">
                 <label for="start-time" class="form-label">Start Time:</label>
-                <input type="datetime-local" class="form-control" id="start-time" name="start_time" required>
+                <input required type="datetime-local" class="form-control" id="start-time" name="start_time" >
             </div>
             <div class="mb-3">
                 <label for="end-time" class="form-label">End Time:</label>
-                <input type="datetime-local" class="form-control" id="end-time" name="end_time" required>
+                <input required type="datetime-local" class="form-control" id="end-time" name="end_time" >
             </div>
             <div class="mb-3">
                 <label for="notes" class="form-label">Notes:</label>

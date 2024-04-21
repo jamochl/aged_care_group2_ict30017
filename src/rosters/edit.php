@@ -110,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container mt-5">
         <div>
             <!-- Display the generated breadcrumbs -->
-            &gt; <?php generateBreadcrumbs(); ?>
+            <?php generateBreadcrumbs(); ?>
         </div>
         <h1>Edit Roster</h1>
 
@@ -148,7 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <!-- Roster form -->
         <form id="edit-roster-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-            <input type="hidden" name="roster_id" value="<?php echo $rosterId; ?>">
+            <input required type="hidden" name="roster_id" value="<?php echo $rosterId; ?>">
             <div class="mb-3">
                 <label for="staff-select" class="form-label">Select Staff:</label>
                 <select class="form-select" id="staff-select" name="staff_id" required>
@@ -181,15 +181,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="mb-3">
                 <label for="service-type" class="form-label">Service Type:</label>
-                <input type="text" class="form-control" id="service-type" name="service_type" value="<?php echo $serviceType; ?>" required>
+                <input required type="text" class="form-control" id="service-type" name="service_type" value="<?php echo $serviceType; ?>" >
             </div>
             <div class="mb-3">
                 <label for="start-time" class="form-label">Start Time:</label>
-                <input type="datetime-local" class="form-control" id="start-time" name="start_time" value="<?php echo date('Y-m-d\TH:i', strtotime($startTime)); ?>" required>
+                <input required type="datetime-local" class="form-control" id="start-time" name="start_time" value="<?php echo date('Y-m-d\TH:i', strtotime($startTime)); ?>" >
             </div>
             <div class="mb-3">
                 <label for="end-time" class="form-label">End Time:</label>
-                <input type="datetime-local" class="form-control" id="end-time" name="end_time" value="<?php echo date('Y-m-d\TH:i', strtotime($endTime)); ?>" required>
+                <input required type="datetime-local" class="form-control" id="end-time" name="end_time" value="<?php echo date('Y-m-d\TH:i', strtotime($endTime)); ?>" >
             </div>
             <div class="mb-3">
                 <label for="notes" class="form-label">Notes:</label>

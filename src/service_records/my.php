@@ -20,7 +20,7 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : null;
     <div class="container mt-5">
         <div>
             <!-- Display the generated breadcrumbs -->
-            &gt; <?php generateBreadcrumbs(); ?>
+            <?php generateBreadcrumbs(); ?>
         </div>
         <h1>Service Records</h1>
         <?php
@@ -32,9 +32,10 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : null;
                     INNER JOIN Staff s ON r.StaffId = s.Id
                     INNER JOIN Members m ON sr.MemberId = m.Id
                     INNER JOIN ManagedLocations ml ON sr.ManagedLocationId = ml.Id
-                    WHERE r.Id = ?";
+                    WHERE r.Id = ? AND
+                    s.Id = ?";
             $statement = $mysqli->prepare($query);
-            $statement->bind_param("i", $rosterId);
+            $statement->bind_param("ii", $rosterId, $staffId);
             $statement->execute();
             $result = $statement->get_result();
         } else {
@@ -43,8 +44,10 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : null;
                     INNER JOIN Rosters r ON sr.RosterId = r.Id
                     INNER JOIN Staff s ON r.StaffId = s.Id
                     INNER JOIN Members m ON sr.MemberId = m.Id
-                    INNER JOIN ManagedLocations ml ON sr.ManagedLocationId = ml.Id";
+                    INNER JOIN ManagedLocations ml ON sr.ManagedLocationId = ml.Id WHERE
+                    s.Id = ?";
             $statement = $mysqli->prepare($query);
+            $statement->bind_param("i", $staffId);
             $statement->execute();
             $result = $statement->get_result();
         }

@@ -19,7 +19,7 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
     <div class="container mt-5">
         <div>
             <!-- Display the generated breadcrumbs -->
-            &gt; <?php generateBreadcrumbs(); ?>
+            <?php generateBreadcrumbs(); ?>
         </div>
         <h1>Rosters</h1>
         <?php
@@ -50,7 +50,7 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
                         // Display the data in the table rows
                         while ($row = $result->fetch_assoc()) {
                             // Construct the URL with rosterId as query parameter
-                            $url = "/service_records/my.php?rosterid=" . $row['Id'];
+                            $url = "/service_records/index.php?rosterid=" . $row['Id'];
                             $urlEdit = "/rosters/edit.php?id=" . $row['Id'];
                             echo "<tr>";
                             echo "<td>{$row['StaffName']}</td>";
@@ -115,12 +115,11 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
         }
         $availabilitiesResult->free();
         
-        // Button to add a new availability
-        echo "<button onclick=\"window.location.href='/rosters/add.php'\" class=\"btn btn-primary add-button button-gap\">Create Roster</button>";
-
         // Close connection
         $mysqli->close();
         ?>
+
+        <a href="/rosters/add.php" class="btn btn-primary add-button button-gap">Create Roster</a>
     </div>
 </body>
 

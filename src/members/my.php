@@ -19,7 +19,7 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : null;
     <div class="container mt-5">
         <div>
             <!-- Display the generated breadcrumbs -->
-            &gt; <?php generateBreadcrumbs(); ?>
+            <?php generateBreadcrumbs(); ?>
         </div>
         <h1>My Members</h1>
         <div class="row">

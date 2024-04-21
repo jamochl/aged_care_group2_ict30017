@@ -88,18 +88,18 @@ if($stmt = $mysqli->prepare($sql)){
     <div class="wrapper p-3">
         <h2>Edit Availability</h2>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <input type="hidden" name="id" value="<?php echo $_GET["id"]; ?>">
+            <input required type="hidden" name="id" value="<?php echo $_GET["id"]; ?>">
             <div class="mb-3">
                 <label for="startTime" class="form-label">Start Time</label>
-                <input type="datetime-local" name="startTime" id="startTime" class="form-control" value="<?php echo htmlspecialchars($startTime); ?>">
+                <input required type="datetime-local" name="startTime" id="startTime" class="form-control" value="<?php echo htmlspecialchars($startTime); ?>">
                 <span class="text-danger"><?php echo $startTime_err; ?></span>
             </div>
             <div class="mb-3">
                 <label for="endTime" class="form-label">End Time</label>
-                <input type="datetime-local" name="endTime" id="endTime" class="form-control" value="<?php echo htmlspecialchars($endTime); ?>">
+                <input required type="datetime-local" name="endTime" id="endTime" class="form-control" value="<?php echo htmlspecialchars($endTime); ?>">
                 <span class="text-danger"><?php echo $endTime_err; ?></span>
             </div>
-            <input type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>"/>
+            <input required type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>"/>
             <button type="submit" class="btn btn-primary">Submit</button>
             <a href="/rosters/my.php" class="btn btn-secondary ms-2">Cancel</a>
         </form>

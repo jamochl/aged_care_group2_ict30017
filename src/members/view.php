@@ -75,23 +75,23 @@ if(isset($_GET["id"])) {
         <form>
             <div class="form-group mb-3">
                 <label>First Name</label>
-                <input type="text" name="firstName" class="form-control" value="<?php echo $firstName; ?>" disabled>
+                <input required type="text" name="firstName" class="form-control" value="<?php echo $firstName; ?>" disabled>
             </div>
             <div class="form-group mb-3">
                 <label>Last Name</label>
-                <input type="text" name="lastName" class="form-control" value="<?php echo $lastName; ?>" disabled>
+                <input required type="text" name="lastName" class="form-control" value="<?php echo $lastName; ?>" disabled>
             </div>
             <div class="form-group mb-3">
                 <label>Date of Birth</label>
-                <input type="date" name="dateOfBirth" class="form-control" value="<?php echo $dateOfBirth; ?>" disabled>
+                <input required type="date" name="dateOfBirth" class="form-control" value="<?php echo $dateOfBirth; ?>" disabled>
             </div>
             <div class="form-group mb-3">
                 <label>Contact</label>
-                <input type="text" name="contact" class="form-control" value="<?php echo $contact; ?>" disabled>
+                <input required type="text" name="contact" class="form-control" value="<?php echo $contact; ?>" disabled>
             </div>
             <div class="form-group mb-3">
                 <label>Family Contact</label>
-                <input type="text" name="familyContact" class="form-control" value="<?php echo $familyContact; ?>" disabled>
+                <input required type="text" name="familyContact" class="form-control" value="<?php echo $familyContact; ?>" disabled>
             </div>
             <div class="form-group mb-3">
                 <label>Medical History</label>
@@ -99,7 +99,7 @@ if(isset($_GET["id"])) {
             </div>
             <div class="form-group mb-3">
                 <label>Billing Per Year</label>
-                <input type="text" name="billingPerYear" class="form-control" value="<?php echo $billingPerYear; ?>" disabled>
+                <input required type="text" name="billingPerYear" class="form-control" value="<?php echo $billingPerYear; ?>" disabled>
             </div>
             <a href="/members/edit.php?id=<?php echo $_GET["id"]; ?>" class="btn btn-primary">Edit Member</a>
         </form>

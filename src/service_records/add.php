@@ -4,6 +4,10 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Prepare and bind parameters
     $stmt = $mysqli->prepare("INSERT INTO ServiceRecords (RosterId, MemberId, StaffId, ServiceType, StartTime, EndTime, ManagedLocationId, Notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    if ($stmt === false) {
+        die("Error in preparing SQL statement: " . $mysqli->error);
+    }
+
     $stmt->bind_param("iiisssis", $rosterId, $memberId, $staffId, $serviceType, $startTime, $endTime, $location, $notes);
 
     // Set parameters from form data
@@ -18,16 +22,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Execute statement
     if ($stmt->execute()) {
-        echo "New record added successfully";
+        header("Location: /service_records/index.php");
+        exit();
     } else {
         echo "Error: " . $stmt->error;
     }
 
-    // Close statement and connection
+    // Close statement
     $stmt->close();
-    $mysqli->close();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -42,14 +47,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container mt-5">
         <div>
             <!-- Display the generated breadcrumbs -->
-            &gt; <?php generateBreadcrumbs(); ?>
+            <?php generateBreadcrumbs(); ?>
         </div>
         <h2>Add New Service Record</h2>
-        <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
+        <form action="#" method="post">
             <!-- New field for Roster ID -->
             <div class="mb-3">
                 <label for="roster_id" class="form-label">Roster ID:</label>
-                <input type="number" id="roster_id" name="roster_id" class="form-control" required>
+                <select id="roster_id" name="roster_id" class="form-select" required>
+                    <option value="">Please select roster</option>
+                    <?php
+                    // Fetch Roster details (start time, end time, and staff name)
+                    $roster_query = "SELECT R.Id, R.StaffId, R.StartTime, R.EndTime, S.Name FROM Rosters R INNER JOIN Staff S ON R.StaffId = S.Id";
+                    $roster_result = $mysqli->query($roster_query);
+                    while ($row = $roster_result->fetch_assoc()) {
+                        $rosterInfo = "{$row['StartTime']} - {$row['EndTime']} ({$row['Name']})";
+                        echo "<option staffid='" . $row['StaffId'] . "' starttime='" . $row['StartTime'] . "' endtime='" . $row["EndTime"] . "' value='" . $row['Id'] . "'>$rosterInfo</option>";
+                    }
+                    ?>
+                </select>
             </div>
             
             <div class="mb-3">
@@ -98,12 +114,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="mb-3">
                 <label for="start_time" class="form-label">Start Time:</label>
-                <input type="datetime-local" id="start_time" name="start_time" class="form-control" required>
+                <input required type="datetime-local" id="start_time" name="start_time" class="form-control" >
             </div>
 
             <div class="mb-3">
                 <label for="end_time" class="form-label">End Time:</label>
-                <input type="datetime-local" id="end_time" name="end_time" class="form-control" required>
+                <input required type="datetime-local" id="end_time" name="end_time" class="form-control" >
             </div>
 
             <div class="mb-3">
@@ -135,5 +151,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Add an event listener to the roster dropdown list -->
+    <script>
+    document.getElementById('roster_id').addEventListener('change', function() {
+        var selectedOption = this.options[this.selectedIndex];
+        var staffId = selectedOption.getAttribute('staffid');
+        var startTime = selectedOption.getAttribute('starttime');
+        var endTime = selectedOption.getAttribute('endtime');
+
+        // Set the staff name to a hidden input field or any other desired element
+        document.getElementById('staff_id').value = staffId;
+        document.getElementById('start_time').value = startTime;
+        document.getElementById('end_time').value = endTime;
+    });
+    </script>
 </body>
 </html>
