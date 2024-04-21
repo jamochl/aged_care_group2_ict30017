@@ -1,26 +1,10 @@
+<?php include '../config.php'; ?>
 <?php
-
-// Database connection parameters
-$host = "db";
-$port = "3306";
-$user = "admin";
-$password = "admin";
-$database = "aged_care";
-
-// Connect to the database
-$mysqli = new mysqli($host, $user, $password, $database, $port);
-
-// Check connection
-if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: " . $mysqli->connect_error;
-    exit();
-}
-
-    $id = '';
-    $name = '';
-    $email = '';
-    $pswrd = '';
-    $roleID = '';
+$id = '';
+$name = '';
+$email = '';
+$pswrd = '';
+$roleID = '';
 
 // Check if staff ID is provided via GET request
 if (!empty($_GET['id'])) {
@@ -65,17 +49,17 @@ if (!empty($_GET['id'])) {
 <body>
     <div class="container">
     <h2>Update Staff Details</h2>
-    <form action="edit_staff.php" method="post">
-        <input type="hidden" name="id" value="<?php echo $id; ?>"> <!-- Hidden field to submit ID -->
+    <form action="/staff/edit.php" method="post">
+        <input required type="hidden" name="id" value="<?php echo $id; ?>"> <!-- Hidden field to submit ID -->
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="<?php echo $name; ?>" required><br><br>
+        <input required type="text" id="name" name="name" value="<?php echo $name; ?>" ><br><br>
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="<?php echo $email; ?>" required><br><br>
+        <input required type="email" id="email" name="email" value="<?php echo $email; ?>" ><br><br>
         <label for="pswrd">Password:</label>
-        <input type="password" id="pswrd" name="pswrd" value="<?php echo $pswrd; ?>" required><br><br>
+        <input required type="password" id="pswrd" name="pswrd" value="<?php echo $pswrd; ?>" ><br><br>
         <label for="roleID">Role ID:</label>
-        <input type="text" id="roleID" name="roleID" value="<?php echo $roleID; ?>" required><br><br>
-        <input type="submit" name="update" value="Update">
+        <input required type="text" id="roleID" name="roleID" value="<?php echo $roleID; ?>" ><br><br>
+        <input required type="submit" name="update" value="Update">
     </form>
     
     <?php

@@ -1,11 +1,11 @@
 CREATE TABLE Roles (
-    Id INT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
     Description VARCHAR(255)
 );
 
 CREATE TABLE Members (
-    Id INT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
     FirstName VARCHAR(255),
     LastName VARCHAR(255),
     DateOfBirth DATETIME,
@@ -16,7 +16,7 @@ CREATE TABLE Members (
 );
 
 CREATE TABLE Inventory (
-    Id INT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
     Purpose VARCHAR(255),
     OwnerDetails VARCHAR(255),
@@ -27,29 +27,32 @@ CREATE TABLE Inventory (
 );
 
 CREATE TABLE Staff (
-    Id INT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
     PasswordHash VARCHAR(255),
     Contact VARCHAR(255),
+    BirthDate DATETIME,
+    Nationality VARCHAR(255),
+    PhoneNumber VARCHAR(255),
     RoleId INT
 );
 
 CREATE TABLE Availabilities (
-    Id INT PRIMARY KEY,
+    Id INT PRIMARY KEY AUTO_INCREMENT,
     StartTime DATETIME,
     EndTime DATETIME,
     StaffId INT
 );
 
 CREATE TABLE ManagedLocations (
-    Id INT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
     Address VARCHAR(255),
     Description TEXT
 );
 
 CREATE TABLE Room (
-    Id INT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
     Description TEXT,
     Availability VARCHAR(255),
@@ -59,7 +62,7 @@ CREATE TABLE Room (
 );
 
 CREATE TABLE Utilities (
-    Id INT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
     Description TEXT,
     Availability VARCHAR(255),
@@ -91,7 +94,7 @@ CREATE TABLE Rosters (
 );
 
 CREATE TABLE BillingReports (
-    Id INT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
     StartTime DATETIME,
     EndTime DATETIME,
     TransactionType VARCHAR(255),
@@ -99,7 +102,7 @@ CREATE TABLE BillingReports (
 );
 
 CREATE TABLE BillingItem (
-    Id INT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
     BillingReportId INT,
     MemberId INT,
     Amount DECIMAL(10, 2)

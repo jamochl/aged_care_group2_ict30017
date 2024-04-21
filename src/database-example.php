@@ -16,7 +16,7 @@ if ($mysqli->connect_errno) {
 }
 
 // Array of tables to select data from
-$tables = array("Roles", "Members", "Inventory", "Staff", "Availabilities", "ManagedLocations", "Room", "Utilities", "ServiceRecords", "BillingReports", "BillingItem");
+$tables = array("Roles", "Members", "Inventory", "Staff", "Availabilities", "ManagedLocations", "Room", "Utilities", "Rosters", "ServiceRecords", "BillingReports", "BillingItem");
 ?>
 
 <!DOCTYPE html>

@@ -1,22 +1,7 @@
+<?php include '../config.php'; ?>
 <?php
-// Database connection parameters
-$host = "db";
-$port = "3306";
-$user = "admin";
-$password = "admin";
-$database = "aged_care";
-
-// Connect to the database
-$mysqli = new mysqli($host, $user, $password, $database, $port);
-
-// Check connection
-if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: " . $mysqli->connect_error;
-    exit();
-}
-
 // Get the service ID from the query string
-$serviceId = isset($_GET['serviceid']) ? intval($_GET['serviceid']) : null;
+$serviceId = isset($_GET['id']) ? intval($_GET['id']) : null;
 
 // Query to fetch service details including managed location name
 $query = "SELECT sr.*, ml.Name AS ManagedLocationName
@@ -44,31 +29,35 @@ $mysqli->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Service Details</title>
+    <title>Service Record</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
 <body>
     <div class="container mt-5">
-        <h1>Service Details</h1>
+        <div>
+            <!-- Display the generated breadcrumbs -->
+            <?php generateBreadcrumbs(); ?>
+        </div>
+        <h1>Service Record</h1>
         <form>
             <div class="mb-3">
                 <label for="serviceType" class="form-label">Service Type</label>
-                <input type="text" class="form-control" id="serviceType" name="serviceType" value="<?php echo $serviceDetails['ServiceType']; ?>" disabled>
+                <input required type="text" class="form-control" id="serviceType" name="serviceType" value="<?php echo $serviceDetails['ServiceType']; ?>" disabled>
             </div>
             <div class="mb-3">
                 <label for="startTime" class="form-label">Start Time</label>
-                <input type="datetime-local" class="form-control" id="startTime" name="startTime" value="<?php echo date('Y-m-d\TH:i', strtotime($serviceDetails['StartTime'])); ?>" disabled>
+                <input required type="datetime-local" class="form-control" id="startTime" name="startTime" value="<?php echo date('Y-m-d\TH:i', strtotime($serviceDetails['StartTime'])); ?>" disabled>
             </div>
             <div class="mb-3">
                 <label for="endTime" class="form-label">End Time</label>
-                <input type="datetime-local" class="form-control" id="endTime" name="endTime" value="<?php echo date('Y-m-d\TH:i', strtotime($serviceDetails['EndTime'])); ?>" disabled>
+                <input required type="datetime-local" class="form-control" id="endTime" name="endTime" value="<?php echo date('Y-m-d\TH:i', strtotime($serviceDetails['EndTime'])); ?>" disabled>
             </div>
             <div class="mb-3">
                 <label for="managedLocation" class="form-label">Managed Location</label>
-                <input type="text" class="form-control" id="managedLocation" name="managedLocation" value="<?php echo $serviceDetails['ManagedLocationName']; ?>" disabled>
-                <input type="hidden" name="managedLocationId" value="<?php echo $serviceDetails['ManagedLocationId']; ?>">
+                <input required type="text" class="form-control" id="managedLocation" name="managedLocation" value="<?php echo $serviceDetails['ManagedLocationName']; ?>" disabled>
+                <input required type="hidden" name="managedLocationId" value="<?php echo $serviceDetails['ManagedLocationId']; ?>">
             </div>
             <div class="mb-3">
                 <label for="notes" class="form-label">Notes</label>
