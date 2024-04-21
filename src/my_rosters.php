@@ -44,7 +44,7 @@ if ($mysqli->connect_errno) {
         ?>
         <div class="row">
             <div class="col">
-                <table class="table table-striped table-hover">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>Staff</th>
@@ -53,6 +53,7 @@ if ($mysqli->connect_errno) {
                             <th>End Time</th>
                             <th>Managed Location</th>
                             <th>Notes</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,13 +62,14 @@ if ($mysqli->connect_errno) {
                         while ($row = $result->fetch_assoc()) {
                             // Construct the URL with rosterId as query parameter
                             $url = "my_services.php?rosterid=" . $row['Id'];
-                            echo "<tr class='table-active' onclick='window.location.href=\"$url\"' style='cursor:pointer;'>";
+                            echo "<tr>";
                             echo "<td>{$row['StaffName']}</td>";
                             echo "<td>{$row['ServiceType']}</td>";
                             echo "<td>{$row['StartTime']}</td>";
                             echo "<td>{$row['EndTime']}</td>";
                             echo "<td>{$row['ManagedLocationName']}</td>";
                             echo "<td>{$row['Notes']}</td>";
+                            echo "<td><a href='{$url}' class='btn btn-primary add-button'>View Related Services</a></td>";
                             echo "</tr>";
                         }
 

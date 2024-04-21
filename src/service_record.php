@@ -16,7 +16,7 @@ if ($mysqli->connect_errno) {
 }
 
 // Get the service ID from the query string
-$serviceId = isset($_GET['serviceid']) ? intval($_GET['serviceid']) : null;
+$serviceId = isset($_GET['id']) ? intval($_GET['id']) : null;
 
 // Query to fetch service details including managed location name
 $query = "SELECT sr.*, ml.Name AS ManagedLocationName

@@ -33,65 +33,82 @@ if ($mysqli->connect_errno) {
 <body>
     <div class="container mt-5">
         <h1>Service Records</h1>
+        <?php
+        // Query to fetch service records related to a specific roster
+        if ($rosterId != null) {
+            $query = "SELECT sr.*, r.ServiceType, r.StartTime AS RosterStartTime, r.EndTime AS RosterEndTime, ml.Name AS ManagedLocationName, s.Name AS StaffName, m.FirstName AS MemberFirstName, m.LastName AS MemberLastName
+                    FROM ServiceRecords sr
+                    INNER JOIN Rosters r ON sr.RosterId = r.Id
+                    INNER JOIN Staff s ON r.StaffId = s.Id
+                    INNER JOIN Members m ON sr.MemberId = m.Id
+                    INNER JOIN ManagedLocations ml ON sr.ManagedLocationId = ml.Id
+                    WHERE r.Id = ?";
+            $statement = $mysqli->prepare($query);
+            $statement->bind_param("i", $rosterId);
+            $statement->execute();
+            $result = $statement->get_result();
+        } else {
+            $query = "SELECT sr.*, r.ServiceType, r.StartTime AS RosterStartTime, r.EndTime AS RosterEndTime, ml.Name AS ManagedLocationName, s.Name AS StaffName, m.FirstName AS MemberFirstName, m.LastName AS MemberLastName
+                    FROM ServiceRecords sr
+                    INNER JOIN Rosters r ON sr.RosterId = r.Id
+                    INNER JOIN Staff s ON r.StaffId = s.Id
+                    INNER JOIN Members m ON sr.MemberId = m.Id
+                    INNER JOIN ManagedLocations ml ON sr.ManagedLocationId = ml.Id";
+            $statement = $mysqli->prepare($query);
+            $statement->execute();
+            $result = $statement->get_result();
+        }
+
+        if ($result->num_rows > 0) {
+        ?>
         <div class="row">
             <div class="col">
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>Staff</th>
+                            <th>Member</th>
                             <th>Service Type</th>
                             <th>Start Time</th>
                             <th>End Time</th>
                             <th>Managed Location</th>
                             <th>Notes</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        // Query to fetch service records related to a specific roster
-                        if ($rosterId != null) {
-                            $query = "SELECT sr.*, r.ServiceType, r.StartTime AS RosterStartTime, r.EndTime AS RosterEndTime, ml.Name AS ManagedLocationName, s.Name AS StaffName 
-                                    FROM ServiceRecords sr
-                                    INNER JOIN Rosters r ON sr.RosterId = r.Id
-                                    INNER JOIN Staff s ON r.StaffId = s.Id
-                                    INNER JOIN ManagedLocations ml ON r.ManagedLocationId = ml.Id
-                                    WHERE r.Id = ?";
-                            $statement = $mysqli->prepare($query);
-                            $statement->bind_param("i", $rosterId);
-                            $statement->execute();
-                            $result = $statement->get_result();
-                        } else {
-                            $query = "SELECT sr.*, r.ServiceType, r.StartTime AS RosterStartTime, r.EndTime AS RosterEndTime, ml.Name AS ManagedLocationName, s.Name AS StaffName 
-                                    FROM ServiceRecords sr
-                                    INNER JOIN Rosters r ON sr.RosterId = r.Id
-                                    INNER JOIN Staff s ON r.StaffId = s.Id
-                                    INNER JOIN ManagedLocations ml ON r.ManagedLocationId = ml.Id";
-                            $statement = $mysqli->prepare($query);
-                            $statement->execute();
-                            $result = $statement->get_result();
-                        }
 
+                    <?php
                         // Display the data in the table rows
                         while ($row = $result->fetch_assoc()) {
+                            // echo "<pre>";
+                            // print_r($row);
+                            // echo "</pre>";
+
                             // Construct the URL with serviceId as query parameter
-                            $url = "service_details.php?serviceid=" . $row['Id'];
-                            echo "<tr class='table-active' onclick='window.location.href=\"$url\"' style='cursor:pointer;'>";
+                            $url = "service_record.php?id=" . $row['Id'];
+                            $urlEdit = "edit_service_record.php?id=" . $row['Id'];
+                            echo "<tr>";
                             echo "<td>{$row['StaffName']}</td>";
+                            echo "<td>{$row['MemberFirstName']} {$row['MemberLastName']}</td>";
                             echo "<td>{$row['ServiceType']}</td>";
                             echo "<td>{$row['StartTime']}</td>";
                             echo "<td>{$row['EndTime']}</td>";
                             echo "<td>{$row['ManagedLocationName']}</td>";
                             echo "<td>{$row['Notes']}</td>";
+                            echo "<td><a href='{$url}' class='mx-2 btn btn-primary add-button'>View Record</a><a href='{$urlEdit}' class='btn btn-primary add-button'>Edit Record</a></td>";
                             echo "</tr>";
                         }
-
-                        // Close database connection
-                        $mysqli->close();
                         ?>
                     </tbody>
                 </table>
             </div>
         </div>
+        <?php
+        } else {
+            echo "<p>No service history for this roster or staff</p>";
+        }
+        ?>
     </div>
 </body>
 
