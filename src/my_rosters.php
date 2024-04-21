@@ -33,6 +33,15 @@ if ($mysqli->connect_errno) {
 <body>
     <div class="container mt-5">
         <h1>Rosters</h1>
+        <?php
+        // Query to fetch rosters
+        $query = "SELECT r.*, s.Name AS StaffName, ml.Name AS ManagedLocationName 
+                FROM Rosters r
+                INNER JOIN Staff s ON r.StaffId = s.Id
+                INNER JOIN ManagedLocations ml ON r.ManagedLocationId = ml.Id WHERE r.StaffId = $staffId";
+        $result = $mysqli->query($query);
+        if ($result->num_rows > 0) {
+        ?>
         <div class="row">
             <div class="col">
                 <table class="table table-striped table-hover">
@@ -48,13 +57,6 @@ if ($mysqli->connect_errno) {
                     </thead>
                     <tbody>
                         <?php
-                        // Query to fetch rosters
-                        $query = "SELECT r.*, s.Name AS StaffName, ml.Name AS ManagedLocationName 
-                                FROM Rosters r
-                                INNER JOIN Staff s ON r.StaffId = s.Id
-                                INNER JOIN ManagedLocations ml ON r.ManagedLocationId = ml.Id WHERE r.StaffId = $staffId";
-                        $result = $mysqli->query($query);
-
                         // Display the data in the table rows
                         while ($row = $result->fetch_assoc()) {
                             // Construct the URL with rosterId as query parameter
@@ -70,12 +72,60 @@ if ($mysqli->connect_errno) {
                         }
 
                         // Close database connection
-                        $mysqli->close();
+                        // $mysqli->close();
                         ?>
                     </tbody>
                 </table>
             </div>
         </div>
+        <?php } else {
+            echo "<p>Nothing rostered for you at the moment</p>";
+        }
+        ?>
+
+        <?php
+        // Table names
+        $availabilitiesTable = "Availabilities";
+        ?>
+
+        <?php
+        // SQL query to retrieve availabilities with staff names
+        $availabilitiesQuery = "SELECT Availabilities.Id, Availabilities.StartTime, Availabilities.EndTime, Availabilities.StaffId, Staff.Name AS StaffName FROM $availabilitiesTable JOIN Staff ON Availabilities.StaffId = Staff.Id WHERE StaffId = $staffId";
+
+        // Execute the availabilities query
+        $availabilitiesResult = $mysqli->query($availabilitiesQuery);
+        ?>
+
+        <h1>Availabilities</h1>
+
+        <?php
+        // Display availabilities with staff names in a table
+        if ($availabilitiesResult->num_rows > 0) {
+            echo "<table class='table'>";
+            echo "<thead><tr>";
+            echo "<th>Start Time</th>";
+            echo "<th>End Time</th>";
+            echo "<th>Actions</th>";
+            echo "</tr></thead><tbody>";
+            while ($row = $availabilitiesResult->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>{$row['StartTime']}</td>";
+                echo "<td>{$row['EndTime']}</td>";
+                echo "<td><a href='edit_availability.php?id={$row['Id']}' class='btn btn-primary add-button'>Edit Availabilities</a></td>";
+                echo "</tr>";
+            }
+            echo "</tbody></table>";
+        } else {
+            echo "<p>You have not specified any availabilities</p>";
+        }
+        $availabilitiesResult->free();
+        
+        // Button to add a new availability
+        echo "<button onclick=\"window.location.href='add_availability.php'\" class=\"btn btn-primary add-button button-gap\">Add Availability</button>";
+
+        // Close connection
+        $mysqli->close();
+        ?>
     </div>
 </body>
 
