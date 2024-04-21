@@ -59,7 +59,7 @@ if ($selectedStaffId) {
         </div>
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2>Service Records for <?php echo isset($selectedStaffName) ? $selectedStaffName : ''; ?></h2>
-            <a href="/rosters" class="btn btn-primary">Return to Roster</a>
+            <a href="/rosters/index.php" class="btn btn-primary">Return to Roster</a>
         </div>
         
         <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="GET">

@@ -43,7 +43,7 @@
                 </a>
             </div>
             <div class="col">
-                <a href="/members" class="card-link">
+                <a href="/members/index.php" class="card-link">
                     <div class="card bg-light">
                         <div class="card-body">
                             <h5 class="card-title">All Member Details</h5>
@@ -52,7 +52,7 @@
                 </a>
             </div>
             <div class="col">
-                <a href="/inventory" class="card-link">
+                <a href="/inventory/index.php" class="card-link">
                     <div class="card bg-light">
                         <div class="card-body">
                             <h5 class="card-title">Inventory</h5>

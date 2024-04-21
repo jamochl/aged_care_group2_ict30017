@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="/rosters" class="btn btn-secondary">Return to Main Page</a>
+            <a href="/rosters/index.php" class="btn btn-secondary">Return to Main Page</a>
         </form>
     </div>
 
