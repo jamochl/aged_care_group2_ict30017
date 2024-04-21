@@ -35,7 +35,7 @@ CREATE TABLE Staff (
 );
 
 CREATE TABLE Availabilities (
-    Id INT PRIMARY KEY,
+    Id INT PRIMARY KEY AUTO_INCREMENT,
     StartTime DATETIME,
     EndTime DATETIME,
     StaffId INT
@@ -104,6 +104,8 @@ CREATE TABLE BillingItem (
     MemberId INT,
     Amount DECIMAL(10, 2)
 );
+
+
 
 ALTER TABLE Staff ADD FOREIGN KEY (RoleId) REFERENCES Roles(Id);
 

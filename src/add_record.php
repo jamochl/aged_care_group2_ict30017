@@ -17,10 +17,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Prepare and bind parameters
-    $stmt = $mysqli->prepare("INSERT INTO ServiceRecords (MemberId, StaffId, ServiceType, StartTime, EndTime, ManagedLocationId, Notes) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("iisssis", $memberId, $staffId, $serviceType, $startTime, $endTime, $location, $notes);
+    $stmt = $mysqli->prepare("INSERT INTO ServiceRecords (RosterId, MemberId, StaffId, ServiceType, StartTime, EndTime, ManagedLocationId, Notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("iiisssis", $rosterId, $memberId, $staffId, $serviceType, $startTime, $endTime, $location, $notes);
 
     // Set parameters from form data
+    $rosterId = $_POST['roster_id']; // New field for Roster ID
     $memberId = $_POST['member_id'];
     $staffId = $_POST['staff_id'];
     $serviceType = $_POST['service_type'];
@@ -55,6 +56,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container mt-5">
         <h2>Add New Service Record</h2>
         <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
+            <!-- New field for Roster ID -->
+            <div class="mb-3">
+                <label for="roster_id" class="form-label">Roster ID:</label>
+                <input type="number" id="roster_id" name="roster_id" class="form-control" required>
+            </div>
+            
             <div class="mb-3">
                 <label for="member_id" class="form-label">Member:</label>
                 <select id="member_id" name="member_id" class="form-select">
@@ -93,10 +100,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="service_type" class="form-label">Service Type:</label>
                 <select id="service_type" name="service_type" class="form-select" required>
                     <option value="">Select Service Type</option>
-                    <option value="cleaning">Cleaning</option>
-                    <option value="caring">Caring</option>
-                    <option value="consultation">Consultation</option>
-                    <option value="special_request">Special Request</option>
+                    <option value="Cleaning">Cleaning</option>
+                    <option value="Caring">Caring</option>
+                    <option value="Consultation">Consultation</option>
+                    <option value="Special_request">Special Request</option>
                 </select>
             </div>
 
@@ -133,6 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="roster.php" class="btn btn-secondary">Return to Main Page</a>
         </form>
     </div>
 
