@@ -1,3 +1,5 @@
+<?php include 'config.php'; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,10 +19,13 @@
 
 <body>
     <div class="container mt-5">
+        <form method="post">
+            <input type="submit" name="logout" value="Logout">
+        </form>
         <h1>Welcome to Staff Home</h1>
         <div class="row row-cols-1 row-cols-md-2 g-4">
             <div class="col">
-                <a href="my_rosters.php" class="card-link">
+                <a href="/rosters/my.php" class="card-link">
                     <div class="card bg-light">
                         <div class="card-body">
                             <h5 class="card-title">My Rosters and Availability</h5>
@@ -29,7 +34,7 @@
                 </a>
             </div>
             <div class="col">
-                <a href="my_members.php" class="card-link">
+                <a href="/members/my.php" class="card-link">
                     <div class="card bg-light">
                         <div class="card-body">
                             <h5 class="card-title">My Members</h5>
@@ -38,7 +43,7 @@
                 </a>
             </div>
             <div class="col">
-                <a href="all_members.php" class="card-link">
+                <a href="/members" class="card-link">
                     <div class="card bg-light">
                         <div class="card-body">
                             <h5 class="card-title">All Member Details</h5>
@@ -47,7 +52,7 @@
                 </a>
             </div>
             <div class="col">
-                <a href="inventory.php" class="card-link">
+                <a href="/inventory" class="card-link">
                     <div class="card bg-light">
                         <div class="card-body">
                             <h5 class="card-title">Inventory</h5>

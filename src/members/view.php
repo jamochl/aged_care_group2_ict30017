@@ -1,20 +1,6 @@
+<?php include '../config.php'; ?>
+
 <?php
-// Database connection parameters
-$host = "db";
-$port = "3306";
-$user = "admin";
-$password = "admin";
-$database = "aged_care";
-
-// Connect to the database
-$mysqli = new mysqli($host, $user, $password, $database, $port);
-
-// Check connection
-if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: " . $mysqli->connect_error;
-    exit();
-}
-
 // Define variables and initialize with empty values
 $firstName = $lastName = $dateOfBirth = $contact = $familyContact = $medicalHistory = $billingPerYear = "";
 
@@ -48,7 +34,7 @@ if(isset($_GET["id"])) {
                 $billingPerYear = $row["BillingPerYear"];
             } else{
                 // URL doesn't contain valid id parameter. Redirect to error page
-                header("location: error.php");
+                header("location: /error.php");
                 exit();
             }
         } else{
@@ -63,7 +49,7 @@ if(isset($_GET["id"])) {
     $mysqli->close();
 } else {
     // If 'id' key is not set, redirect to error page
-    header("location: error.php");
+    header("location: /error.php");
     exit();
 }
 ?>
@@ -115,7 +101,7 @@ if(isset($_GET["id"])) {
                 <label>Billing Per Year</label>
                 <input type="text" name="billingPerYear" class="form-control" value="<?php echo $billingPerYear; ?>" disabled>
             </div>
-            <a href="edit_member.php?id=<?php echo $_GET["id"]; ?>" class="btn btn-primary">Edit Member</a>
+            <a href="/members/edit.php?id=<?php echo $_GET["id"]; ?>" class="btn btn-primary">Edit Member</a>
         </form>
     </div>
 </body>

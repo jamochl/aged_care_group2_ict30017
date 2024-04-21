@@ -30,6 +30,10 @@ $tables = array("Roles", "Members", "Inventory", "Staff", "Availabilities", "Man
 </head>
 <body>
     <div class="container mt-5">
+        <div>
+            <!-- Display the generated breadcrumbs -->
+            &gt; <?php generateBreadcrumbs(); ?>
+        </div>
         <h1>Database Data</h1>
         <hr>
         <?php

@@ -1,20 +1,5 @@
+<?php include '../config.php'; ?>
 <?php
-// Database connection parameters
-$host = "db";
-$port = "3306";
-$user = "admin";
-$password = "admin";
-$database = "aged_care";
-
-// Connect to the database
-$mysqli = new mysqli($host, $user, $password, $database, $port);
-
-// Check connection
-if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: " . $mysqli->connect_error;
-    exit();
-}
-
 // Get the service ID from the query string
 $serviceId = isset($_GET['id']) ? intval($_GET['id']) : null;
 
@@ -51,6 +36,10 @@ $mysqli->close();
 
 <body>
     <div class="container mt-5">
+        <div>
+            <!-- Display the generated breadcrumbs -->
+            &gt; <?php generateBreadcrumbs(); ?>
+        </div>
         <h1>Service Record</h1>
         <form>
             <div class="mb-3">

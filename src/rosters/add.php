@@ -1,20 +1,6 @@
+<?php include '../config.php'; ?>
+
 <?php
-// Database connection parameters
-$host = "db";
-$port = "3306";
-$user = "admin";
-$password = "admin";
-$database = "aged_care";
-
-// Connect to the database
-$mysqli = new mysqli($host, $user, $password, $database, $port);
-
-// Check connection
-if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: " . $mysqli->connect_error;
-    exit();
-}
-
 // Initialize variables for form input
 $staffId = $managedLocationId = $serviceType = $startTime = $endTime = $notes = "";
 
@@ -28,7 +14,7 @@ function sanitize_input($data) {
 
 // Function to redirect to all_rosters.php
 function redirect_to_rosters() {
-    header("Location: all_rosters.php");
+    header("Location: /rosters/all.php");
     exit();
 }
 
@@ -102,6 +88,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <div class="container mt-5">
+        <div>
+            <!-- Display the generated breadcrumbs -->
+            &gt; <?php generateBreadcrumbs(); ?>
+        </div>
         <h1>Add Roster</h1>
 
         <!-- List of availabilities -->

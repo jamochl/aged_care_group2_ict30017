@@ -1,20 +1,5 @@
+<?php include '../config.php'; ?>
 <?php
-// Database connection parameters
-$host = "db";
-$port = "3306";
-$user = "admin";
-$password = "admin";
-$database = "aged_care";
-
-// Connect to the database
-$mysqli = new mysqli($host, $user, $password, $database, $port);
-
-// Check connection
-if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: " . $mysqli->connect_error;
-    exit();
-}
-
 // Define variables and initialize with empty values
 $startTime = $endTime = "";
 $startTime_err = $endTime_err = "";
@@ -54,7 +39,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if($stmt->execute()){
                 // Records updated successfully. Redirect to landing page
-                header("location: my_rosters.php");
+                header("location: /rosters/my.php");
                 exit();
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
@@ -116,7 +101,7 @@ if($stmt = $mysqli->prepare($sql)){
             </div>
             <input type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>"/>
             <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="my_rosters.php" class="btn btn-secondary ms-2">Cancel</a>
+            <a href="/rosters/my.php" class="btn btn-secondary ms-2">Cancel</a>
         </form>
     </div>    
 </body>

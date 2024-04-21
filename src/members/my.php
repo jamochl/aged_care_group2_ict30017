@@ -1,23 +1,7 @@
+<?php include '../config.php'; ?>
+
 <?php
-// Start the session
-session_start();
 $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : null;
-
-// Database connection parameters
-$host = "db";
-$port = "3306";
-$user = "admin";
-$password = "admin";
-$database = "aged_care";
-
-// Connect to the database
-$mysqli = new mysqli($host, $user, $password, $database, $port);
-
-// Check connection
-if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: " . $mysqli->connect_error;
-    exit();
-}
 ?>
 
 <!DOCTYPE html>
@@ -33,6 +17,10 @@ if ($mysqli->connect_errno) {
 
 <body>
     <div class="container mt-5">
+        <div>
+            <!-- Display the generated breadcrumbs -->
+            &gt; <?php generateBreadcrumbs(); ?>
+        </div>
         <h1>My Members</h1>
         <div class="row">
             <div class="col-md-12">
@@ -70,8 +58,8 @@ if ($mysqli->connect_errno) {
                             echo "Service Record ID: {$row['ServiceRecordId']}<br>";
                             echo "</td>";
                             echo "<td>";
-                            echo "<a href='view_member.php?id={$row['MemberId']}' class='btn btn-primary'>View</a>";
-                            echo "<a href='edit_member.php?id={$row['MemberId']}' class='btn btn-secondary'>Edit</a>";
+                            echo "<a href='/members/view.php?id={$row['MemberId']}' class='btn btn-primary'>View</a>";
+                            echo "<a href='/members/edit.php?id={$row['MemberId']}' class='btn btn-secondary'>Edit</a>";
                             echo "</td>";
                             echo "</tr>";
                         }

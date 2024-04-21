@@ -1,23 +1,7 @@
+<?php include '../config.php'; ?>
 <?php
-session_start();
 // Get the staff ID from the query string
 $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
-
-// Database connection parameters
-$host = "db";
-$port = "3306";
-$user = "admin";
-$password = "admin";
-$database = "aged_care";
-
-// Connect to the database
-$mysqli = new mysqli($host, $user, $password, $database, $port);
-
-// Check connection
-if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: " . $mysqli->connect_error;
-    exit();
-}
 ?>
 
 <!DOCTYPE html>
@@ -33,13 +17,17 @@ if ($mysqli->connect_errno) {
 
 <body>
     <div class="container mt-5">
+        <div>
+            <!-- Display the generated breadcrumbs -->
+            &gt; <?php generateBreadcrumbs(); ?>
+        </div>
         <h1>Rosters</h1>
         <?php
         // Query to fetch rosters
         $query = "SELECT r.*, s.Name AS StaffName, ml.Name AS ManagedLocationName 
                 FROM Rosters r
                 INNER JOIN Staff s ON r.StaffId = s.Id
-                INNER JOIN ManagedLocations ml ON r.ManagedLocationId = ml.Id WHERE r.StaffId = $staffId";
+                INNER JOIN ManagedLocations ml ON r.ManagedLocationId = ml.Id";
         $result = $mysqli->query($query);
         if ($result->num_rows > 0) {
         ?>
@@ -48,6 +36,7 @@ if ($mysqli->connect_errno) {
                 <table class="table table-striped">
                     <thead>
                         <tr>
+                            <th>Staff Name</th>
                             <th>Service Type</th>
                             <th>Start Time</th>
                             <th>End Time</th>
@@ -61,14 +50,17 @@ if ($mysqli->connect_errno) {
                         // Display the data in the table rows
                         while ($row = $result->fetch_assoc()) {
                             // Construct the URL with rosterId as query parameter
-                            $url = "my_services.php?rosterid=" . $row['Id'];
+                            $url = "/service_records/my.php?rosterid=" . $row['Id'];
+                            $urlEdit = "/rosters/edit.php?id=" . $row['Id'];
                             echo "<tr>";
+                            echo "<td>{$row['StaffName']}</td>";
                             echo "<td>{$row['ServiceType']}</td>";
                             echo "<td>{$row['StartTime']}</td>";
                             echo "<td>{$row['EndTime']}</td>";
                             echo "<td>{$row['ManagedLocationName']}</td>";
                             echo "<td>{$row['Notes']}</td>";
                             echo "<td><a href='{$url}' class='btn btn-primary add-button'>View Related Services</a></td>";
+                            echo "<td><a href='{$urlEdit}' class='btn btn-primary add-button'>Edit</a></td>";
                             echo "</tr>";
                         }
 
@@ -91,7 +83,7 @@ if ($mysqli->connect_errno) {
 
         <?php
         // SQL query to retrieve availabilities with staff names
-        $availabilitiesQuery = "SELECT Availabilities.Id, Availabilities.StartTime, Availabilities.EndTime, Availabilities.StaffId, Staff.Name AS StaffName FROM $availabilitiesTable JOIN Staff ON Availabilities.StaffId = Staff.Id WHERE StaffId = $staffId";
+        $availabilitiesQuery = "SELECT Availabilities.Id, Availabilities.StartTime, Availabilities.EndTime, Availabilities.StaffId, Staff.Name AS StaffName FROM $availabilitiesTable JOIN Staff ON Availabilities.StaffId = Staff.Id";
 
         // Execute the availabilities query
         $availabilitiesResult = $mysqli->query($availabilitiesQuery);
@@ -104,15 +96,17 @@ if ($mysqli->connect_errno) {
         if ($availabilitiesResult->num_rows > 0) {
             echo "<table class='table'>";
             echo "<thead><tr>";
+            echo "<th>Staff Name</th>";
             echo "<th>Start Time</th>";
             echo "<th>End Time</th>";
             echo "<th>Actions</th>";
             echo "</tr></thead><tbody>";
             while ($row = $availabilitiesResult->fetch_assoc()) {
                 echo "<tr>";
+                echo "<td>{$row['StaffName']}</td>";
                 echo "<td>{$row['StartTime']}</td>";
                 echo "<td>{$row['EndTime']}</td>";
-                echo "<td><a href='edit_availability.php?id={$row['Id']}' class='btn btn-primary add-button'>Edit Availabilities</a></td>";
+                echo "<td><a href='/availabilities/edit.php?id={$row['Id']}' class='btn btn-primary add-button'>Edit Availabilities</a></td>";
                 echo "</tr>";
             }
             echo "</tbody></table>";
@@ -122,7 +116,7 @@ if ($mysqli->connect_errno) {
         $availabilitiesResult->free();
         
         // Button to add a new availability
-        echo "<button onclick=\"window.location.href='add_availability.php'\" class=\"btn btn-primary add-button button-gap\">Add Availability</button>";
+        echo "<button onclick=\"window.location.href='/rosters/add.php'\" class=\"btn btn-primary add-button button-gap\">Create Roster</button>";
 
         // Close connection
         $mysqli->close();

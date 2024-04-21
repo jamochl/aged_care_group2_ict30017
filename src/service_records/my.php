@@ -1,24 +1,8 @@
+<?php include '../config.php'; ?>
 <?php
-session_start();
 // Get the roster ID from the query string
 $rosterId = isset($_GET['rosterid']) ? intval($_GET['rosterid']) : null;
 $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : null;
-
-// Database connection parameters
-$host = "db";
-$port = "3306";
-$user = "admin";
-$password = "admin";
-$database = "aged_care";
-
-// Connect to the database
-$mysqli = new mysqli($host, $user, $password, $database, $port);
-
-// Check connection
-if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: " . $mysqli->connect_error;
-    exit();
-}
 ?>
 
 <!DOCTYPE html>
@@ -34,6 +18,10 @@ if ($mysqli->connect_errno) {
 
 <body>
     <div class="container mt-5">
+        <div>
+            <!-- Display the generated breadcrumbs -->
+            &gt; <?php generateBreadcrumbs(); ?>
+        </div>
         <h1>Service Records</h1>
         <?php
         // Query to fetch service records related to a specific roster
@@ -88,8 +76,8 @@ if ($mysqli->connect_errno) {
                             // echo "</pre>";
 
                             // Construct the URL with serviceId as query parameter
-                            $url = "service_record.php?id=" . $row['Id'];
-                            $urlEdit = "edit_service_record.php?id=" . $row['Id'];
+                            $url = "/service_records/view.php?id=" . $row['Id'];
+                            $urlEdit = "/service_records/edit.php?id=" . $row['Id'];
                             echo "<tr>";
                             echo "<td>{$row['StaffName']}</td>";
                             echo "<td>{$row['MemberFirstName']} {$row['MemberLastName']}</td>";

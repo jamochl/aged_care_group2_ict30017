@@ -1,20 +1,4 @@
-<?php
-// Database connection parameters
-$host = "db";
-$port = "3306";
-$user = "admin";
-$password = "admin";
-$database = "aged_care";
-
-// Connect to the database
-$mysqli = new mysqli($host, $user, $password, $database, $port);
-
-// Check connection
-if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: " . $mysqli->connect_error;
-    exit();
-}
-?>
+<?php include '../config.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,6 +11,10 @@ if ($mysqli->connect_errno) {
 </head>
 <body>
     <div class="container mt-5">
+        <div>
+            <!-- Display the generated breadcrumbs -->
+            &gt; <?php generateBreadcrumbs(); ?>
+        </div>
         <h1>Add new member</h1>
         <hr>
 
@@ -59,7 +47,7 @@ $pattern3 = "/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{2}$/"; //
 $pattern4 = "/[\w]+(@)[a-zA-Z]+?(\.[a-zA-Z]+)+/"; // validation pattern for email 
 ?>
 
-    <form action=add_member.php method="POST">
+    <form action="/members/add.php" method="POST">
     
     <?php
         if(!empty($_POST["submit"]))

@@ -1,20 +1,5 @@
+<?php include '../config.php'; ?>
 <?php
-// Database connection parameters
-$host = "db";
-$port = "3306";
-$user = "admin";
-$password = "admin";
-$database = "aged_care";
-
-// Connect to the database
-$mysqli = new mysqli($host, $user, $password, $database, $port);
-
-// Check connection
-if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: " . $mysqli->connect_error;
-    exit();
-}
-
 // Define variables and initialize with empty values
 $rosterId = $memberId = $serviceType = $startTime = $endTime = $managedLocationId = $notes = "";
 $member_err = "";
@@ -50,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if($stmt->execute()){
                 // Records updated successfully. Redirect to landing page
-                header("location: my_services.php");
+                header("location: /service_records");
                 exit();
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
@@ -158,4 +143,4 @@ if($result = $mysqli->query($sql)){
             </div>
             <input type="hidden" name="staffId" value="<?php echo htmlspecialchars($staffId); ?>"/>
             <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="my_services.php" class
+            <a href="/service_records/edit.php" class

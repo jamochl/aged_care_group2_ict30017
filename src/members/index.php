@@ -1,21 +1,4 @@
-<?php
-// Database connection details
-$host = "db";
-$port = "3306";
-$user = "admin";
-$password = "admin";
-$database = "aged_care";
-
-// Connect to the database
-$mysqli = new mysqli($host, $user, $password, $database, $port);
-
-// Check connection
-if ($mysqli->connect_errno) 
-{
-    echo "Failed to connect to MySQL: " . $mysqli->connect_error;
-    exit();
-}
-?>
+<?php include '../config.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,6 +11,10 @@ if ($mysqli->connect_errno)
 </head>
 <body>
     <div class="container mt-5">
+        <div>
+            <!-- Display the generated breadcrumbs -->
+            &gt; <?php generateBreadcrumbs(); ?>
+        </div>
         <h1>Members</h1>
         <?php
             $table = "Members";
@@ -55,7 +42,7 @@ if ($mysqli->connect_errno)
                         echo "<td>$value</td>";
                     }
                     // Add view and edit buttons with links
-                    echo "<td><a href='member.php?id={$row['Id']}' class='btn btn-primary'>View</a> <a href='edit_member.php?id={$row['Id']}' class='btn btn-primary'>Edit</a></td>";
+                    echo "<td><a href='/members/view.php?id={$row['Id']}' class='btn btn-primary'>View</a> <a href='/members/edit.php?id={$row['Id']}' class='btn btn-primary'>Edit</a></td>";
                     echo "</tr>";
                 }
                 echo "</tbody></table>";

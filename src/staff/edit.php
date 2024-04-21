@@ -1,26 +1,10 @@
+<?php include '../config.php'; ?>
 <?php
-
-// Database connection parameters
-$host = "db";
-$port = "3306";
-$user = "admin";
-$password = "admin";
-$database = "aged_care";
-
-// Connect to the database
-$mysqli = new mysqli($host, $user, $password, $database, $port);
-
-// Check connection
-if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: " . $mysqli->connect_error;
-    exit();
-}
-
-    $id = '';
-    $name = '';
-    $email = '';
-    $pswrd = '';
-    $roleID = '';
+$id = '';
+$name = '';
+$email = '';
+$pswrd = '';
+$roleID = '';
 
 // Check if staff ID is provided via GET request
 if (!empty($_GET['id'])) {
@@ -65,7 +49,7 @@ if (!empty($_GET['id'])) {
 <body>
     <div class="container">
     <h2>Update Staff Details</h2>
-    <form action="edit_staff.php" method="post">
+    <form action="/staff/edit.php" method="post">
         <input type="hidden" name="id" value="<?php echo $id; ?>"> <!-- Hidden field to submit ID -->
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" value="<?php echo $name; ?>" required><br><br>

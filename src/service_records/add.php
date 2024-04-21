@@ -1,21 +1,7 @@
+<?php include '../config.php'; ?>
 <?php
-// Database connection parameters
-$host = "db";
-$port = "3306";
-$user = "admin";
-$password = "admin";
-$database = "aged_care";
-
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Create connection
-    $mysqli = new mysqli($host, $user, $password, $database, $port);
-    // Check connection
-    if ($mysqli->connect_errno) {
-        echo "Failed to connect to MySQL: " . $mysqli->connect_error;
-        exit();
-    }
-
     // Prepare and bind parameters
     $stmt = $mysqli->prepare("INSERT INTO ServiceRecords (RosterId, MemberId, StaffId, ServiceType, StartTime, EndTime, ManagedLocationId, Notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("iiisssis", $rosterId, $memberId, $staffId, $serviceType, $startTime, $endTime, $location, $notes);
@@ -54,6 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <div class="container mt-5">
+        <div>
+            <!-- Display the generated breadcrumbs -->
+            &gt; <?php generateBreadcrumbs(); ?>
+        </div>
         <h2>Add New Service Record</h2>
         <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
             <!-- New field for Roster ID -->
@@ -68,7 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option value="">Please select member</option>
                     <?php
                     // Fetch Member IDs and full names
-                    $mysqli = new mysqli($host, $user, $password, $database, $port);
                     $member_query = "SELECT Id, CONCAT(FirstName, ' ', LastName) AS FullName FROM Members";
                     $member_result = $mysqli->query($member_query);
                     while ($row = $member_result->fetch_assoc()) {
@@ -140,7 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="roster.php" class="btn btn-secondary">Return to Main Page</a>
+            <a href="/rosters" class="btn btn-secondary">Return to Main Page</a>
         </form>
     </div>
 
