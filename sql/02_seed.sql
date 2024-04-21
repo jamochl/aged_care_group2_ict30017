@@ -25,11 +25,11 @@ INSERT INTO Inventory (Id, Name, Purpose, OwnerDetails, OwnerType, Description, 
 (4, 'Scanner', 'Document scanning', 'Main Office', 'Organization', 'Epson WorkForce ES-500W', 2, 1);
 
 -- Staff
-INSERT INTO Staff (Id, Name, PasswordHash, Contact, RoleId) VALUES
-(1, 'Admin', 'admin_password', 'admin@example.com', 1),
-(2, 'Staff', 'staff_password', 'staff@example.com', 2),
-(3, 'Cleaner', 'cleaner_password', 'cleaner@example.com', 3),
-(4, 'Accountant', 'accountant_password', 'accountant@example.com', 4);
+INSERT INTO Staff (Name, PasswordHash, Contact, BirthDate, Nationality, PhoneNumber, RoleId) VALUES
+('Admin', 'admin_password', 'admin@example.com', '1985-05-20', 'Brazillian', '0458234888', 1),
+('Staff', 'staff_password', 'staff@example.com', '1996-06-05', 'Polish', '0444888999',2),
+('Cleaner', 'cleaner_password', 'cleaner@example.com','1994-12-12', 'American', '0455222333', 3),
+('Accountant', 'accountant_password', 'accountant@example.com', '2004-04-07', 'Vietnamese', '0469696969', 4);
 
 -- Availabilities
 INSERT INTO Availabilities (Id, StartTime, EndTime, StaffId) VALUES
