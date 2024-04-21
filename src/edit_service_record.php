@@ -45,7 +45,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $param_endTime = $_POST["endTime"];
             $param_managedLocationId = $_POST["managedLocationId"];
             $param_notes = $_POST["notes"];
-            $param_id = $_GET["id"];
+            $param_id = $_POST["id"];
 
             // Attempt to execute the prepared statement
             if($stmt->execute()){
@@ -120,6 +120,7 @@ if($result = $mysqli->query($sql)){
     <div class="wrapper p-3">
         <h2>Edit Service Record</h2>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . "?id=" . htmlspecialchars($id); ?>" method="post">
+            <input type="hidden" name="id" value="<?php echo $_GET["id"]; ?>">
             <div class="mb-3">
                 <label for="memberId" class="form-label">Member</label>
                 <select name="memberId" id="memberId" class="form-select">

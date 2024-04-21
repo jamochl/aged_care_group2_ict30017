@@ -49,7 +49,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Set parameters
             $param_startTime = $startTime;
             $param_endTime = $endTime;
-            $param_id = $_GET["id"];
+            $param_id = $_POST["id"];
             
             // Attempt to execute the prepared statement
             if($stmt->execute()){
@@ -103,6 +103,7 @@ if($stmt = $mysqli->prepare($sql)){
     <div class="wrapper p-3">
         <h2>Edit Availability</h2>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <input type="hidden" name="id" value="<?php echo $_GET["id"]; ?>">
             <div class="mb-3">
                 <label for="startTime" class="form-label">Start Time</label>
                 <input type="datetime-local" name="startTime" id="startTime" class="form-control" value="<?php echo htmlspecialchars($startTime); ?>">

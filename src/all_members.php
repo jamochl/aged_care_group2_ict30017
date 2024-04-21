@@ -24,15 +24,13 @@ if ($mysqli->connect_errno)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Member Data</title>
     <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container mt-5">
-        <h1>Database Data</h1>
-        <hr>
+        <h1>Members</h1>
         <?php
             $table = "Members";
-            echo "<h2>$table</h2>";
             // SQL query to select all data from the table
             $query = "SELECT * FROM $table";
             // Execute query
@@ -47,6 +45,8 @@ if ($mysqli->connect_errno)
                 foreach ($field_names as $field) {
                     echo "<th>$field->name</th>";
                 }
+                // Add an extra column for actions
+                echo "<th>Actions</th>";
                 echo "</tr></thead><tbody>";
                 // Fetch and display table data
                 while ($row = $result->fetch_assoc()) {
@@ -54,6 +54,8 @@ if ($mysqli->connect_errno)
                     foreach ($row as $value) {
                         echo "<td>$value</td>";
                     }
+                    // Add view and edit buttons with links
+                    echo "<td><a href='member.php?id={$row['Id']}' class='btn btn-primary'>View</a> <a href='edit_member.php?id={$row['Id']}' class='btn btn-primary'>Edit</a></td>";
                     echo "</tr>";
                 }
                 echo "</tbody></table>";
