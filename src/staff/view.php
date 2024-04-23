@@ -1,10 +1,8 @@
 <?php include '../config.php'; ?>
-
 <?php
-$tables = "Staff";
-$name = "Admin";
+$staffId = isset($_GET['id']) ? $_GET['id'] : null;
 // Array of tables to select data from
-$stmt = $mysqli->execute_query("SELECT * FROM $tables WHERE Name = ?", [$name]);
+$stmt = $mysqli->execute_query("SELECT * FROM Staff WHERE Id = ?", [$staffId]);
 if (!$stmt) {
     echo "Failed to collect data from MySQL: " . $mysqli->connect_error;
     exit();
@@ -49,7 +47,7 @@ $row = $stmt->fetch_assoc();
     } elseif ($row['RoleId'] == 3) {
         $role = "Cleaner";
     } elseif ($row['RoleId'] == 4) {
-        $role = "Account";
+        $role = "Accountant";
     }
     echo "<label for='Role'>Role: {$role}</label>";
     echo "</div>";
