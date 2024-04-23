@@ -27,7 +27,7 @@ INSERT INTO Inventory (Id, Name, Purpose, OwnerDetails, OwnerType, Description, 
 -- Staff
 INSERT INTO Staff (Name, PasswordHash, Contact, BirthDate, Nationality, PhoneNumber, RoleId) VALUES
 ('Admin', 'admin', 'admin@example.com', '1985-05-20', 'Brazillian', '0458234888', 1),
-('Staff', 'staff', 'staff@example.com', '1996-06-05', 'Polish', '0444888999',2),
+('carer', 'carer', 'carer@example.com', '1996-06-05', 'Polish', '0444888999',2),
 ('Cleaner', 'cleaner', 'cleaner@example.com','1994-12-12', 'American', '0455222333', 3),
 ('Accountant', 'accountant', 'accountant@example.com', '2004-04-07', 'Vietnamese', '0469696969', 4);
 
