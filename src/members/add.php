@@ -1,277 +1,196 @@
 <?php include '../config.php'; ?>
+<?php
+// Define variables and initialize with empty values
+$firstName = $lastName = $dateOfBirth = $gender = $phoneNumber = $email = $emergencyContact = $emergencyRelationship = $medicalHistory = $billingPerYear = "";
+$firstName_err = $lastName_err = $dateOfBirth_err = $gender_err = $phoneNumber_err = $email_err = $emergencyContact_err = $emergencyRelationship_err = $medicalHistory_err = $billingPerYear_err = "";
+
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    // Validate first name
+    $input_firstName = trim($_POST["firstName"]);
+    if(empty($input_firstName)){
+        $firstName_err = "Please enter a first name.";
+    } else{
+        $firstName = $input_firstName;
+    }
+
+    // Validate last name
+    $input_lastName = trim($_POST["lastName"]);
+    if(empty($input_lastName)){
+        $lastName_err = "Please enter a last name.";
+    } else{
+        $lastName = $input_lastName;
+    }
+
+    // Validate date of birth
+    $input_dateOfBirth = trim($_POST["dateOfBirth"]);
+    if(empty($input_dateOfBirth)){
+        $dateOfBirth_err = "Please enter a date of birth.";
+    } else{
+        $dateOfBirth = $input_dateOfBirth;
+    }
+
+    // Validate gender
+    $input_gender = trim($_POST["gender"]);
+    if(empty($input_gender)){
+        $gender_err = "Please select a gender.";
+    } else{
+        $gender = $input_gender;
+    }
+
+    // Validate phone number
+    $input_phoneNumber = trim($_POST["phoneNumber"]);
+    if(empty($input_phoneNumber)){
+        $phoneNumber_err = "Please enter a phone number.";
+    } else{
+        $phoneNumber = $input_phoneNumber;
+    }
+
+    // Validate email
+    $input_email = trim($_POST["email"]);
+    if(empty($input_email)){
+        $email_err = "Please enter an email address.";
+    } else{
+        $email = $input_email;
+    }
+
+    // Validate emergency contact
+    $input_emergencyContact = trim($_POST["emergencyContact"]);
+    if(empty($input_emergencyContact)){
+        $emergencyContact_err = "Please enter an emergency contact number.";
+    } else{
+        $emergencyContact = $input_emergencyContact;
+    }
+
+    // Validate emergency relationship
+    $input_emergencyRelationship = trim($_POST["emergencyRelationship"]);
+    if(empty($input_emergencyRelationship)){
+        $emergencyRelationship_err = "Please enter the relationship with the emergency contact.";
+    } else{
+        $emergencyRelationship = $input_emergencyRelationship;
+    }
+
+    // Validate medical history
+    $input_medicalHistory = trim($_POST["medicalHistory"]);
+    if(empty($input_medicalHistory)){
+        $medicalHistory_err = "Please enter medical history.";
+    } else{
+        $medicalHistory = $input_medicalHistory;
+    }
+
+    // Validate billing per year
+    $input_billingPerYear = trim($_POST["billingPerYear"]);
+    if(empty($input_billingPerYear)){
+        $billingPerYear_err = "Please enter billing per year.";
+    } else{
+        $billingPerYear = $input_billingPerYear;
+    }
+
+    // Check input errors before updating the database
+    if(empty($firstName_err) && empty($lastName_err) && empty($dateOfBirth_err) && empty($gender_err) && empty($phoneNumber_err) && empty($email_err) && empty($emergencyContact_err) && empty($emergencyRelationship_err) && empty($medicalHistory_err) && empty($billingPerYear_err)){
+        // Prepare an insert statement
+        $sql = "INSERT INTO Members (FirstName, LastName, DateOfBirth, Gender, PhoneNumber, Email, EmergencyContact, EmergencyRelationship, MedicalHistory, BillingPerYear) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        if($stmt = $mysqli->prepare($sql)){
+            // Bind variables to the prepared statement as parameters
+            $stmt->bind_param("sssssssssd", $firstName, $lastName, $dateOfBirth, $gender, $phoneNumber, $email, $emergencyContact, $emergencyRelationship, $medicalHistory, $billingPerYear);
+
+            // Attempt to execute the prepared statement
+            if($stmt->execute()){
+                // Records created successfully. Redirect to landing page
+                header("location: /members/index.php");
+                exit();
+            } else{
+                echo "Oops! Something went wrong. Please try again later.";
+            }
+        }
+
+        // Close statement
+        $stmt->close();
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add new member</title>
+    <title>Add Member</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .wrapper{
+            max-width: 500px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="wrapper p-3">
         <div>
             <!-- Display the generated breadcrumbs -->
             <?php generateBreadcrumbs(); ?>
         </div>
-        <h1>Add new member</h1>
-        <hr>
-
-<style>
-    .error-message {
-        color: red;
-        margin-left: 123px;
-        text-align:end;
-        
-    }
-
-    .label {
-        width: 120px;
-    }
-</style>
-<?php
-$checkerror = 0; 
-$memberId = "";
-$fname = "";
-$lname = "";
-$dob = "";
-$contact = "";
-$fcontact = "";
-$medhistory = "";
-$bpy = "";
-
-$pattern1 = "/^\d+$/"; //validation pattern for only numbers
-$pattern2 = "/^[a-zA-Z\s]+$/"; // validation pattern for only alphanumerics
-$pattern3 = "/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{2}$/"; //date of birth validation
-$pattern4 = "/[\w]+(@)[a-zA-Z]+?(\.[a-zA-Z]+)+/"; // validation pattern for email 
-?>
-
-    <form action="/members/add.php" method="POST">
-    
-    <?php
-        if(!empty($_POST["submit"]))
-        {  
-         
-            $memberId = $_POST["memberId"];
-            
-            //id validation
-            if(empty($memberId))
-            {
-                echo "<span class='error-message'>Member ID cannot be empty.</span><br>";
-                $checkerror = $checkerror +1;
-            }
-            else if(preg_match($pattern1, $memberId) === 0)
-            {
-                echo "<span class='error-message'>Member ID can only contain digits between 0-9.</span><br>";
-                $checkerror = $checkerror +1;
-            }
-            else 
-            {
-                // Prepare the query to check if the ID exists
-                $query = "SELECT * FROM Members WHERE Id = $memberId";
-
-                // Execute the query
-                $result = $mysqli->query($query);
-
-                // Check if any rows were returned
-                if ($result->num_rows > 0) {
-                    // ID already exists
-                    echo "<span class='error-message'>Id already exists.</span><br>";
-                    $checkerror = $checkerror +1;
-                  
-            }
-            }
-        }
-    ?>
-
-        <label class="label" for="memberId" > Member ID: </label>
-        <input required type="text" name="memberId" id="memberId" value="<?php echo $memberId; ?>"> <br><br>
-
-        <?php
-        if(!empty($_POST["submit"]))
-        {  
-         
-            $fname = $_POST["fname"];
-            
-            //first name validation
-            if(empty($fname))
-            {
-                echo "<span class='error-message'>First name cannot be empty.</span><br>";
-                $checkerror = $checkerror +1;
-            }
-            else if(preg_match($pattern2, $fname) === 0)
-            {
-                echo "<span class='error-message'>First name can only contain alphanumeric characters.</span><br>";
-                $checkerror = $checkerror +1;
-            }
-        }
-    ?>
- 
-        <label class="label" for="fname"> First Name:  </label>
-        <input required type="text" name="fname" id="fname" value="<?php echo $fname; ?>"> <br><br>
-
-        <?php
-        if(!empty($_POST["submit"]))
-        {  
-         
-            $lname = $_POST["lname"];
-            
-            //first name validation
-            if(empty($lname))
-            {
-                echo "<span class='error-message'>Last name cannot be empty.</span><br>";
-                $checkerror = $checkerror +1;
-            }
-            else if(preg_match($pattern2, $lname) === 0)
-            {
-                echo "<span class='error-message'>Last name can only contain alphanumeric characters.</span><br>";
-                $checkerror = $checkerror +1;
-            }
-        }
-    ?>
-
-        <label class="label" for="lname"> Last Name: </label>
-        <input required type="text" name="lname" id="lname" value="<?php echo $lname; ?>"> <br><br>
-
-        <?php
-        if(!empty($_POST["submit"]))
-        {  
-         
-            $dob = $_POST["dob"];
-    
-            //date of birth validation
-            if(empty($dob))
-            {
-                echo "<span class='error-message'>Date of birth cannot be empty.</span><br>";
-                $checkerror = $checkerror +1;
-            }
-            else if(preg_match($pattern3, $dob) === 0)
-            {
-                echo "<span class='error-message'>Date must be in yy/mm/dd format.</span><br>";
-                $checkerror = $checkerror +1;
-            }
-        }
-    ?>
-
-        <label class="label" for="dob"> Date of Birth: </label>
-        <input required type="date" name="dob" id="dob" value=""> <br><br>
-
-        <?php
-        if(!empty($_POST["submit"]))
-        {  
-         
-            $contact = $_POST["contact"];
-   
-           //contact validation
-            if(empty($contact))
-            {
-                echo "<span class='error-message'>Contact cannot be empty.</span><br>";
-                $checkerror = $checkerror +1;
-            }
-            else if(preg_match($pattern4, $contact) === 0)
-            {
-                echo "<span class='error-message'>Email must be in name123@example.com format.</span><br>";
-                $checkerror = $checkerror +1;
-            }
-        }
-    ?>
-    
-        <label class="label" for="contact"> Contact:</label>
-        <input required type="text" name="contact" id="contact" value="<?php echo $contact; ?>"> <br><br>
-
-        <?php
-        if(!empty($_POST["submit"]))
-        {  
-         
-            $fcontact = $_POST["fcontact"];
-            
-            //family contact validation
-            if(empty($fcontact))
-            {
-                echo "<span class='error-message'>Family contact cannot be empty.</span><br>";
-                $checkerror = $checkerror +1;
-            }
-        }
-    ?>
-    
-        <label class="label" for="fcontact"> Family Contact: </label>
-        <input required type="text" name="fcontact" id="fcontact" value="<?php echo $fcontact; ?>"> <br><br>
-
-        <?php
-        if(!empty($_POST["submit"]))
-        {  
-         
-            $medhistory = $_POST["medhistory"];
-            
-            //medical history validation
-            if(empty($medhistory))
-            {
-                echo "<span class='error-message'>Medical history cannot be empty.</span><br>";
-                $checkerror = $checkerror +1;
-            }
-        }
-    ?>
-
-        <label class="label" for="medhistory"> Medical History:</label>
-        <textarea name="medhistory" id="medhistory" maxlength="260" width="300px" style="width: 300px; height: 100px;" ><?php echo $medhistory; ?></textarea> <br><br>
-
-        <?php
-        if(!empty($_POST["submit"]))
-        {  
-         
-            $bpy = $_POST["bpy"];
-            
-            //billing per yeat validation
-            if(empty($bpy))
-            {
-                echo "<span class='error-message'>Billing per year cannot be empty.</span><br>";
-                $checkerror = $checkerror +1;
-            }
-        }
-    ?>
-    
-        <label class="label" for="bpy"> Billing Per Year: </label>
-        <input required type="text" name="bpy" id="bpy" value="<?php echo $bpy; ?>"> <br><br>
-
-        <input required type="submit" name="submit" value="submit">
-    </form>
-
+        <h2>Add Member</h2>
+        <form action="#" method="post">
+            <div class="form-group mb-3">
+                <label>First Name</label>
+                <input required type="text" name="firstName" class="form-control <?php echo (!empty($firstName_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $firstName; ?>">
+                <span class="invalid-feedback"><?php echo $firstName_err; ?></span>
+            </div>
+            <div class="form-group mb-3">
+                <label>Last Name</label>
+                <input required type="text" name="lastName" class="form-control <?php echo (!empty($lastName_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $lastName; ?>">
+                <span class="invalid-feedback"><?php echo $lastName_err; ?></span>
+            </div>
+            <div class="form-group mb-3">
+                <label>Date of Birth</label>
+                <input required type="date" name="dateOfBirth" class="form-control <?php echo (!empty($dateOfBirth_err)) ? 'is-invalid' : ''; ?>" value="<?php echo htmlspecialchars($dateOfBirth); ?>">
+                <span class="invalid-feedback"><?php echo $dateOfBirth_err; ?></span>
+            </div>
+            <div class="form-group mb-3">
+                <label>Gender</label>
+                <select required name="gender" class="form-control <?php echo (!empty($gender_err)) ? 'is-invalid' : ''; ?>">
+                    <option value="Male" <?php if($gender === 'Male') echo 'selected'; ?>>Male</option>
+                    <option value="Female" <?php if($gender === 'Female') echo 'selected'; ?>>Female</option>
+                    <option value="Other" <?php if($gender === 'Other') echo 'selected'; ?>>Other</option>
+                </select>
+                <span class="invalid-feedback"><?php echo $gender_err; ?></span>
+            </div>
+            <div class="form-group mb-3">
+                <label>Phone Number</label>
+                <input required type="tel" name="phoneNumber" class="form-control <?php echo (!empty($phoneNumber_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $phoneNumber; ?>">
+                <span class="invalid-feedback"><?php echo $phoneNumber_err; ?></span>
+            </div>
+            <div class="form-group mb-3">
+                <label>Email</label>
+                <input required type="email" name="email" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>">
+                <span class="invalid-feedback"><?php echo $email_err; ?></span>
+            </div>
+            <div class="form-group mb-3">
+                <label>Emergency Contact</label>
+                <input required type="text" name="emergencyContact" class="form-control <?php echo (!empty($emergencyContact_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $emergencyContact; ?>">
+                <span class="invalid-feedback"><?php echo $emergencyContact_err; ?></span>
+            </div>
+            <div class="form-group mb-3">
+                <label>Emergency Relationship</label>
+                <input required type="text" name="emergencyRelationship" class="form-control <?php echo (!empty($emergencyRelationship_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $emergencyRelationship; ?>">
+                <span class="invalid-feedback"><?php echo $emergencyRelationship_err; ?></span>
+            </div>
+            <div class="form-group mb-3">
+                <label>Medical History</label>
+                <textarea name="medicalHistory" class="form-control <?php echo (!empty($medicalHistory_err)) ? 'is-invalid' : ''; ?>"><?php echo $medicalHistory; ?></textarea>
+                <span class="invalid-feedback"><?php echo $medicalHistory_err; ?></span>
+            </div>
+            <div class="form-group mb-3">
+                <label>Billing Per Year</label>
+                <input required type="number" name="billingPerYear" class="form-control <?php echo (!empty($billingPerYear_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $billingPerYear; ?>">
+                <span class="invalid-feedback"><?php echo $billingPerYear_err; ?></span>
+            </div>
+            <input required type="submit" class="btn btn-primary" value="Submit">
+            <a href="index.php" class="btn btn-secondary ml-2">Cancel</a>
+        </form>
+    </div>
 </body>
 </html>
-<?php
-    
-    if(!empty($_POST["submit"]))
-    {  
-     
-        $memberId = $_POST["memberId"];
-        $fname = $_POST["fname"];
-        $lname = $_POST["lname"];
-        $dob = $_POST["dob"];
-        $contact = $_POST["contact"];
-        $fcontact = $_POST["fcontact"];
-        $medhistory = $_POST["medhistory"];
-        $bpy = $_POST["bpy"];  
-                
-        if($checkerror == 0) 
-        {
-  
-        // Check connection
-        if ($mysqli->connect_errno) 
-        {
-            echo "Failed to connect to MySQL: " . $mysqli->connect_error;
-            exit();
-        }
-            // ## 2. set up SQL string and execute
-        
-            $query = "INSERT INTO Members (Id, FirstName, LastName, DateOfBirth, Contact, FamilyContact, MedicalHistory, BillingPerYear) VALUES
-            ('$memberId', '$fname', '$lname', '$dob', '$contact', '$fcontact', '$medhistory','$bpy')";
-
-            $mysqli->query($query);
-            mysqli_close($mysqli);
-            
-        }
-    }
-
-?>
-

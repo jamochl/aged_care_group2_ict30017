@@ -6,15 +6,19 @@ CREATE TABLE Roles (
 
 CREATE TABLE Members (
     Id INT AUTO_INCREMENT PRIMARY KEY,
-    FirstName VARCHAR(255),
-    LastName VARCHAR(255),
-    DateOfBirth DATETIME,
-    DateJoined DATETIME,
-    IsStillMember BOOLEAN,
-    Contact VARCHAR(255),
-    FamilyContact VARCHAR(255),
+    FirstName VARCHAR(255) NOT NULL,
+    LastName VARCHAR(255) NOT NULL,
+    DateOfBirth DATE NOT NULL,
+    Gender ENUM('male', 'female', 'other') NOT NULL,
+    Email VARCHAR(255),
+    PhoneNumber VARCHAR(20),
+    Address VARCHAR(255),
+    EmergencyContact VARCHAR(255),
+    EmergencyRelationship VARCHAR(50),
     MedicalHistory TEXT,
-    BillingPerYear DECIMAL(10, 2)
+    DateJoined DATE NOT NULL DEFAULT (CURRENT_DATE),
+    IsStillMember BOOLEAN NOT NULL DEFAULT 1,
+    BillingPerYear DECIMAL(10, 2) NOT NULL
 );
 
 CREATE TABLE Inventory (
