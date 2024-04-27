@@ -10,6 +10,10 @@
 </head>
 <body>
     <div class="container mt-5">
+        <div>
+            <!-- Display the generated breadcrumbs -->
+            <?php generateBreadcrumbs(); ?>
+        </div>
         <h2>Billing Report Detail</h2>
 
         <?php
@@ -23,12 +27,14 @@
 
             if ($report_result->num_rows > 0) {
                 $report_row = $report_result->fetch_assoc();
-                $start_time = $report_row['StartTime'];
-                $end_time = $report_row['EndTime'];
+                $start_time = date('Y-m', strtotime($report_row['StartTime']));
+                $end_time = date('Y-m', strtotime($report_row['EndTime']));
 
                 // Retrieve billing items associated with the report
                 $billing_item_query = "SELECT * FROM BillingItem WHERE BillingReportId = $report_id";
                 $billing_item_result = $mysqli->query($billing_item_query);
+
+                $total_amount = 0; // Variable to store total amount
 
                 if ($billing_item_result->num_rows > 0) {
                     echo "<h3>Report Period: $start_time - $end_time</h3>";
@@ -51,9 +57,13 @@
 
                             // Display member details in a table row
                             echo "<tr><td>$member_name</td><td>$amount</td></tr>";
+                            $total_amount += $amount; // Update total amount
                         }
                     }
                     echo "</tbody></table>";
+
+                    // Display total amount
+                    echo "<h4>Total Amount: $total_amount</h4>";
                 } else {
                     echo "<p>No billing items found for this report.</p>";
                 }

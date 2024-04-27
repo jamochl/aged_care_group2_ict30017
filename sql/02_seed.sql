@@ -63,13 +63,13 @@ INSERT INTO ServiceRecords (Id, RosterId, MemberId, StaffId, ServiceType, StartT
 (4,1 , 4, 2, 'Consultation', '2024-03-26 14:00:00', '2024-03-26 15:00:00', 2, 'Discussing treatment options');
 
 -- BillingReports
-INSERT INTO BillingReports (Id, StartTime, EndTime, TransactionType, Amount) VALUES
-(1, '2024-03-01 00:00:00', '2024-03-31 23:59:59', 'Membership Fee', 100.00),
-(2, '2024-03-25 10:00:00', '2024-03-25 11:00:00', 'Membership Fee', 50.00),
-(3, '2024-03-25 14:00:00', '2024-03-25 15:00:00', 'Membership Fee', 75.00),
-(4, '2024-03-01 00:00:00', '2024-03-31 23:59:59', 'Membership Fee', 80.00),
-(5, '2024-03-26 10:00:00', '2024-03-26 11:00:00', 'Membership Fee', 40.00),
-(6, '2024-03-26 14:00:00', '2024-03-26 15:00:00', 'Membership Fee', 60.00);
+INSERT INTO BillingReports (Id, StartTime, EndTime, TransactionType) VALUES
+(1, '2024-03-01 00:00:00', '2024-03-31 23:59:59', 'Membership Fee'),
+(2, '2024-03-25 10:00:00', '2024-03-25 11:00:00', 'Membership Fee'),
+(3, '2024-03-25 14:00:00', '2024-03-25 15:00:00', 'Membership Fee'),
+(4, '2024-03-01 00:00:00', '2024-03-31 23:59:59', 'Membership Fee'),
+(5, '2024-03-26 10:00:00', '2024-03-26 11:00:00', 'Membership Fee'),
+(6, '2024-03-26 14:00:00', '2024-03-26 15:00:00', 'Membership Fee');
 
 -- BillingItem
 INSERT INTO BillingItem (Id, BillingReportId, MemberId, Amount) VALUES

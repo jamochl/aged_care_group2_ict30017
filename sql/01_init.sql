@@ -99,8 +99,7 @@ CREATE TABLE BillingReports (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     StartTime DATETIME,
     EndTime DATETIME,
-    TransactionType VARCHAR(255),
-    Amount DECIMAL(10, 2)
+    TransactionType VARCHAR(255)
 );
 
 CREATE TABLE BillingItem (
