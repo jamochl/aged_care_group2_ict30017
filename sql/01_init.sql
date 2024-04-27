@@ -9,6 +9,8 @@ CREATE TABLE Members (
     FirstName VARCHAR(255),
     LastName VARCHAR(255),
     DateOfBirth DATETIME,
+    DateJoined DATETIME,
+    IsStillMember BOOLEAN,
     Contact VARCHAR(255),
     FamilyContact VARCHAR(255),
     MedicalHistory TEXT,

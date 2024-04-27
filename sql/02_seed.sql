@@ -11,11 +11,11 @@ INSERT INTO ManagedLocations (Id, Name, Address, Description) VALUES
 (2, 'Brian Durings House', '456 Elm St, Town', 'Aged care in the member Brian home itself');
 
 -- Members
-INSERT INTO Members (Id, FirstName, LastName, DateOfBirth, Contact, FamilyContact, MedicalHistory, BillingPerYear) VALUES
-(1, 'John', 'Doe', '1980-05-15', 'john@example.com', 'Jane Doe - 123-456-7890', 'No significant medical history', 1000.00),
-(2, 'Alice', 'Smith', '1992-09-28', 'alice@example.com', 'Bob Smith - 987-654-3210', 'Allergic to penicillin', 1200.00),
-(3, 'Emma', 'Johnson', '1985-12-10', 'emma@example.com', 'George Johnson - 456-789-0123', 'None', 800.00),
-(4, 'Michael', 'Brown', '1976-08-22', 'michael@example.com', 'Sophia Brown - 789-012-3456', 'Allergic to shellfish', 1500.00);
+INSERT INTO Members (Id, FirstName, LastName, DateOfBirth, DateJoined, IsStillMember, Contact, FamilyContact, MedicalHistory, BillingPerYear) VALUES
+(1, 'John', 'Doe', '1980-05-15', '2023-05-15', 1,'john@example.com', 'Jane Doe - 123-456-7890', 'No significant medical history', 1000.00),
+(2, 'Alice', 'Smith', '1992-09-28', '2023-05-15', 1, 'alice@example.com', 'Bob Smith - 987-654-3210', 'Allergic to penicillin', 1200.00),
+(3, 'Emma', 'Johnson', '1985-12-10', '2023-05-15', 1, 'emma@example.com', 'George Johnson - 456-789-0123', 'None', 800.00),
+(4, 'Michael', 'Brown', '1976-08-22', '2023-05-15', 1, 'michael@example.com', 'Sophia Brown - 789-012-3456', 'Allergic to shellfish', 1500.00);
 
 -- Inventory
 INSERT INTO Inventory (Id, Name, Purpose, OwnerDetails, OwnerType, Description, Quantity, ManagedLocationId) VALUES
