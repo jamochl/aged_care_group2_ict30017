@@ -1,7 +1,7 @@
 -- Roles
 INSERT INTO Roles (Id, Name, Description) VALUES
 (1, 'Admin', 'Administrator role with full access'),
-(2, 'Staff', 'Standard staff role'),
+(2, 'Carer', 'Standard carer role'),
 (3, 'Cleaner', 'Limited access role for guests'),
 (4, 'Accountant', 'Limited access role for guests');
 

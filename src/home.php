@@ -60,6 +60,20 @@
 
 <body>
     <div class="container mt-5">
+        <?php
+        // Check if there is an error message and the requested page in the session variables
+        $error = isset($_SESSION['error']) ? $_SESSION['error'] : '';
+        $page = isset($_SESSION['requested_page']) ? $_SESSION['requested_page'] : '';
+
+        // Display error message if present
+        if ($error === 'unauthorized' && !empty($page)) {
+            echo '<div class="alert alert-danger" role="alert">You are not authorized to access the page: ' . htmlspecialchars($page) . '</div>';
+        }
+
+        // Unset session variables
+        unset($_SESSION['error']);
+        unset($_SESSION['requested_page']);
+        ?>
         <div class="container my-5">
             <div class="d-flex justify-content-between">
                 <h1>Welcome, <?=$staffName?>!</h1>
