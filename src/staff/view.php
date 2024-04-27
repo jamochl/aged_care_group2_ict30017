@@ -2,9 +2,9 @@
 
 <?php
 $tables = "Staff";
-$name = "Admin";
+$id = $_GET["id"];
 // Array of tables to select data from
-$stmt = $mysqli->execute_query("SELECT * FROM $tables WHERE Name = ?", [$name]);
+$stmt = $mysqli->execute_query("SELECT * FROM $tables WHERE Id = ?", [$id]);
 if (!$stmt) {
     echo "Failed to collect data from MySQL: " . $mysqli->connect_error;
     exit();
