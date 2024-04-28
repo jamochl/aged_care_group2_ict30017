@@ -99,7 +99,7 @@
                 </a>
             </div>
             <div class="col">
-                <a href="/inventory" class="card-link">
+                <a href="inventory/view.php" class="card-link">
                     <div class="card bg-light">
                         <div class="card-body">
                             <h5 class="card-title">Inventory</h5>
@@ -189,7 +189,7 @@
                 </a>
             </div>
             <div class="col">
-                <a href="/inventory" class="card-link">
+                <a href="inventory/view.php" class="card-link">
                     <div class="card bg-light">
                         <div class="card-body">
                             <h5 class="card-title">Inventory</h5>
