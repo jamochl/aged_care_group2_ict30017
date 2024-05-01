@@ -60,7 +60,12 @@
                             $colCheck = 0;
                             continue;
                         }
-                        if ($value == NULL){
+                        if ($colCheck == 3){
+                            echo "<td>Available</td>";
+                            $colCheck += 1;
+                            continue;
+                        }
+                        if ($colCheck == 4){
                             echo "<td>Not Booked</td>";
                             $colCheck += 1;
                         } else {
@@ -128,9 +133,10 @@
                             $colCheck = 0;
                             continue;
                         }
-                        if ($value == NULL){
-                            echo "<td>Not Booked</td>";
+                        if ($colCheck == 3){
+                            echo "<td>Booked</td>";
                             $colCheck += 1;
+                            continue;
                         } else {
                             echo "<td>$value</td>";
                             $colCheck += 1;
