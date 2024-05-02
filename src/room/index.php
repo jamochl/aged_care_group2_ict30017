@@ -80,7 +80,7 @@
                 }
                 echo "</tbody></table>";
             } else {
-                echo "No data available in $table";
+                echo "No available room.";
             }
             // Free result set
             $result->free();
@@ -149,7 +149,7 @@
                 }
                 echo "</tbody></table>";
             } else {
-                echo "No data available in $table";
+                echo "No booked room.";
             }
             // Free result set
             $result->free();
