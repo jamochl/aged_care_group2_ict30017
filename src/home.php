@@ -180,10 +180,10 @@
                 </a>
             </div>
             <div class="col">
-                <a href="/facilities/index.php" class="card-link">
+                <a href="/room/index.php" class="card-link">
                     <div class="card bg-light">
                         <div class="card-body">
-                            <h5 class="card-title">Facilities</h5>
+                            <h5 class="card-title">Rooms</h5>
                         </div>
                     </div>
                 </a>
