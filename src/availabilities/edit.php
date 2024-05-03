@@ -86,6 +86,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 <body>
     <div class="wrapper p-3">
+        <div>
+            <!-- Display the generated breadcrumbs -->
+            <?php generateBreadcrumbs(); ?>
+        </div>
         <h2>Edit Availability</h2>
         <form action="#" method="post">
             <input required type="hidden" name="id" value="<?php echo $_GET["id"]; ?>">

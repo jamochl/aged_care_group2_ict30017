@@ -1,7 +1,7 @@
 -- Roles
 INSERT INTO Roles (Id, Name, Description) VALUES
 (1, 'Admin', 'Administrator role with full access'),
-(2, 'Staff', 'Standard staff role'),
+(2, 'Carer', 'Standard carer role'),
 (3, 'Cleaner', 'Limited access role for guests'),
 (4, 'Accountant', 'Limited access role for guests');
 
@@ -11,11 +11,11 @@ INSERT INTO ManagedLocations (Id, Name, Address, Description) VALUES
 (2, 'Brian Durings House', '456 Elm St, Town', 'Aged care in the member Brian home itself');
 
 -- Members
-INSERT INTO Members (Id, FirstName, LastName, DateOfBirth, Contact, FamilyContact, MedicalHistory, BillingPerYear) VALUES
-(1, 'John', 'Doe', '1980-05-15', 'john@example.com', 'Jane Doe - 123-456-7890', 'No significant medical history', 1000.00),
-(2, 'Alice', 'Smith', '1992-09-28', 'alice@example.com', 'Bob Smith - 987-654-3210', 'Allergic to penicillin', 1200.00),
-(3, 'Emma', 'Johnson', '1985-12-10', 'emma@example.com', 'George Johnson - 456-789-0123', 'None', 800.00),
-(4, 'Michael', 'Brown', '1976-08-22', 'michael@example.com', 'Sophia Brown - 789-012-3456', 'Allergic to shellfish', 1500.00);
+INSERT INTO Members (Id, FirstName, LastName, DateOfBirth, Gender, Email, PhoneNumber, Address, EmergencyContact, EmergencyRelationship, DateJoined, IsStillMember, MedicalHistory, BillingPerYear) VALUES
+(1, 'John', 'Doe', '1980-05-15', 'male', 'john@example.com', '123-456-7890', '123 Main St, Cityville', 'Jane Doe', 'Spouse', '2023-05-15', 1, 'No significant medical history', 1000.00),
+(2, 'Alice', 'Smith', '1992-09-28', 'female', 'alice@example.com', '987-654-3210', '456 Elm St, Townsville', 'Bob Smith', 'Parent', '2023-05-15', 1, 'Allergic to penicillin', 1200.00),
+(3, 'Emma', 'Johnson', '1985-12-10', 'female', 'emma@example.com', '456-789-0123', '789 Oak St, Villageton', 'George Johnson', 'Sibling', '2023-05-15', 1, "None", 800.00),
+(4, 'Michael', 'Brown', '1976-08-22', 'male', 'michael@example.com', '789-012-3456', '101 Pine St, Hamletville', 'Sophia Brown', 'Child', '2023-05-15', 1, 'Allergic to shellfish', 1500.00);
 
 -- Inventory
 INSERT INTO Inventory (Id, Name, Purpose, OwnerDetails, OwnerType, Description, Quantity, ManagedLocationId) VALUES
@@ -27,7 +27,7 @@ INSERT INTO Inventory (Id, Name, Purpose, OwnerDetails, OwnerType, Description, 
 -- Staff
 INSERT INTO Staff (Name, PasswordHash, Contact, BirthDate, Nationality, PhoneNumber, RoleId) VALUES
 ('Admin', 'admin', 'admin@example.com', '1985-05-20', 'Brazillian', '0458234888', 1),
-('Staff', 'staff', 'staff@example.com', '1996-06-05', 'Polish', '0444888999',2),
+('carer', 'carer', 'carer@example.com', '1996-06-05', 'Polish', '0444888999',2),
 ('Cleaner', 'cleaner', 'cleaner@example.com','1994-12-12', 'American', '0455222333', 3),
 ('Accountant', 'accountant', 'accountant@example.com', '2004-04-07', 'Vietnamese', '0469696969', 4);
 
@@ -63,13 +63,13 @@ INSERT INTO ServiceRecords (Id, RosterId, MemberId, StaffId, ServiceType, StartT
 (4,1 , 4, 2, 'Consultation', '2024-03-26 14:00:00', '2024-03-26 15:00:00', 2, 'Discussing treatment options');
 
 -- BillingReports
-INSERT INTO BillingReports (Id, StartTime, EndTime, TransactionType, Amount) VALUES
-(1, '2024-03-01 00:00:00', '2024-03-31 23:59:59', 'Membership Fee', 100.00),
-(2, '2024-03-25 10:00:00', '2024-03-25 11:00:00', 'Membership Fee', 50.00),
-(3, '2024-03-25 14:00:00', '2024-03-25 15:00:00', 'Membership Fee', 75.00),
-(4, '2024-03-01 00:00:00', '2024-03-31 23:59:59', 'Membership Fee', 80.00),
-(5, '2024-03-26 10:00:00', '2024-03-26 11:00:00', 'Membership Fee', 40.00),
-(6, '2024-03-26 14:00:00', '2024-03-26 15:00:00', 'Membership Fee', 60.00);
+INSERT INTO BillingReports (Id, StartTime, EndTime, TransactionType) VALUES
+(1, '2024-03-01 00:00:00', '2024-03-31 23:59:59', 'Membership Fee'),
+(2, '2024-03-25 10:00:00', '2024-03-25 11:00:00', 'Membership Fee'),
+(3, '2024-03-25 14:00:00', '2024-03-25 15:00:00', 'Membership Fee'),
+(4, '2024-03-01 00:00:00', '2024-03-31 23:59:59', 'Membership Fee'),
+(5, '2024-03-26 10:00:00', '2024-03-26 11:00:00', 'Membership Fee'),
+(6, '2024-03-26 14:00:00', '2024-03-26 15:00:00', 'Membership Fee');
 
 -- BillingItem
 INSERT INTO BillingItem (Id, BillingReportId, MemberId, Amount) VALUES

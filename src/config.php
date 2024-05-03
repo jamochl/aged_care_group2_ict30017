@@ -54,4 +54,62 @@ if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: " . $mysqli->connect_error;
     exit();
 }
+
+// Define authorized pages based on roles
+$authorizedPages = [
+    // Carer
+    "2" => [
+        '/rosters/*',
+        '/availabilities/*',
+        '/service_records/*',
+        '/inventory/*',
+        '/members/*',
+        '/facilities/*'
+    ],
+    // Cleaner
+    "3" => [
+        '/rosters/*',
+        '/availabilities/*',
+        '/service_records/*',
+        '/facilities/*'
+    ],
+    // Accountant
+    "4" => [
+        '/billing/*'
+    ]
+];
+
+// Check if the current page is authorized for the user's role
+function isAuthorized($role, $page)
+{
+    global $authorizedPages;
+    if (fnmatch("/home*", $page)) {
+        return true;
+    }
+
+    foreach ($authorizedPages[$role] as $authorizedPage) {
+        if (fnmatch($authorizedPage, $page)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+// Get the current page URL
+$current_page = $_SERVER['REQUEST_URI'];
+
+// Get user role
+$role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
+
+// Check if the user's role is authorized to access the current page (if not admin)
+if ($role !== '' && $role !== 1 && !isAuthorized($role, $current_page)) {
+    // Get the current URL path
+    $url = $_SERVER['REQUEST_URI'];
+    // Redirect unauthorized users to home page with error message including the requested page
+    $_SESSION['error'] = 'unauthorized';
+    $_SESSION['requested_page'] = $url;
+    header("Location: /home");
+    exit;
+}
 ?>

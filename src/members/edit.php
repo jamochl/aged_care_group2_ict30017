@@ -1,8 +1,8 @@
 <?php include '../config.php'; ?>
 <?php
 // Define variables and initialize with empty values
-$firstName = $lastName = $dateOfBirth = $contact = $familyContact = $medicalHistory = $billingPerYear = "";
-$firstName_err = $lastName_err = $dateOfBirth_err = $contact_err = $familyContact_err = $medicalHistory_err = $billingPerYear_err = "";
+$firstName = $lastName = $dateOfBirth = $gender = $phoneNumber = $email = $emergencyContact = $emergencyRelationship = $medicalHistory = $billingPerYear = "";
+$firstName_err = $lastName_err = $dateOfBirth_err = $gender_err = $phoneNumber_err = $email_err = $emergencyContact_err = $emergencyRelationship_err = $medicalHistory_err = $billingPerYear_err = "";
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -30,20 +30,44 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $dateOfBirth = $input_dateOfBirth;
     }
 
-    // Validate contact
-    $input_contact = trim($_POST["contact"]);
-    if(empty($input_contact)){
-        $contact_err = "Please enter a contact number.";
+    // Validate gender
+    $input_gender = trim($_POST["gender"]);
+    if(empty($input_gender)){
+        $gender_err = "Please select a gender.";
     } else{
-        $contact = $input_contact;
+        $gender = $input_gender;
     }
 
-    // Validate family contact
-    $input_familyContact = trim($_POST["familyContact"]);
-    if(empty($input_familyContact)){
-        $familyContact_err = "Please enter a family contact number.";
+    // Validate phone number
+    $input_phoneNumber = trim($_POST["phoneNumber"]);
+    if(empty($input_phoneNumber)){
+        $phoneNumber_err = "Please enter a phone number.";
     } else{
-        $familyContact = $input_familyContact;
+        $phoneNumber = $input_phoneNumber;
+    }
+
+    // Validate email
+    $input_email = trim($_POST["email"]);
+    if(empty($input_email)){
+        $email_err = "Please enter an email address.";
+    } else{
+        $email = $input_email;
+    }
+
+    // Validate emergency contact
+    $input_emergencyContact = trim($_POST["emergencyContact"]);
+    if(empty($input_emergencyContact)){
+        $emergencyContact_err = "Please enter an emergency contact number.";
+    } else{
+        $emergencyContact = $input_emergencyContact;
+    }
+
+    // Validate emergency relationship
+    $input_emergencyRelationship = trim($_POST["emergencyRelationship"]);
+    if(empty($input_emergencyRelationship)){
+        $emergencyRelationship_err = "Please enter the relationship with the emergency contact.";
+    } else{
+        $emergencyRelationship = $input_emergencyRelationship;
     }
 
     // Validate medical history
@@ -63,23 +87,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     // Check input errors before updating the database
-    if(empty($firstName_err) && empty($lastName_err) && empty($dateOfBirth_err) && empty($contact_err) && empty($familyContact_err) && empty($medicalHistory_err) && empty($billingPerYear_err)){
+    if(empty($firstName_err) && empty($lastName_err) && empty($dateOfBirth_err) && empty($gender_err) && empty($phoneNumber_err) && empty($email_err) && empty($emergencyContact_err) && empty($emergencyRelationship_err) && empty($medicalHistory_err) && empty($billingPerYear_err)){
         // Prepare an update statement
-        $sql = "UPDATE Members SET FirstName=?, LastName=?, DateOfBirth=?, Contact=?, FamilyContact=?, MedicalHistory=?, BillingPerYear=? WHERE Id=?";
+        $sql = "UPDATE Members SET FirstName=?, LastName=?, DateOfBirth=?, Gender=?, PhoneNumber=?, Email=?, EmergencyContact=?, EmergencyRelationship=?, MedicalHistory=?, BillingPerYear=? WHERE Id=?";
 
         if($stmt = $mysqli->prepare($sql)){
-            // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("ssssssdi", $param_firstName, $param_lastName, $param_dateOfBirth, $param_contact, $param_familyContact, $param_medicalHistory, $param_billingPerYear, $param_id);
-
             // Set parameters
-            $param_firstName = $firstName;
-            $param_lastName = $lastName;
-            $param_dateOfBirth = $dateOfBirth;
-            $param_contact = $contact;
-            $param_familyContact = $familyContact;
-            $param_medicalHistory = $medicalHistory;
-            $param_billingPerYear = $billingPerYear;
             $param_id = $_POST["id"];
+
+            // Bind variables to the prepared statement as parameters
+            $stmt->bind_param("sssssssssdi", $firstName, $lastName, $dateOfBirth, $gender, $phoneNumber, $email, $emergencyContact, $emergencyRelationship, $medicalHistory, $billingPerYear, $param_id);
 
             // Attempt to execute the prepared statement
             if($stmt->execute()){
@@ -94,12 +111,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         // Close statement
         $stmt->close();
     }
-
-    // Close connection
-    $mysqli->close();
 } else {
     // Prepare a select statement
-    $sql = "SELECT * FROM Members WHERE Id = ?";
+    $sql = "SELECT Id, FirstName, LastName, DateOfBirth, Gender, PhoneNumber, Email, EmergencyContact, EmergencyRelationship, MedicalHistory, BillingPerYear FROM Members WHERE Id = ?";
     
     if($stmt = $mysqli->prepare($sql)){
         // Bind variables to the prepared statement as parameters
@@ -120,8 +134,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $firstName = $row["FirstName"];
                 $lastName = $row["LastName"];
                 $dateOfBirth = $row["DateOfBirth"];
-                $contact = $row["Contact"];
-                $familyContact = $row["FamilyContact"];
+                $gender = $row["Gender"];
+                $phoneNumber = $row["PhoneNumber"];
+                $email = $row["Email"];
+                $emergencyContact = $row["EmergencyContact"];
+                $emergencyRelationship = $row["EmergencyRelationship"];
                 $medicalHistory = $row["MedicalHistory"];
                 $billingPerYear = $row["BillingPerYear"];
             } else{
@@ -136,9 +153,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
     // Close statement
     $stmt->close();
-    
-    // Close connection
-    $mysqli->close();
 }
 ?>
 
@@ -159,6 +173,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 <body>
     <div class="wrapper p-3">
+        <div>
+            <!-- Display the generated breadcrumbs -->
+            <?php generateBreadcrumbs(); ?>
+        </div>
         <h2>Edit Member</h2>
         <form action="#" method="post">
             <input required type="hidden" name="id" value="<?php echo $_GET["id"]; ?>">
@@ -174,18 +192,37 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
             <div class="form-group mb-3">
                 <label>Date of Birth</label>
-                <input required type="datetime-local" name="dateOfBirth" class="form-control <?php echo (!empty($dateOfBirth_err)) ? 'is-invalid' : ''; ?>" value="<?php echo htmlspecialchars($dateOfBirth); ?>">
+                <input required type="date" name="dateOfBirth" class="form-control <?php echo (!empty($dateOfBirth_err)) ? 'is-invalid' : ''; ?>" value="<?php echo htmlspecialchars($dateOfBirth); ?>">
                 <span class="invalid-feedback"><?php echo $dateOfBirth_err; ?></span>
             </div>
             <div class="form-group mb-3">
-                <label>Contact</label>
-                <input required type="text" name="contact" class="form-control <?php echo (!empty($contact_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $contact; ?>">
-                <span class="invalid-feedback"><?php echo $contact_err; ?></span>
+                <label>Gender</label>
+                <select required name="gender" class="form-control <?php echo (!empty($gender_err)) ? 'is-invalid' : ''; ?>">
+                    <option value="Male" <?php if($gender === 'Male') echo 'selected'; ?>>Male</option>
+                    <option value="Female" <?php if($gender === 'Female') echo 'selected'; ?>>Female</option>
+                    <option value="Other" <?php if($gender === 'Other') echo 'selected'; ?>>Other</option>
+                </select>
+                <span class="invalid-feedback"><?php echo $gender_err; ?></span>
             </div>
             <div class="form-group mb-3">
-                <label>Family Contact</label>
-                <input required type="text" name="familyContact" class="form-control <?php echo (!empty($familyContact_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $familyContact; ?>">
-                <span class="invalid-feedback"><?php echo $familyContact_err; ?></span>
+                <label>Phone Number</label>
+                <input required type="text" name="phoneNumber" class="form-control <?php echo (!empty($phoneNumber_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $phoneNumber; ?>">
+                <span class="invalid-feedback"><?php echo $phoneNumber_err; ?></span>
+            </div>
+            <div class="form-group mb-3">
+                <label>Email</label>
+                <input required type="email" name="email" class="form-control <?php echo (!empty($email_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $email; ?>">
+                <span class="invalid-feedback"><?php echo $email_err; ?></span>
+            </div>
+            <div class="form-group mb-3">
+                <label>Emergency Contact</label>
+                <input required type="text" name="emergencyContact" class="form-control <?php echo (!empty($emergencyContact_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $emergencyContact; ?>">
+                <span class="invalid-feedback"><?php echo $emergencyContact_err; ?></span>
+            </div>
+            <div class="form-group mb-3">
+                <label>Emergency Relationship</label>
+                <input required type="text" name="emergencyRelationship" class="form-control <?php echo (!empty($emergencyRelationship_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $emergencyRelationship; ?>">
+                <span class="invalid-feedback"><?php echo $emergencyRelationship_err; ?></span>
             </div>
             <div class="form-group mb-3">
                 <label>Medical History</label>
@@ -199,7 +236,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
             <input required type="hidden" name="id" value="<?php echo $_GET["id"]; ?>"/>
             <input required type="submit" class="btn btn-primary" value="Submit">
-            <a href="my_members.php" class="btn btn-secondary ml-2">Cancel</a>
+            <a href="index.php" class="btn btn-secondary ml-2">Cancel</a>
         </form>
     </div>
 </body>
