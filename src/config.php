@@ -64,14 +64,14 @@ $authorizedPages = [
         '/service_records/*',
         '/inventory/*',
         '/members/*',
-        '/facilities/*'
+        '/room/*'
     ],
     // Cleaner
     "3" => [
         '/rosters/*',
         '/availabilities/*',
         '/service_records/*',
-        '/facilities/*'
+        '/room/*'
     ],
     // Accountant
     "4" => [
