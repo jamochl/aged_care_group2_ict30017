@@ -1,17 +1,32 @@
 <?php include '../config.php'; ?>
 <?php
+error_reporting(E_ERROR);
 // Get the service ID from the query string
 $roomId = isset($_GET['id']) ? intval($_GET['id']) : null;
 
 // Query to fetch service details including managed location name
-$query = "SELECT r.*, ml.Name AS ManagedLocationName
+$query = "SELECT r.*, m.FirstName AS FirstName, m.LastName AS LastName, ml.Name AS ManagedLocationName
         FROM Room r
+        INNER JOIN Members m ON m.Id = r.BookedFor
         INNER JOIN ManagedLocations ml ON r.ManagedLocationId = ml.Id
         WHERE r.Id = $roomId";
 $result = $mysqli->query($query);
 
 // Fetch service details
 $roomDetails = $result->fetch_assoc();
+
+if ($roomDetails['BookedFor'] > 0){
+
+} else {
+    $query = "SELECT r.*, ml.Name AS ManagedLocationName
+        FROM Room r
+        INNER JOIN ManagedLocations ml ON r.ManagedLocationId = ml.Id
+        WHERE r.Id = $roomId";
+    $result = $mysqli->query($query);
+
+// Fetch service details
+    $roomDetails = $result->fetch_assoc();
+}
 
 
 // Close database connection
@@ -43,11 +58,11 @@ $mysqli->close();
             </div>
             <div class="mb-3">
                 <label for="avail" class="form-label">Availability</label>
-                <input required type="text" class="form-control" id="avail" name="avail" value="<?php echo  $roomDetails['Availability']; ?>" disabled>
+                <input required type="text" class="form-control" id="avail" name="avail" value="<?php if ($roomDetails['Availability'] == 1) {echo  'Available';} else {echo  'Booked';} ?>" disabled>
             </div>
             <div class="mb-3">
                 <label for="booked" class="form-label">Booked For</label>
-                <input required type="text" class="form-control" id="booked" name="booked" value="<?php if ($roomDetails['BookedFor'] != NULL){echo  $roomDetails['BookedFor'];} else {echo "Not Booked";} ?>" disabled>
+                <input required type="text" class="form-control" id="booked" name="booked" value="<?php if ($roomDetails['BookedFor'] != NULL){echo $roomDetails['FirstName']," ",$roomDetails['LastName'];} else {echo "Not Booked";} ?>" disabled>
             </div>
             <div class="mb-3">
                 <label for="maintenance" class="form-label">Maintenance Status</label>

@@ -61,7 +61,7 @@ CREATE TABLE Room (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
     Description TEXT,
-    Availability VARCHAR(255),
+    Availability BOOLEAN,
     BookedFor INT,
     MaintenanceStatus VARCHAR(255),
     ManagedLocationId INT

@@ -40,10 +40,10 @@ INSERT INTO Availabilities (Id, StartTime, EndTime, StaffId) VALUES
 
 -- Room
 INSERT INTO Room (Id, Name, Description, Availability, BookedFor, MaintenanceStatus, ManagedLocationId) VALUES
-(1, 'Conference Room A', 'Spacious conference room', 'Available', NULL, 'Functional', 1),
-(2, 'Meeting Room B', 'Small meeting room', 'Available', NULL, 'Functional', 1),
-(3, 'Meeting Room C', 'Medium-sized meeting room', 'Available', NULL, 'Functional', 2),
-(4, 'Boardroom', 'Executive meeting space', 'Available', NULL, 'Functional', 2);
+(1, 'Conference Room A', 'Spacious conference room', 1, NULL, 'Functional', 1),
+(2, 'Meeting Room B', 'Small meeting room', 1, NULL, 'Functional', 1),
+(3, 'Meeting Room C', 'Medium-sized meeting room', 0, 2, 'Functional', 2),
+(4, 'Boardroom', 'Executive meeting space', 1, NULL, 'Functional', 2);
 
 -- Utilities
 INSERT INTO Utilities (Id, Name, Description, Availability, BookedFor, MaintenanceStatus, ManagedLocationId) VALUES
