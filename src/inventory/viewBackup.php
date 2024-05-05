@@ -2,7 +2,7 @@
 
 <?php
 
-$sql = "SELECT Id, Name, Description, Quantity, Purpose, OwnerDetails, OwnerType FROM Inventory";
+$sql = "SELECT Name, Description, Quantity, Purpose, OwnerDetails, OwnerType FROM Inventory";
 $result = $mysqli->query($sql);
 
 // Initialize an array to hold the inventory data
@@ -18,10 +18,8 @@ if ($result->num_rows > 0) {
     $error_msg = "No inventory records found.";
 }
 
-
-
 // Close the database connection
-//$mysqli->close();
+$mysqli->close();
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +51,6 @@ if ($result->num_rows > 0) {
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Name</th>
                         <th>Description</th>
                         <th>Quantity</th>
@@ -64,7 +61,6 @@ if ($result->num_rows > 0) {
                     <?php foreach ($inventoryData as $item): ?>
 
                         <tr>
-                            <td><?php echo $item['Id']; ?></td>
                             <td><?php echo $item['Name']; ?></td>
                             <td><?php echo $item['Description']; ?></td>
                             <td><?php echo $item['Quantity']; ?></td>
@@ -76,14 +72,13 @@ if ($result->num_rows > 0) {
                                     data-purpose="<?php echo $item['Purpose']; ?>" 
                                     data-ownerdetails="<?php echo $item['OwnerDetails']; ?>" 
                                     data-ownertype="<?php echo $item['OwnerType']; ?>">View More</button>
-                                    
-                                    <!-- <button class="btn btn-primary edit-quantity" data-bs-toggle="modal" data-bs-target="#editModal" 
-                                    data-id="<?php echo $item['Id']; ?>"
-                                    data-quantity="<?php echo $item['Quantity']; ?>">Edit Quantity</button> -->
 
-                                    
-                                    <?php echo "<td><a href='/inventory/edit.php?id={$item['Id']}' class='btn btn-primary'>Edit</a></td>";?>
+                                    <button class="btn btn-primary edit-quantity" data-bs-toggle="modal" data-bs-target="#editModal" 
+                                    data-name="<?php echo $item['Name']; ?>" 
+                                    data-quantity="<?php echo $item['Quantity']; ?>">Edit Quantity</button>
                             </td>
+                            
+
                         </tr>
 
 
@@ -132,37 +127,16 @@ if ($result->num_rows > 0) {
                         <div class="mb-3">
                             <label for="newQuantity" class="form-label">New Quantity:</label>
                             <input type="number" class="form-control" id="newQuantity" name="newQuantity" min="0" required>
-                            <input type="number" id="itemId" name="itemId">
+                            <input type="hidden" id="itemName" name="itemName">
                         </div>
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                     </form>
+
+
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Edit Quantity</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                        <form action="#" method="post">
-                            <input required type="hidden" name="id" value="<?php echo $_GET["id"]; ?>">
-                            <div class="form-group mb-3">
-                                <input required type="Number" name="Quantity" class="form-control <?php echo (!empty($Quantity_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $Quantity; ?>">
-                                <span class="invalid-feedback"><?php echo $Quantity_err; ?></span>
-                            </div>
-                            <input required type="hidden" name="id" value="<?php echo $_GET["id"]; ?>"/>
-                            <input required type="submit" class="btn btn-primary" value="Submit">
-                </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     <!-- populate modal with item details -->
     <script>
@@ -185,33 +159,32 @@ if ($result->num_rows > 0) {
             document.getElementById('modal-owner-type').textContent = ownerType;
         });
 
-        
-        // Edit Quantity Modal
-        var editQuantityModal = document.getElementById('editModal');
-        editQuantityModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget;
-            var itemId = button.getAttribute('data-id');
-            var quantity = button.getAttribute('data-quantity');
-            document.getElementById('newQuantity').value = quantity;
-            document.getElementById('itemId').value = itemId;
-        });
 
-            // Submit edit quantity form
+
+         // Edit Quantity Modal
+         var editQuantityModal = document.getElementById('editModal');
+            editQuantityModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget;
+                var name = button.getAttribute('data-name');
+                var quantity = button.getAttribute('data-quantity');
+                document.getElementById('newQuantity').value = quantity;
+                document.getElementById('itemName').value = name;
+            });
+
+       
+       // Submit edit quantity form
             document.getElementById('editQuantityForm').addEventListener('submit', function (event) {
                 event.preventDefault(); // Prevent the default form submission
 
                 // Get input values
                 var newQuantity = parseInt(document.getElementById('newQuantity').value); // Parse input value as integer
-                var itemId = parseInt(document.getElementById('itemId').value);
+                var itemName = document.getElementById('itemName').value;
 
                 // Construct JSON object with form data
                 var formData = {
                     newQuantity: newQuantity,
-                    itemId: itemId
+                    itemName: itemName
                 };
-
-                // Convert formData object to JSON string
-                var jsonData = JSON.stringify(formData);
 
                 // Send JSON data to server using fetch
                 fetch('update_quantity.php', {
@@ -219,7 +192,7 @@ if ($result->num_rows > 0) {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: jsonData // Pass JSON string as the request body
+                    body: JSON.stringify(formData)
                 })
                 .then(response => {
                     if (!response.ok) {
@@ -245,8 +218,6 @@ if ($result->num_rows > 0) {
                     alert('An error occurred while updating quantity.');
                 });
             });
-
-
 
 
 
