@@ -25,12 +25,7 @@
                         <th>Last Name</th>
                         <th>Date of Birth</th>
                         <th>Gender</th>
-                        <th>Phone Number</th>
-                        <th>Email</th>
-                        <th>Emergency Contact</th>
-                        <th>Emergency Relationship</th>
                         <th>Medical History</th>
-                        <th>Billing Per Year</th>
                         <th>Is Still Member</th>
                         <th>Action</th>
                     </tr>
@@ -46,12 +41,7 @@
                             echo "<td>" . $row['LastName'] . "</td>";
                             echo "<td>" . $row['DateOfBirth'] . "</td>";
                             echo "<td>" . $row['Gender'] . "</td>";
-                            echo "<td>" . $row['PhoneNumber'] . "</td>";
-                            echo "<td>" . $row['Email'] . "</td>";
-                            echo "<td>" . $row['EmergencyContact'] . "</td>";
-                            echo "<td>" . $row['EmergencyRelationship'] . "</td>";
                             echo "<td>" . $row['MedicalHistory'] . "</td>";
-                            echo "<td>" . $row['BillingPerYear'] . "</td>";
                             echo "<td>" . ($row['IsStillMember'] == 1 ? "true" : "false") . "</td>";
                             echo "<td>";
                             echo "<a href='view.php?id=" . $row['Id'] . "' class='btn btn-primary ml-2'>View</a>";

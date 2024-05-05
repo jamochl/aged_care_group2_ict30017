@@ -29,9 +29,6 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : null;
                         <tr>
                             <th>Member Name</th>
                             <th>Medical History</th>
-                            <th>Phone Number</th>
-                            <th>Emergency contact details</th>
-                            <th>Emergency contact relationship </th>
                             <th>Service Details</th>
                             <th>Actions</th>
                         </tr>
@@ -51,9 +48,6 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : null;
                             echo "<tr>";
                             echo "<td>{$row['FirstName']} {$row['LastName']}</td>";
                             echo "<td>{$row['MedicalHistory']}</td>";
-                            echo "<td>{$row['PhoneNumber']}</td>";
-                            echo "<td>{$row['EmergencyContact']}</td>";
-                            echo "<td>{$row['EmergencyRelationship']}</td>";
                             echo "<td>";
                             echo "Start Date: {$row['StartDate']}<br>";
                             echo "End Date: {$row['EndDate']}<br>";
