@@ -10,13 +10,19 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h1>Out Of Stock Data</h1>
-        <hr>
+        <div>
+            <!-- Display the generated breadcrumbs -->
+            <?php generateBreadcrumbs(); ?>
+        </div>
+        <h1>Inventory</h1>
+        <h2>Out of stock</h2>
         <?php
             $table = "Inventory";
-            echo "<h2>$table</h2>";
-            // SQL query to select all data from the table
-            $query = "SELECT * FROM $table Where Quantity = '0' ";
+            // SQL query to select specific columns from the table and join with ManagedLocations table
+            $query = "SELECT i.Name, i.Purpose, i.OwnerDetails, i.OwnerType, i.Description, i.Quantity, ml.Name AS ManagedLocationName
+                      FROM $table i
+                      LEFT JOIN ManagedLocations ml ON i.ManagedLocationId = ml.Id
+                      WHERE i.Quantity = 0";
             // Execute query
             $result = $mysqli->query($query);
             // Check if there are any rows returned
@@ -24,29 +30,85 @@
                 // Display data in a table
                 echo "<table class='table'>";
                 echo "<thead><tr>";
-                // Fetch table column names
-                $field_names = $result->fetch_fields();
-                foreach ($field_names as $field) {
-                    echo "<th>$field->name</th>";
-                }
+                // Explicitly define table headers
+                echo "<th>Name</th>";
+                echo "<th>Purpose</th>";
+                echo "<th>Owner Details</th>";
+                echo "<th>Owner Type</th>";
+                echo "<th>Description</th>";
+                echo "<th>Quantity</th>";
+                echo "<th>Managed Location</th>";
                 echo "</tr></thead><tbody>";
                 // Fetch and display table data
                 while ($row = $result->fetch_assoc()) {
                     echo "<tr>";
-                    foreach ($row as $value) {
-                        echo "<td>$value</td>";
-                    }
+                    echo "<td>{$row['Name']}</td>";
+                    echo "<td>{$row['Purpose']}</td>";
+                    echo "<td>{$row['OwnerDetails']}</td>";
+                    echo "<td>{$row['OwnerType']}</td>";
+                    echo "<td>{$row['Description']}</td>";
+                    echo "<td>{$row['Quantity']}</td>";
+                    echo "<td>{$row['ManagedLocationName']}</td>";
                     echo "</tr>";
                 }
                 echo "</tbody></table>";
             } else {
-                echo "No data available in $table";
+                echo "No out-of-stock data available in $table";
+            }
+            // Free result set
+            $result->free();
+        ?>
+        <hr>
+        <h2>In stock</h2>
+        <?php
+            $table = "Inventory";
+            // SQL query to select specific columns from the table and join with ManagedLocations table
+            $query = "SELECT i.Id, i.Name, i.Purpose, i.OwnerDetails, i.OwnerType, i.Description, i.Quantity, ml.Name AS ManagedLocationName
+                      FROM $table i
+                      LEFT JOIN ManagedLocations ml ON i.ManagedLocationId = ml.Id
+                      WHERE i.Quantity > 0";
+            // Execute query
+            $result = $mysqli->query($query);
+            // Check if there are any rows returned
+            if ($result->num_rows > 0) {
+                // Display data in a table
+                echo "<table class='table'>";
+                echo "<thead><tr>";
+                // Explicitly define table headers
+                echo "<th>Name</th>";
+                echo "<th>Purpose</th>";
+                echo "<th>Owner Details</th>";
+                echo "<th>Owner Type</th>";
+                echo "<th>Description</th>";
+                echo "<th>Quantity</th>";
+                echo "<th>Managed Location</th>";
+                echo "<th>Actions</th>";
+                echo "</tr></thead><tbody>";
+                // Fetch and display table data
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>{$row['Name']}</td>";
+                    echo "<td>{$row['Purpose']}</td>";
+                    echo "<td>{$row['OwnerDetails']}</td>";
+                    echo "<td>{$row['OwnerType']}</td>";
+                    echo "<td>{$row['Description']}</td>";
+                    echo "<td>{$row['Quantity']}</td>";
+                    echo "<td>{$row['ManagedLocationName']}</td>";
+                    echo "<td>";
+                    echo "<a href='view.php?id=" . $row['Id'] . "' class='btn btn-primary ml-2'>View</a>";
+                    echo "<a href='edit.php?id=" . $row['Id'] . "' class='btn btn-primary'>Edit</a>";
+                    echo "</td>";
+                    echo "</tr>";
+                }
+                echo "</tbody></table>";
+            } else {
+                echo "No out-of-stock data available in $table";
             }
             // Free result set
             $result->free();
 
-        // Close connection
-        $mysqli->close();
+            // Close connection
+            $mysqli->close();
         ?>
     </div> 
 </body>
