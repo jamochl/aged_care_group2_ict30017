@@ -51,6 +51,7 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
                         while ($row = $result->fetch_assoc()) {
                             // Construct the URL with rosterId as query parameter
                             $url = "/service_records/index.php?rosterid=" . $row['Id'];
+                            $urlAdd = "/service_records/add.php?rosterid=" . $row['Id'];
                             $urlEdit = "/rosters/edit.php?id=" . $row['Id'];
                             echo "<tr>";
                             echo "<td>{$row['StaffName']}</td>";
@@ -59,7 +60,8 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
                             echo "<td>{$row['EndTime']}</td>";
                             echo "<td>{$row['ManagedLocationName']}</td>";
                             echo "<td>{$row['Notes']}</td>";
-                            echo "<td><a href='{$url}' class='btn btn-primary add-button'>View Related Services</a></td>";
+                            echo "<td><a href='{$urlAdd}' class='btn btn-primary add-button'>Add Service</a></td>";
+                            echo "<td><a href='{$url}' class='btn btn-primary add-button'>View Services</a></td>";
                             echo "<td><a href='{$urlEdit}' class='btn btn-primary add-button'>Edit</a></td>";
                             echo "</tr>";
                         }

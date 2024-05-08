@@ -56,7 +56,7 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
                             echo "<td>{$row['EndTime']}</td>";
                             echo "<td>{$row['ManagedLocationName']}</td>";
                             echo "<td>{$row['Notes']}</td>";
-                            echo "<td><a href='{$url}' class='btn btn-primary add-button'>View Related Services</a></td>";
+                            echo "<td><a href='{$url}' class='btn btn-primary add-button'>View Services</a></td>";
                             echo "</tr>";
                         }
                         ?>
@@ -109,6 +109,7 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
 
         <a href="/availabilities/add.php" class="btn btn-primary add-button button-gap">Add Availability</a>
     </div>
+
 </body>
 
 </html>

@@ -95,6 +95,15 @@
                 </a>
             </div>
             <div class="col">
+                <a href="/service_records/my.php" class="card-link">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">My Services Records</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
                 <a href="/members/my.php" class="card-link">
                     <div class="card bg-light">
                         <div class="card-body">
@@ -134,6 +143,15 @@
                 </a>
             </div>
             <div class="col">
+                <a href="/service_records/my.php" class="card-link">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">My Services Records</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
                 <a href="/room/index.php" class="card-link">
                     <div class="card bg-light">
                         <div class="card-body">
@@ -155,6 +173,15 @@
                 </a>
             </div>
             <div class="col">
+                <a href="/service_records/my.php" class="card-link">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">My Services Records</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
                 <a href="/billing/index.php" class="card-link">
                     <div class="card bg-light">
                         <div class="card-body">
@@ -171,6 +198,15 @@
                     <div class="card bg-light">
                         <div class="card-body">
                             <h5 class="card-title">My Rosters and Availability</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="/service_records/my.php" class="card-link">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">My Services Records</h5>
                         </div>
                     </div>
                 </a>
@@ -198,6 +234,15 @@
                     <div class="card bg-light">
                         <div class="card-body">
                             <h5 class="card-title">Rosters and availability</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col">
+                <a href="/service_records/index.php" class="card-link">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">Services Records</h5>
                         </div>
                     </div>
                 </a>
