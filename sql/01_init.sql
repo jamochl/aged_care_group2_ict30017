@@ -89,6 +89,18 @@ CREATE TABLE ServiceRecords (
     Notes TEXT
 );
 
+CREATE TABLE serviceHistory (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    RosterId INT ,
+    MemberId INT,
+    StaffId INT,
+    ServiceType VARCHAR(255),
+    StartTime DATETIME,
+    EndTime DATETIME,
+    ManagedLocationId INT,
+    Notes TEXT
+);
+
 CREATE TABLE Rosters (
     Id INT PRIMARY KEY AUTO_INCREMENT,
     StaffId INT,
@@ -129,6 +141,11 @@ ALTER TABLE ServiceRecords ADD FOREIGN KEY (MemberId) REFERENCES Members(Id);
 ALTER TABLE ServiceRecords ADD FOREIGN KEY (StaffId) REFERENCES Staff(Id);
 ALTER TABLE ServiceRecords ADD FOREIGN KEY (ManagedLocationId) REFERENCES ManagedLocations(Id);
 ALTER TABLE ServiceRecords ADD FOREIGN KEY (RosterId) REFERENCES Rosters(Id);
+
+ALTER TABLE serviceHistory ADD FOREIGN KEY (MemberId) REFERENCES Members(Id);
+ALTER TABLE serviceHistory ADD FOREIGN KEY (StaffId) REFERENCES Staff(Id);
+ALTER TABLE serviceHistory ADD FOREIGN KEY (ManagedLocationId) REFERENCES ManagedLocations(Id);
+ALTER TABLE serviceHistory ADD FOREIGN KEY (RosterId) REFERENCES Rosters(Id);
 
 
 ALTER TABLE BillingItem ADD FOREIGN KEY (BillingReportId) REFERENCES BillingReports(Id);
