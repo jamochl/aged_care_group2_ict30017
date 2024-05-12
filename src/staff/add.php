@@ -3,16 +3,17 @@
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
-    $name = $_POST['name'];
-    $passwordHash = $_POST['password'];
-    $email = $_POST['email'];
-    $roleID = $_POST['roleID'];
-    $phone = $_POST['phone'];
-    $nationality = $_POST['nationality'];
-    $birthDate = $_POST['birthDate'];
+    $name = $_POST["name"];
+    $password = $_POST["password"];
+    $birthdate = $_POST["birthdate"];
+    $gender = $_POST["gender"];
+    $immigrationStatus = $_POST["immigrationStatus"];
+    $email = $_POST["email"];
+    $phone = $_POST["phone"];
+    $role = $_POST["role"];
 
 
-    $sql = "INSERT INTO Staff (Name, PasswordHash, Contact, BirthDate, Nationality, PhoneNumber, RoleId) VALUES ('$name', '$passwordHash', '$email', '$birthDate', '$nationality', '$phone', '$roleID')";
+    $sql = "INSERT INTO Staff (Name, PasswordHash, BirthDate, Gender, ImmigrationStatus, Contact, PhoneNumber, RoleId) VALUES ('$name', '$password', '$birthdate', '$gender', '$immigrationStatus', '$email', '$phone', '$role')";
     if ($mysqli->query($sql) === true) {
         echo "New employee created successfully";
     } else {
@@ -51,16 +52,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input required type="password" id="password" name="password"><br>
             <label for="repassword">Retype Password:</label><br>
             <input required type="password" id="repassword" name="repassword"><br>
+            <label for="name">Gender:</label><br>
+            <input required type="text" id="gender" name="gender"><br>
             <label for="email">Email:</label><br>
             <input required type="email" id="email" name="email"><br>
             <label for="roleID">Role ID:</label><br>
-            <input required type="number" id="roleID" name="roleID"><br>
+            <input required type="number" id="role" name="role"><br>
             <label for="phone">Phone Number:</label><br>
             <input required type="text" id="phone" name="phone"><br>
-            <label for="nationality">Nationality:</label><br>
-            <input required type="text" id="nationality" name="nationality"><br>
+            <label for="nationality">Immigration Status:</label><br>
+            <input required type="text" id="immigrationStatus" name="immigrationStatus"><br>
             <label for="birthDate">Birth Date:</label><br>
-            <input required type="date" id="birthDate" name="birthDate"><br><br>
+            <input required type="date" id="birthdate" name="birthdate"><br><br>
             <input required type="submit" value="Submit">
         </form>
     </div>

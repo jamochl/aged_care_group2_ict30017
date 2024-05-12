@@ -1,75 +1,109 @@
 <?php include '../config.php'; ?>
 <?php
-$staffId = isset($_GET['id']) ? $_GET['id'] : null;
-// Array of tables to select data from
-$stmt = $mysqli->execute_query("SELECT * FROM Staff WHERE Id = ?", [$staffId]);
-if (!$stmt) {
-    echo "Failed to collect data from MySQL: " . $mysqli->connect_error;
-    exit();
+// Define variables and initialize with empty values
+
+// Prepare a select statement
+$sql = "SELECT * FROM Staff WHERE Id = ?";
+if($stmt = $mysqli->prepare($sql)){
+    // Bind variables to the prepared statement as parameters
+    $stmt->bind_param("i", $param_id);
+    
+    // Set parameters
+    $param_id = $_GET["id"];
+    
+    // Attempt to execute the prepared statement
+    if($stmt->execute()){
+        $result = $stmt->get_result();
+        
+        if($result->num_rows == 1){
+            /* Fetch result row as an associative array. Since the result set contains only one row, we don't need to use while loop */
+            $row = $result->fetch_array(MYSQLI_ASSOC);
+            
+            // Retrieve individual field value
+            $id = $row["Id"];
+            $name = $row["Name"];
+            $birthdate = date('Y-m-d', strtotime($row['BirthDate']));
+            $gender = $row["Gender"];
+            $immigrationStatus = $row["ImmigrationStatus"];
+            $email = $row["Contact"];
+            $phoneNumber = $row["PhoneNumber"];
+            if ($row['RoleId'] == 1){
+                $role = 'Admin';
+            } else if ($row['RoleId'] == 2){
+                $role = 'Carer';
+            } else if ($row['RoleId'] == 3){
+                $role = 'Cleaner';
+            } else if ($row['RoleId'] == 4){
+                $role = 'Accountant';
+            }
+        } else{
+            // URL doesn't contain valid id parameter. Redirect to error page
+            header("location: /error.php");
+            exit();
+        }
+    } else{
+        echo "Oops! Something went wrong. Please try again later.";
+    }
 }
-$row = $stmt->fetch_assoc();
+
+// Close statement
+$stmt->close();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Info</title>
+    <title>View Member</title>
     <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .wrapper{
+            max-width: 500px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
-
 <body>
-    <div class="container mt-5">
+    <div class="wrapper p-3">
         <div>
             <!-- Display the generated breadcrumbs -->
             <?php generateBreadcrumbs(); ?>
         </div>
-        <h1>Employee Information</h1>
-    <?php
-    $date = $row['BirthDate'];
-    echo "<div class='container mt-5'>";
-    echo "<div class='row'>";
-    echo "<div class='col-md-6 offset-md-3'>";
-    echo "<div class='card'>";
-    echo "<div class='card-header'><h2>Employee Details</h2></div>";
-    echo "<div class='card-body'>";
-    echo "<div class='form-group'>";
-    echo "<label for='name'>Name: {$row['Name']}</label>";
-    echo "</div>";
-    echo "<div class='form-group'>";
-    if ($row['RoleId'] == 1) {
-        $role = "Admin";
-    } elseif ($row['RoleId'] == 2) {
-        $role = "Staff";
-    } elseif ($row['RoleId'] == 3) {
-        $role = "Cleaner";
-    } elseif ($row['RoleId'] == 4) {
-        $role = "Accountant";
-    }
-    echo "<label for='Role'>Role: {$role}</label>";
-    echo "</div>";
-    echo "<div class='form-group'>";
-    echo "<label for='email'>Email: {$row['Contact']}</label>";
-    echo "</div>";
-    echo "<div class='form-group'>";
-    echo "<label for='phone'>Phone Number: {$row['PhoneNumber']}</label>";
-    echo "</div>";
-    echo "<div class='form-group'>";
-    echo "<label for='nationality'>Nationality: {$row['Nationality']}</label>";
-    echo "</div>";
-    echo "<div class='form-group'>";
-    echo "<label for='Birthdate'>Birthdate: $date</label>";
-    echo "</div>";
-    echo "</div>";
-    echo "</div>";
-    echo "</div>";
-    echo "</div>";
-    echo "</div>";
-    ?>
+        <h2>View Member</h2>
+        <form action="#" method="post">
+            <input required type="hidden" name="id" value="<?php echo $_GET["id"]; ?>">
+            <div class="form-group mb-3">
+                <label>Name</label>
+                <input disabled type="text" name="Name" class="form-control" value="<?php echo $name; ?>">
+            </div>
+            <div class="form-group mb-3">
+                <label>Date of Birth</label>
+                <input disabled type="date" name="birthDate" class="form-control" value="<?php echo $birthdate; ?>">
+            </div>
+            <div class="form-group mb-3">
+                <label>Gender</label>
+                <input disabled type="text" name="gender" class="form-control" value="<?php echo $gender; ?>">
+            </div>
+            <div class="form-group mb-3">
+                <label>Phone Number</label>
+                <input disabled type="text" name="phoneNumber" class="form-control" value="<?php echo $phoneNumber; ?>">
+            </div>
+            <div class="form-group mb-3">
+                <label>Email</label>
+                <input disabled type="email" name="email" class="form-control" value="<?php echo $email; ?>">
+            </div>
+            <div class="form-group mb-3">
+                <label>Immigration Status</label>
+                <input disabled type="text" name="immigrationStatus" class="form-control" value="<?php echo $immigrationStatus; ?>">
+            </div>
+            <div class="form-group mb-3">
+                <label>Role</label>
+                <input disabled type="text" name="role" class="form-control" value="<?php echo $role; ?>">
+            </div>
+            <a href="edit.php?id=<?php echo $_GET["id"]; ?>" class="btn btn-primary">Edit Member</a>
+        </form>
     </div>
 </body>
-
 </html>

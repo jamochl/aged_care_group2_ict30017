@@ -36,9 +36,10 @@ CREATE TABLE Staff (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
     PasswordHash VARCHAR(255),
-    Contact VARCHAR(255),
     BirthDate DATETIME,
-    Nationality VARCHAR(255),
+    Gender VARCHAR(255),
+    ImmigrationStatus TEXT,
+    Contact VARCHAR(255),
     PhoneNumber VARCHAR(255),
     RoleId INT
 );
@@ -89,6 +90,18 @@ CREATE TABLE ServiceRecords (
     Notes TEXT
 );
 
+CREATE TABLE RoomClean (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    RosterId INT,
+    RoomId INT,
+    StaffId INT,
+    ServiceType VARCHAR(255),
+    StartTime DATETIME,
+    EndTime DATETIME,
+    ManagedLocationId INT,
+    Notes TEXT
+);
+
 CREATE TABLE Rosters (
     Id INT PRIMARY KEY AUTO_INCREMENT,
     StaffId INT,
@@ -129,6 +142,11 @@ ALTER TABLE ServiceRecords ADD FOREIGN KEY (MemberId) REFERENCES Members(Id);
 ALTER TABLE ServiceRecords ADD FOREIGN KEY (StaffId) REFERENCES Staff(Id);
 ALTER TABLE ServiceRecords ADD FOREIGN KEY (ManagedLocationId) REFERENCES ManagedLocations(Id);
 ALTER TABLE ServiceRecords ADD FOREIGN KEY (RosterId) REFERENCES Rosters(Id);
+
+ALTER TABLE RoomClean ADD FOREIGN KEY (RoomId) REFERENCES Room(Id);
+ALTER TABLE RoomClean ADD FOREIGN KEY (StaffId) REFERENCES Staff(Id);
+ALTER TABLE RoomClean ADD FOREIGN KEY (ManagedLocationId) REFERENCES ManagedLocations(Id);
+ALTER TABLE RoomClean ADD FOREIGN KEY (RosterId) REFERENCES Rosters(Id);
 
 
 ALTER TABLE BillingItem ADD FOREIGN KEY (BillingReportId) REFERENCES BillingReports(Id);
