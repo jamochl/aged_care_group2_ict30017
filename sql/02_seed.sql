@@ -18,11 +18,24 @@ INSERT INTO Members (Id, FirstName, LastName, DateOfBirth, Contact, FamilyContac
 (4, 'Michael', 'Brown', '1976-08-22', 'michael@example.com', 'Sophia Brown - 789-012-3456', 'Allergic to shellfish', 1500.00);
 
 -- Inventory
-INSERT INTO Inventory (Id, Name, Purpose, OwnerDetails, OwnerType, Description, Quantity, ManagedLocationId) VALUES
-(1, 'Laptop', 'General use', 'John Doe', 'Staff', 'Dell XPS 15', 5, 1),
-(2, 'Projector', 'Presentation', 'Alice Smith', 'Staff', 'Epson PowerLite 1781W', 2, 1),
-(3, 'Printer', 'Office use', 'Main Office', 'Organization', 'HP LaserJet Pro M402n', 3, 1),
-(4, 'Scanner', 'Document scanning', 'Main Office', 'Organization', 'Epson WorkForce ES-500W', 2, 1);
+INSERT INTO Inventory (name, description, quantity) VALUES
+('Wheelchair', 'Foldable wheelchair for mobility assistance.', 10),
+('Aspirin', 'Pain reliever and fever reducer.', 100),
+('Acetaminophen', 'Pain reliever and fever reducer.', 150),
+('Ibuprofen', 'Nonsteroidal anti-inflammatory drug (NSAID).', 120),
+('Loratadine', 'Antihistamine for allergies.', 80),
+('Omeprazole', 'Proton pump inhibitor for heartburn relief.', 90),
+('Walking Frames', 'Lightweight walking frames for stability support.', 15),
+('Incontinence Pads', 'Disposable incontinence pads for hygiene care.', 200),
+('Bedside Commodes', 'Portable commodes for bedside use.', 8),
+('Recliner Chairs', 'Comfortable recliner chairs for relaxation.', 12),
+('Hearing Aids', 'Digital hearing aids for hearing assistance.', 25),
+('Grab Bars', 'Safety grab bars for bathroom assistance.', 20),
+('Raised Toilet Seats', 'Toilet seats with raised height for accessibility.', 10),
+('Pill Organizers', 'Weekly pill organizers for medication management.', 30),
+('Electric Hoists', 'Electric hoists for transferring patients safely.', 5);
+
+
 
 -- Staff
 INSERT INTO Staff (Name, PasswordHash, Contact, BirthDate, Nationality, PhoneNumber, RoleId) VALUES

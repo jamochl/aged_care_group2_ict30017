@@ -3,13 +3,16 @@
 $Quantity = "";
 $Quantity_err = "";
 
-// Processing form data when form is submitted
+// Process form data
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     $input_Quantity = trim($_POST["Quantity"]);
     if(empty($input_Quantity)){
         $Quantity_err = "Please enter quantity";
-    } else{
+    }elseif($input_Quantity < 0){
+        $Quantity_err = "Quantity for item cannot be negative";
+    }
+    else{
         $Quantity = $input_Quantity;
     }
 
@@ -110,7 +113,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <span class="invalid-feedback"><?php echo $Quantity_err; ?></span>
             </div>
             <input required type="hidden" name="id" value="<?php echo $_GET["id"]; ?>"/>
-            <input required type="submit" class="btn btn-primary" value="Submit">
+            <input required type="submit" class="btn btn-primary" value="Update Quantity">
 
 
             <a href="view.php" class="btn btn-secondary ml-2">Cancel</a>

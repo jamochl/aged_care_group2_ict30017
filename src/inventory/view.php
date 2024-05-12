@@ -2,7 +2,7 @@
 
 <?php
 
-$sql = "SELECT Id, Name, Description, Quantity, Purpose, OwnerDetails, OwnerType FROM Inventory";
+$sql = "SELECT Id, Name, Description, Quantity FROM Inventory";
 $result = $mysqli->query($sql);
 
 // Initialize an array to hold the inventory data
@@ -55,7 +55,6 @@ if ($result->num_rows > 0) {
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Description</th>
                         <th>Quantity</th>
                         <th>Actions</th>
                     </tr>
@@ -66,22 +65,16 @@ if ($result->num_rows > 0) {
                         <tr>
                             <td><?php echo $item['Id']; ?></td>
                             <td><?php echo $item['Name']; ?></td>
-                            <td><?php echo $item['Description']; ?></td>
                             <td><?php echo $item['Quantity']; ?></td>
                             <td>
                                 <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal" 
                                     data-name="<?php echo $item['Name']; ?>" 
                                     data-description="<?php echo $item['Description']; ?>" 
-                                    data-quantity="<?php echo $item['Quantity']; ?>" 
-                                    data-purpose="<?php echo $item['Purpose']; ?>" 
-                                    data-ownerdetails="<?php echo $item['OwnerDetails']; ?>" 
-                                    data-ownertype="<?php echo $item['OwnerType']; ?>">View More</button>
+                                    data-quantity="<?php echo $item['Quantity']; ?>">View More</button>
                                     
                                     <!-- <button class="btn btn-primary edit-quantity" data-bs-toggle="modal" data-bs-target="#editModal" 
                                     data-id="<?php echo $item['Id']; ?>"
-                                    data-quantity="<?php echo $item['Quantity']; ?>">Edit Quantity</button> -->
-
-                                    
+                                    data-quantity="<?php echo $item['Quantity']; ?>">Edit Quantity</button> -->                                    
                                     <?php echo "<td><a href='/inventory/edit.php?id={$item['Id']}' class='btn btn-primary'>Edit</a></td>";?>
                             </td>
                         </tr>
@@ -107,9 +100,6 @@ if ($result->num_rows > 0) {
                     <p><strong>Name:</strong> <span id="modal-name"></span></p>
                     <p><strong>Description:</strong> <span id="modal-description"></span></p>
                     <p><strong>Quantity:</strong> <span id="modal-quantity"></span></p>
-                    <p><strong>Purpose:</strong> <span id="modal-purpose"></span></p>
-                    <p><strong>Owner Details:</strong> <span id="modal-owner-details"></span></p>
-                    <p><strong>Owner Type:</strong> <span id="modal-owner-type"></span></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -247,9 +237,6 @@ if ($result->num_rows > 0) {
             });
 
 
-
-
-
         // search functionality
         document.getElementById("searchInput").addEventListener("keyup", function() {
             var input, filter, table, tr, td, i, txtValue;
@@ -258,7 +245,7 @@ if ($result->num_rows > 0) {
             table = document.querySelector("table");
             tr = table.getElementsByTagName("tr");
             for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[0];
+                td = tr[i].getElementsByTagName("td")[1];
                 if (td) {
                     txtValue = td.textContent || td.innerText;
                     if (txtValue.toUpperCase().indexOf(filter) > -1) {
