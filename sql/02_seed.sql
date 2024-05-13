@@ -26,12 +26,12 @@ INSERT INTO Inventory (Id, Name, Purpose, Description, Quantity, ManagedLocation
 (5, 'Panadol', 'Fever management', 'For patient with fevers', 0, 1);
 
 -- Staff
-INSERT INTO Staff (Name, PasswordHash, Contact, BirthDate, Nationality, PhoneNumber, RoleId) VALUES
-('Admin1', 'admin1', 'admin@example.com', '1995-05-20', 'Brazillian', '0412341234', 1),
-('Admin2', 'admin2', 'admin@example.com', '1985-05-20', 'Brazillian', '0458234888', 1),
-('carer', 'carer', 'carer@example.com', '1996-06-05', 'Polish', '0444888999',2),
-('Cleaner', 'cleaner', 'cleaner@example.com','1994-12-12', 'American', '0455222333', 3),
-('Accountant', 'accountant', 'accountant@example.com', '2004-04-07', 'Vietnamese', '0469696969', 4);
+INSERT INTO Staff (Name, PasswordHash, BirthDate, Gender, ImmigrationStatus, Contact, PhoneNumber, RoleId) VALUES
+('Admin1', 'admin1', '1985-05-20', 'Male', 'Permanent Work Visa', 'admin@example.com', '0458234888', 1),
+('Admin2', 'admin2', '1985-05-20', 'Male', 'Permanent Work Visa', 'admin@example.com', '0458234888', 1),
+('carer', 'carer', '1996-06-05', 'Female', 'Student Visa', 'carer@example.com', '0444888999', 2),
+('Cleaner', 'cleaner', '1994-12-12', 'Other', 'Permanent Resident', 'cleaner@example.com', '0455222333', 3),
+('Accountant', 'accountant', '2004-04-07', 'Male',  'Permanent Resident', 'accountant@example.com', '0469696969', 4);
 
 -- Availabilities
 INSERT INTO Availabilities (Id, StartTime, EndTime, StaffId) VALUES
@@ -54,8 +54,10 @@ INSERT INTO Utilities (Id, Name, Description, Availability, BookedFor, Maintenan
 (3, 'Printer', 'HP LaserJet Pro M402n', 'Available', NULL, 'Functional', 2),
 (4, 'Scanner', 'Epson WorkForce ES-500W', 'Available', NULL, 'Functional', 2);
 
-INSERT INTO Rosters (Id, StaffId, ServiceType, StartTime, EndTime, ManagedLocationId, Notes) VALUES
-(1, 1 , 'Checkup', '2024-03-25 10:00:00', '2024-03-25 11:00:00', 1, 'roster for staff');
+INSERT INTO Rosters (StaffId, ServiceType, StartTime, EndTime, ManagedLocationId, Notes) VALUES
+(1 , 'Checkup', '2024-03-25 10:00:00', '2024-03-25 11:00:00', 1, 'roster for staff'),
+(3, 'Clean Room', '2024-03-26 13:00:00', '2024-03-26 15:00:00', 1, 'roster for cleaner'),
+(3, 'Clean Room', '2024-03-28 13:00:00', '2024-03-28 15:00:00', 1, 'roster for cleaner');
 
 -- ServiceRecords
 INSERT INTO ServiceRecords (Id, RosterId, MemberId, StaffId, ServiceType, StartTime, EndTime, ManagedLocationId, Notes) VALUES
@@ -63,6 +65,11 @@ INSERT INTO ServiceRecords (Id, RosterId, MemberId, StaffId, ServiceType, StartT
 (2,1 ,2 ,2 , 'Consultation', '2024-03-25 14:00:00', '2024-03-25 15:00:00', 1, 'Discussing treatment options'),
 (3,1,3 ,2 , 'Checkup', '2024-03-26 10:00:00', '2024-03-26 11:00:00', 2, 'Routine checkup'),
 (4,1 , 4, 2, 'Consultation', '2024-03-26 14:00:00', '2024-03-26 15:00:00', 2, 'Discussing treatment options');
+
+-- Cleaner
+INSERT INTO RoomClean (Id, RosterId, RoomId, StaffId, ServiceType, StartTime, EndTime, ManagedLocationId, Notes) VALUES
+(1, 2, 2 ,3 , 'Clean Room', '2024-03-26 13:00:00', '2024-03-26 15:00:00', 1, 'Cleaning room 1'),
+(2, 3, 3 ,3 , 'Clean Room', '2024-03-28 13:00:00', '2024-03-28 15:00:00', 1, 'Cleaning room 1');
 
 -- BillingReports
 INSERT INTO BillingReports (Id, StartTime, EndTime, TransactionType) VALUES
