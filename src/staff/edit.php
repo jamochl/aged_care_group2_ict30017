@@ -1,40 +1,46 @@
 <?php include '../config.php'; ?>
 <?php
-$id = '';
-$name = '';
-$email = '';
-$pswrd = '';
-$roleID = '';
+// Define variables and initialize with empty values
 
-// Check if staff ID is provided via GET request
-if (!empty($_GET['id'])) {
-    // Get staff ID from GET request
-    $id = $_GET['id'];
-
-    // SQL query to select staff details by ID
-    $query = "SELECT * FROM `Staff` WHERE `id`='$id'";
-
-    // Execute the query
-    $result = $mysqli->query($query);
-
-    // Check if a row is returned
-    if ($result->num_rows > 0) {
-        // Fetch the row data
-        $row = $result->fetch_assoc();
-        // Assign values to variables
-        $id = $row['Id'];
-        $name = $row['Name'];
-        $pswrd = $row['PasswordHash'];
-        $email = $row['Contact'];
-        $roleID = $row['RoleId'];
-    } else {
-        // If no row is returned, display an error message
-        echo "No staff found with the provided ID";
+// Prepare a select statement
+$sql = "SELECT * FROM Staff WHERE Id = ?";
+if($stmt = $mysqli->prepare($sql)){
+    // Bind variables to the prepared statement as parameters
+    $stmt->bind_param("i", $param_id);
+    
+    // Set parameters
+    $param_id = $_GET["id"];
+    
+    // Attempt to execute the prepared statement
+    if($stmt->execute()){
+        $result = $stmt->get_result();
+        
+        if($result->num_rows == 1){
+            /* Fetch result row as an associative array. Since the result set contains only one row, we don't need to use while loop */
+            $row = $result->fetch_array(MYSQLI_ASSOC);
+            
+            // Retrieve individual field value
+            $id = $row["Id"];
+            $name = $row["Name"];
+            $password = $row["PasswordHash"];
+            $birthdate = date('Y-m-d', strtotime($row['BirthDate']));
+            $gender = $row["Gender"];
+            $immigrationStatus = $row["ImmigrationStatus"];
+            $email = $row["Contact"];
+            $phoneNumber = $row["PhoneNumber"];
+            $role = $row["RoleId"];
+        } else{
+            // URL doesn't contain valid id parameter. Redirect to error page
+            header("location: /error.php");
+            exit();
+        }
+    } else{
+        echo "Oops! Something went wrong. Please try again later.";
     }
-} else {
-    header("Location: /staff.php");
-    die();
 }
+
+// Close statement
+$stmt->close();
 ?>
 
 <!DOCTYPE html>
@@ -42,46 +48,76 @@ if (!empty($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update staff profile</title>
+    <title>View Member</title>
     <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .wrapper{
+            max-width: 500px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-    <h2>Update Staff Details</h2>
-    <form action="/staff/edit.php" method="post">
-        <input required type="hidden" name="id" value="<?php echo $id; ?>"> <!-- Hidden field to submit ID -->
-        <label for="name">Name:</label>
-        <input required type="text" id="name" name="name" value="<?php echo $name; ?>" ><br><br>
-        <label for="email">Email:</label>
-        <input required type="email" id="email" name="email" value="<?php echo $email; ?>" ><br><br>
-        <label for="pswrd">Password:</label>
-        <input required type="password" id="pswrd" name="pswrd" value="<?php echo $pswrd; ?>" ><br><br>
-        <label for="roleID">Role ID:</label>
-        <input required type="text" id="roleID" name="roleID" value="<?php echo $roleID; ?>" ><br><br>
-        <input required type="submit" name="update" value="Update">
-    </form>
-    
-    <?php
-
-if (!empty($_POST['update'])) {
-    // Get form data
-    $id = $_POST['id'];
-    $name = $_POST['name'];
-    $pswrd = $_POST['pswrd'];
-    $email = $_POST['email'];
-    $roleID = $_POST['roleID'];
-
-    // SQL query to update staff details
-    $query = "UPDATE `Staff` SET `Name`='$name', `Contact`='$email', `PasswordHash`='$pswrd', `RoleId`='$roleID' WHERE `id`='$id'";
-    $mysqli->query($query);
-
-    $query = "SELECT * FROM `Staff`";
-    
-    $qresult = $mysqli->query($query); 
-}
-    ?>
+    <div class="wrapper p-3">
+        <div>
+            <!-- Display the generated breadcrumbs -->
+            <?php generateBreadcrumbs(); ?>
+        </div>
+        <h2>View Member</h2>
+        <form action="#" method="post">
+            <input required type="hidden" name="id" value="<?php echo $_GET["id"]; ?>">
+            <div class="form-group mb-3">
+                <label>Name</label>
+                <input type="text" name="name" class="form-control" value="<?php echo $name; ?>">
+            </div>
+            <div class="form-group mb-3">
+                <label>Password</label>
+                <input type="password" name="password" class="form-control">
+            </div>
+            <div class="form-group mb-3">
+                <label>Date of Birth</label>
+                <input type="date" name="birthdate" class="form-control" value="<?php echo $birthdate; ?>">
+            </div>
+            <div class="form-group mb-3">
+                <label>Gender</label>
+                <input type="text" name="gender" class="form-control" value="<?php echo $gender; ?>">
+            </div>
+            <div class="form-group mb-3">
+                <label>Phone Number</label>
+                <input type="text" name="phoneNumber" class="form-control" value="<?php echo $phoneNumber; ?>">
+            </div>
+            <div class="form-group mb-3">
+                <label>Email</label>
+                <input type="email" name="email" class="form-control" value="<?php echo $email; ?>">
+            </div>
+            <div class="form-group mb-3">
+                <label>Immigration Status</label>
+                <input type="text" name="immigrationStatus" class="form-control" value="<?php echo $immigrationStatus; ?>">
+            </div>
+            <div class="form-group mb-3">
+                <label>Role</label>
+                <input type="text" name="role" class="form-control" value="<?php echo $role; ?>">
+            </div>
+            <button class="btn btn-primary" type="submit">Update Staff</button>
+        </form>
     </div>
+
+    <?php
+    if ($_POST){
+        $name = $_POST["name"];
+        $password = $_POST["password"];
+        $birthdate = $_POST["birthdate"];
+        $gender = $_POST["gender"];
+        $immigrationStatus = $_POST["immigrationStatus"];
+        $email = $_POST["email"];
+        $phoneNumber = $_POST["phoneNumber"];
+        $role = $_POST["role"];
+        // SQL query to update staff details
+        $query = "UPDATE Staff SET Name='$name', PasswordHash='$password', BirthDate='$birthdate', Gender = '$gender', ImmigrationStatus = '$immigrationStatus', Contact='$email', PhoneNumber='$phoneNumber', RoleId='$role' WHERE Id='$id'";
+        $mysqli->query($query);
+    } 
+    ?>
 </body>
 
 </html>
