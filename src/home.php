@@ -178,6 +178,17 @@
                     </div>
                 </a>
             </div>
+            <div class="col">
+                <a href="/cleaner/index.php" class="card-link">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">Cleaning Status</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        <?php endif?>
+        <?php if ($_SESSION['role'] == 1 || $_SESSION['role'] == 2): ?>
             <!-- Admin and carers -->
             <div class="col">
                 <a href="/inventory" class="card-link">

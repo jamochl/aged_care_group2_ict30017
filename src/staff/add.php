@@ -1,6 +1,14 @@
 <?php include '../config.php'; ?>
 <?php
+// Define variables and initialize with empty values
+$name = $password = $birthdate = $gender = $immigrationStatus = $email = $phone = $role = "";
+$name_err = $password_err = $birthdate_err = $gender_err = $immigrationStatus_err = $email_err = $phone_err = $role_err = "";
 
+// Fetch roles from the database
+$roles_query = "SELECT Id, Name FROM Roles";
+$roles_result = $mysqli->query($roles_query);
+
+// Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
     $name = $_POST["name"];
@@ -12,16 +20,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = $_POST["phone"];
     $role = $_POST["role"];
 
+    // Your database insertion code here...
+    $sql = "INSERT INTO Staff (Name, PasswordHash, BirthDate, Gender, ImmigrationStatus, Contact, PhoneNumber, RoleId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    if ($stmt = $mysqli->prepare($sql)) {
+        // Bind variables to the prepared statement as parameters
+        $stmt->bind_param("ssssssss", $name, $password, $birthdate, $gender, $immigrationStatus, $email, $phone, $role);
 
-    $sql = "INSERT INTO Staff (Name, PasswordHash, BirthDate, Gender, ImmigrationStatus, Contact, PhoneNumber, RoleId) VALUES ('$name', '$password', '$birthdate', '$gender', '$immigrationStatus', '$email', '$phone', '$role')";
-    if ($mysqli->query($sql) === true) {
-        echo "New employee created successfully";
-    } else {
-        echo "Failed to collect data from MySQL: " . $mysqli->connect_error;
-        exit();
+        // Attempt to execute the prepared statement
+        if ($stmt->execute()) {
+            // Records created successfully. Redirect to landing page
+            header("location: /staff/index.php");
+            exit();
+        } else {
+            echo "Failed to create staff data" . $mysqli->error;
+            exit();
+        }
+        // Close statement
+        $stmt->close();
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,42 +48,72 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Staff Info</title>
-
-    <link href="modal.css" rel="stylesheet" type="text/css" />
-
     <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .wrapper {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 
 <body>
-    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="validating.js"></script>
     <div class="container mt-5">
         <div>
             <!-- Display the generated breadcrumbs -->
             <?php generateBreadcrumbs(); ?>
         </div>
-        <h1>Create Staff Information</h1>
+        <h2 class="mb-4">Create Staff Information</h2>
         <form id="add" action="#" method="post">
-            <label for="name">Name:</label><br>
-            <input required type="text" id="name" name="name"><br>
-            <label for="password">Password:</label><br>
-            <input required type="password" id="password" name="password"><br>
-            <label for="repassword">Retype Password:</label><br>
-            <input required type="password" id="repassword" name="repassword"><br>
-            <label for="name">Gender:</label><br>
-            <input required type="text" id="gender" name="gender"><br>
-            <label for="email">Email:</label><br>
-            <input required type="email" id="email" name="email"><br>
-            <label for="roleID">Role ID:</label><br>
-            <input required type="number" id="role" name="role"><br>
-            <label for="phone">Phone Number:</label><br>
-            <input required type="text" id="phone" name="phone"><br>
-            <label for="nationality">Immigration Status:</label><br>
-            <input required type="text" id="immigrationStatus" name="immigrationStatus"><br>
-            <label for="birthDate">Birth Date:</label><br>
-            <input required type="date" id="birthdate" name="birthdate"><br><br>
-            <input required type="submit" value="Submit">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name:</label>
+                <input required type="text" id="name" name="name" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password:</label>
+                <input required type="password" id="password" name="password" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="birthdate" class="form-label">Birthdate:</label>
+                <input required type="date" id="birthdate" name="birthdate" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="gender" class="form-label">Gender:</label>
+                <select required id="gender" name="gender" class="form-select">
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="immigrationStatus" class="form-label">Immigration Status:</label>
+                <input required type="text" id="immigrationStatus" name="immigrationStatus" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input required type="email" id="email" name="email" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone:</label>
+                <input required type="text" id="phone" name="phone" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="role" class="form-label">Role:</label>
+                <select required id="role" name="role" class="form-select">
+                    <option value="">Select Role</option>
+                    <?php
+                    // Populate dropdown list with roles
+                    while ($row = $roles_result->fetch_assoc()) {
+                        echo "<option value='" . $row['Id'] . "'>" . $row['Name'] . "</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="mb-3">
+                <input required type="submit" value="Submit" class="btn btn-primary">
+            </div>
         </form>
     </div>
 </body>

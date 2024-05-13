@@ -70,6 +70,7 @@ $authorizedPages = [
     // Cleaner
     "3" => [
         '/rosters/my*',
+        '/cleaner/*',
         '/availabilities/*',
         '/service_records/*',
         '/docs/*',
