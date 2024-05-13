@@ -21,14 +21,15 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
             <!-- Display the generated breadcrumbs -->
             <?php generateBreadcrumbs(); ?>
         </div>
-        <h1>Upcoming Rosters</h1>
+        <!-- For past rosters -->
+        <h1>Past Rosters</h1>
         <?php
         // Query to fetch rosters
         $query = "SELECT r.*, s.Name AS StaffName, ml.Name AS ManagedLocationName 
                 FROM Rosters r
                 INNER JOIN Staff s ON r.StaffId = s.Id
                 INNER JOIN ManagedLocations ml ON r.ManagedLocationId = ml.Id
-                WHERE r.StartTime > CURRENT_TIME";
+                WHERE r.StartTime < CURRENT_TIME";
         $result = $mysqli->query($query);
         if ($result->num_rows > 0) {
         ?>
@@ -84,7 +85,7 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
             </div>
         </div>
         <?php } else {
-            echo "<p>No upcoming rosters</p>";
+            echo "<p>No past rosters</p>";
         }
         ?>
 
@@ -95,13 +96,13 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
 
         <?php
         // SQL query to retrieve availabilities with staff names
-        $availabilitiesQuery = "SELECT Availabilities.Id, Availabilities.StartTime, Availabilities.EndTime, Availabilities.StaffId, Staff.Name AS StaffName FROM $availabilitiesTable JOIN Staff ON Availabilities.StaffId = Staff.Id WHERE Availabilities.StartTime > CURRENT_TIME";
+        $availabilitiesQuery = "SELECT Availabilities.Id, Availabilities.StartTime, Availabilities.EndTime, Availabilities.StaffId, Staff.Name AS StaffName FROM $availabilitiesTable JOIN Staff ON Availabilities.StaffId = Staff.Id WHERE Availabilities.StartTime < CURRENT_TIME";
 
         // Execute the availabilities query
         $availabilitiesResult = $mysqli->query($availabilitiesQuery);
         ?>
 
-        <h1>Current Availabilities</h1>
+        <h1>Past Availabilities</h1>
 
         <?php
         // Display availabilities with staff names in a table
@@ -129,18 +130,17 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
             }
             echo "</tbody></table>";
         } else {
-            echo "<p>No staff availabilities at the moment</p>";
+            echo "<p>No past availabilities at the moment</p>";
         }
         $availabilitiesResult->free();
         ?>
-
-        <a href="/rosters/add.php" class="btn btn-primary add-button button-gap my-4">Create Roster</a>
-        <a href="/rosters/past.php" class="btn btn-primary add-button button-gap my-4">View past rosters and availabilities</a>
 
         <?php
         // Close connection
         $mysqli->close();
         ?>
+
+        <a href="/rosters/add.php" class="btn btn-primary add-button button-gap">Create Roster</a>
     </div>
 </body>
 

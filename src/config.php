@@ -59,22 +59,26 @@ if ($mysqli->connect_errno) {
 $authorizedPages = [
     // Carer
     "2" => [
-        '/rosters/*',
+        '/rosters/my*',
         '/availabilities/*',
         '/service_records/*',
         '/inventory/*',
         '/members/*',
+        '/docs/*',
         '/room/*'
     ],
     // Cleaner
     "3" => [
-        '/rosters/*',
+        '/rosters/my*',
+        '/cleaner/*',
         '/availabilities/*',
         '/service_records/*',
+        '/docs/*',
         '/room/*'
     ],
     // Accountant
     "4" => [
+        '/docs/*',
         '/billing/*'
     ]
 ];

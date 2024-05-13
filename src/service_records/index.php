@@ -2,6 +2,7 @@
 <?php
 // Get the roster ID from the query string
 $rosterId = isset($_GET['rosterid']) ? intval($_GET['rosterid']) : null;
+$memberId = isset($_GET['memberid']) ? intval($_GET['memberid']) : null;
 $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : null;
 ?>
 
@@ -35,6 +36,18 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : null;
                     WHERE r.Id = ?";
             $statement = $mysqli->prepare($query);
             $statement->bind_param("i", $rosterId);
+            $statement->execute();
+            $result = $statement->get_result();
+        } else if ($memberId != null) {
+            $query = "SELECT sr.*, r.ServiceType, r.StartTime AS RosterStartTime, r.EndTime AS RosterEndTime, ml.Name AS ManagedLocationName, s.Name AS StaffName, m.FirstName AS MemberFirstName, m.LastName AS MemberLastName
+                    FROM ServiceRecords sr
+                    INNER JOIN Rosters r ON sr.RosterId = r.Id
+                    INNER JOIN Staff s ON r.StaffId = s.Id
+                    INNER JOIN Members m ON sr.MemberId = m.Id
+                    INNER JOIN ManagedLocations ml ON sr.ManagedLocationId = ml.Id
+                    WHERE m.Id = ?";
+            $statement = $mysqli->prepare($query);
+            $statement->bind_param("i", $memberId);
             $statement->execute();
             $result = $statement->get_result();
         } else {
@@ -86,7 +99,14 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : null;
                             echo "<td>{$row['EndTime']}</td>";
                             echo "<td>{$row['ManagedLocationName']}</td>";
                             echo "<td>{$row['Notes']}</td>";
-                            echo "<td><a href='{$url}' class='mx-2 btn btn-primary add-button'>View Record</a><a href='{$urlEdit}' class='btn btn-primary add-button'>Edit Record</a></td>";
+                            echo "<td><a href='{$url}' class='ma-2 btn btn-primary add-button'>View Record</a>";
+                            $startTime = strtotime($row['StartTime']);
+                            $currentTime = time();
+                            if ($startTime > $currentTime) {
+                                echo "<a href='{$urlEdit}' class='btn btn-primary add-button'>Edit Record</a></td>";
+                            } else {
+                                echo "<a href='{$urlEdit}' class='btn btn-primary add-button disabled' aria-disabled>Edit Record</a></td>";
+                            }
                             echo "</tr>";
                         }
                         ?>
@@ -96,7 +116,7 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : null;
         </div>
         <?php
         } else {
-            echo "<p>No service history for this roster or staff</p>";
+            echo "<p>No service history for this roster, staff or member</p>";
         }
         ?>
 

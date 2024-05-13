@@ -53,6 +53,7 @@ CREATE TABLE Availabilities (
 
 CREATE TABLE ManagedLocations (
     Id INT AUTO_INCREMENT PRIMARY KEY,
+    Personal BOOLEAN DEFAULT 0,
     Name VARCHAR(255),
     Address VARCHAR(255),
     Description TEXT

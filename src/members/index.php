@@ -44,8 +44,13 @@
                             echo "<td>" . $row['MedicalHistory'] . "</td>";
                             echo "<td>" . ($row['IsStillMember'] == 1 ? "true" : "false") . "</td>";
                             echo "<td>";
-                            echo "<a href='view.php?id=" . $row['Id'] . "' class='btn btn-primary ml-2'>View</a>";
-                            echo "<a href='edit.php?id=" . $row['Id'] . "' class='btn btn-primary'>Edit</a>";
+                            echo "<a href='view.php?id=" . $row['Id'] . "' class='btn btn-primary mx-2'>View</a>";
+                            echo "<a href='/service_records/index.php?memberid=" . $row['Id'] . "' class='btn btn-primary ml-2'>Service History</a>";
+                            if ($_SESSION['role'] == 1) {
+                                echo "<a href='edit.php?id=" . $row['Id'] . "' class='mx-2 btn btn-primary'>Edit</a>";
+                            } else {
+                                echo "<a href='edit.php?id=" . $row['Id'] . "' class='mx-2 btn btn-primary disabled' aria-disabled>Edit</a>";
+                            }
                             echo "</td>";
                             echo "</tr>";
                         }

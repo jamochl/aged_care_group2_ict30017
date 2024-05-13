@@ -157,6 +157,8 @@
         // Close connection
         $mysqli->close();
         ?>
+
+        <a href="/room/add.php" class="btn btn-primary add-button button-gap my-4">Add Room</a>
     </div>
 </body>
 </html>
