@@ -49,13 +49,10 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : null;
                             echo "<td>{$row['FirstName']} {$row['LastName']}</td>";
                             echo "<td>{$row['MedicalHistory']}</td>";
                             echo "<td>";
-                            echo "Start Date: {$row['StartDate']}<br>";
-                            echo "End Date: {$row['EndDate']}<br>";
-                            echo "Service Record ID: {$row['ServiceRecordId']}<br>";
+                            echo "<a href='/service_records/index.php?memberid=" . $row['MemberId'] . "' class='btn btn-primary ml-2'>Service History</a>";
                             echo "</td>";
                             echo "<td>";
-                            echo "<a href='/members/view.php?id={$row['MemberId']}' class='btn btn-primary'>View</a>";
-                            echo "<a href='/members/edit.php?id={$row['MemberId']}' class='btn btn-secondary'>Edit</a>";
+                            echo "<a href='/members/view.php?id={$row['MemberId']}' class='btn btn-primary mx-2'>View</a>";
                             echo "</td>";
                             echo "</tr>";
                         }

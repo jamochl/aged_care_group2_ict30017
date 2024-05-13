@@ -18,15 +18,17 @@ INSERT INTO Members (Id, FirstName, LastName, DateOfBirth, Gender, Email, PhoneN
 (4, 'Michael', 'Brown', '1976-08-22', 'male', 'michael@example.com', '789-012-3456', '101 Pine St, Hamletville', 'Sophia Brown', 'Child', '2023-05-15', 1, 'Allergic to shellfish', 1500.00);
 
 -- Inventory
-INSERT INTO Inventory (Id, Name, Purpose, OwnerDetails, OwnerType, Description, Quantity, ManagedLocationId) VALUES
-(1, 'Laptop', 'General use', 'John Doe', 'Staff', 'Dell XPS 15', 5, 1),
-(2, 'Projector', 'Presentation', 'Alice Smith', 'Staff', 'Epson PowerLite 1781W', 2, 1),
-(3, 'Printer', 'Office use', 'Main Office', 'Organization', 'HP LaserJet Pro M402n', 3, 1),
-(4, 'Scanner', 'Document scanning', 'Main Office', 'Organization', 'Epson WorkForce ES-500W', 2, 1);
+INSERT INTO Inventory (Id, Name, Purpose, Description, Quantity, ManagedLocationId) VALUES
+(1, 'Oxygen Tank', 'Respiratory support', 'Portable oxygen tank, 5L capacity', 10, 1),
+(2, 'Insulin', 'Diabetes management', 'Humulin R Insulin, 10ml vial', 50, 1),
+(3, 'Blood Pressure Monitor', 'Vital sign monitoring', 'Digital blood pressure monitor', 20, 1),
+(4, 'Wheelchair', 'Mobility aid', 'Standard manual wheelchair', 15, 1),
+(5, 'Panadol', 'Fever management', 'For patient with fevers', 0, 1);
 
 -- Staff
 INSERT INTO Staff (Name, PasswordHash, Contact, BirthDate, Nationality, PhoneNumber, RoleId) VALUES
-('Admin', 'admin', 'admin@example.com', '1985-05-20', 'Brazillian', '0458234888', 1),
+('Admin1', 'admin1', 'admin@example.com', '1995-05-20', 'Brazillian', '0412341234', 1),
+('Admin2', 'admin2', 'admin@example.com', '1985-05-20', 'Brazillian', '0458234888', 1),
 ('carer', 'carer', 'carer@example.com', '1996-06-05', 'Polish', '0444888999',2),
 ('Cleaner', 'cleaner', 'cleaner@example.com','1994-12-12', 'American', '0455222333', 3),
 ('Accountant', 'accountant', 'accountant@example.com', '2004-04-07', 'Vietnamese', '0469696969', 4);
@@ -40,10 +42,10 @@ INSERT INTO Availabilities (Id, StartTime, EndTime, StaffId) VALUES
 
 -- Room
 INSERT INTO Room (Id, Name, Description, Availability, BookedFor, MaintenanceStatus, ManagedLocationId) VALUES
-(1, 'Conference Room A', 'Spacious conference room', 1, NULL, 'Functional', 1),
-(2, 'Meeting Room B', 'Small meeting room', 1, NULL, 'Functional', 1),
-(3, 'Meeting Room C', 'Medium-sized meeting room', 0, 2, 'Functional', 2),
-(4, 'Boardroom', 'Executive meeting space', 1, NULL, 'Functional', 2);
+(1, 'Patient Room 101', 'Single occupancy room with attached bathroom', 1, NULL, 'Functional', 1),
+(2, 'Patient Room 102', 'Single occupancy room with shared bathroom', 1, NULL, 'Functional', 1),
+(3, 'Patient Room 103', 'Double occupancy room with attached bathroom', 0, 2, 'Functional', 2),
+(4, 'Patient Room 104', 'Double occupancy room with shared bathroom', 1, NULL, 'Functional', 2);
 
 -- Utilities
 INSERT INTO Utilities (Id, Name, Description, Availability, BookedFor, MaintenanceStatus, ManagedLocationId) VALUES
