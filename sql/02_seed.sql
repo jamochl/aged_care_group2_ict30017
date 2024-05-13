@@ -6,9 +6,9 @@ INSERT INTO Roles (Id, Name, Description) VALUES
 (4, 'Accountant', 'Limited access role for guests');
 
 -- ManagedLocations
-INSERT INTO ManagedLocations (Id, Name, Address, Description) VALUES
-(1, 'Aged Care', '123 Main St, City', 'Main building for hosting multiple members'),
-(2, 'Brian Durings House', '456 Elm St, Town', 'Aged care in the member Brian home itself');
+INSERT INTO ManagedLocations (Id, Personal, Name, Address, Description) VALUES
+(1, 0, 'Aged Care', '123 Main St, City', 'Main building for hosting multiple members'),
+(2, 1, 'Brian Durings House', '456 Elm St, Town', 'Aged care in the member Brian home itself');
 
 -- Members
 INSERT INTO Members (Id, FirstName, LastName, DateOfBirth, Gender, Email, PhoneNumber, Address, EmergencyContact, EmergencyRelationship, DateJoined, IsStillMember, MedicalHistory, BillingPerYear) VALUES

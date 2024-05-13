@@ -107,6 +107,8 @@
             // Close connection
             $mysqli->close();
         ?>
+        <a href="/inventory/add.php" class="btn btn-primary add-button button-gap my-4">Add Item</a>
     </div> 
+
 </body>
 </html>

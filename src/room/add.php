@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <select class="form-select" id="managed_location_id" name="managed_location_id" required>
                     <?php
                     // Retrieve managed locations from the database
-                    $query = "SELECT Id, Name FROM ManagedLocations";
+                    $query = "SELECT Id, Name FROM ManagedLocations WHERE Personal = 0";
                     $result = $mysqli->query($query);
 
                     // Check if there are any rows returned
