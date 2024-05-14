@@ -19,11 +19,11 @@ INSERT INTO Members (Id, FirstName, LastName, DateOfBirth, Gender, Email, PhoneN
 
 -- Inventory
 INSERT INTO Inventory (Name, ItemCategory, Description, Quantity, storageLocation, supplier, supplierNumber) VALUES
-('Wheelchair', 'Mobility Equipment', 'Foldable wheelchair for mobility assistance.', 10, 'Storage A', 'Supplier X', 433500022),
+('Wheelchair', 'Mobility Equipment', 'Foldable wheelchair for mobility assistance.', 0, 'Storage A', 'Supplier X', 433500022),
 ('Aspirin', 'Medication', 'Pain reliever and fever reducer.', 100, 'Storage B', 'Supplier Y', 433500001),
 ('Acetaminophen', 'Medication', 'Pain reliever and fever reducer.', 150, 'Storage C', 'Supplier Z', 433500002),
 ('Ibuprofen', 'Medication', 'Nonsteroidal anti-inflammatory drug (NSAID).', 120, 'Storage D', 'Supplier X', 433500003),
-('Loratadine', 'Medication', 'Antihistamine for allergies.', 80, 'Storage E', 'Supplier Y', 433500004),
+('Loratadine', 'Medication', 'Antihistamine for allergies.', 0, 'Storage E', 'Supplier Y', 433500004),
 ('Omeprazole', 'Medication', 'Proton pump inhibitor for heartburn relief.', 90, 'Storage F', 'Supplier Z', 433500005),
 ('Walking Frames', 'Mobility Equipment', 'Lightweight walking frames for stability support.', 15, 'Storage G', 'Supplier X', 433500006),
 ('Incontinence Pads', 'Healthcare Supplies', 'Disposable incontinence pads for hygiene care.', 200, 'Storage H', 'Supplier Y', 433500007),
