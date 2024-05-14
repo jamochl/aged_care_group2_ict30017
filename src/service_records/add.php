@@ -62,7 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $roster_result = $mysqli->query($roster_query);
                     while ($row = $roster_result->fetch_assoc()) {
                         $rosterInfo = "{$row['StartTime']} - {$row['EndTime']} - {$row['ServiceType']} ({$row['Name']})";
-                        echo "<option staffid='" . $row['StaffId'] . "' starttime='" . $row['StartTime'] . "' endtime='" . $row["EndTime"] . "' value='" . $row['Id'] . "'>$rosterInfo</option>";
+                        $selected = isset($_GET['rosterid']) && $_GET['rosterid'] == $row['Id'] ? 'selected' : '';
+                        echo "<option staffid='" . $row['StaffId'] . "' starttime='" . $row['StartTime'] . "' endtime='" . $row["EndTime"] . "' value='" . $row['Id'] . "' $selected>$rosterInfo</option>";
                     }
                     ?>
                 </select>

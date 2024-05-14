@@ -29,8 +29,6 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : null;
                         <tr>
                             <th>Member Name</th>
                             <th>Medical History</th>
-                            <th>Contact</th>
-                            <th>Family Contact</th>
                             <th>Service Details</th>
                             <th>Actions</th>
                         </tr>
@@ -41,7 +39,7 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : null;
                         $currentDateTime = date("Y-m-d H:i:s");
 
                         // Query to fetch data for all services and related member details
-                        $query = "SELECT s.MemberId, s.StartTime AS StartDate, s.EndTime AS EndDate, s.Id AS ServiceRecordId, m.FirstName, m.LastName, m.MedicalHistory, m.Contact, m.FamilyContact FROM ServiceRecords s
+                        $query = "SELECT s.MemberId, s.StartTime AS StartDate, s.EndTime AS EndDate, s.Id AS ServiceRecordId, m.FirstName, m.LastName, m.MedicalHistory, m.PhoneNumber, m.EmergencyContact, m.EmergencyRelationship, m.Gender FROM ServiceRecords s
                             INNER JOIN Members m ON s.MemberId = m.Id
                             WHERE s.StaffId = {$staffId}";
                         $result = $mysqli->query($query);
@@ -50,16 +48,11 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : null;
                             echo "<tr>";
                             echo "<td>{$row['FirstName']} {$row['LastName']}</td>";
                             echo "<td>{$row['MedicalHistory']}</td>";
-                            echo "<td>{$row['Contact']}</td>";
-                            echo "<td>{$row['FamilyContact']}</td>";
                             echo "<td>";
-                            echo "Start Date: {$row['StartDate']}<br>";
-                            echo "End Date: {$row['EndDate']}<br>";
-                            echo "Service Record ID: {$row['ServiceRecordId']}<br>";
+                            echo "<a href='/service_records/index.php?memberid=" . $row['MemberId'] . "' class='btn btn-primary ml-2'>Service History</a>";
                             echo "</td>";
                             echo "<td>";
-                            echo "<a href='/members/view.php?id={$row['MemberId']}' class='btn btn-primary'>View</a>";
-                            echo "<a href='/members/edit.php?id={$row['MemberId']}' class='btn btn-secondary'>Edit</a>";
+                            echo "<a href='/members/view.php?id={$row['MemberId']}' class='btn btn-primary mx-2'>View</a>";
                             echo "</td>";
                             echo "</tr>";
                         }

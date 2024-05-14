@@ -1,0 +1,54 @@
+
+.button {
+	border           :1px solid black;
+	border-radius    :5px;
+	background-color :lightgrey;
+	background		:linear-gradient(#ccc, lightgrey);
+	padding          :0.25em; 
+	text-decoration	:none;
+	font-family	:Arial, sans-serif;
+	margin-right	:20px;
+	float	:right;
+}
+.button:hover {
+	background-color :darkgrey;
+	background		:linear-gradient(#ccc, darkgrey);
+	text-decoration	:underline;
+}
+
+
+
+.window {						
+	display						: none;				
+	z-index						: 2;					
+	position					: fixed;			
+
+	top								: 50%;				
+  left							: 50%;				
+  margin-top				: -5em;				
+  margin-left				: -11em;     
+	
+	background-color	: lightblue;	
+	border-radius			: 15px;				
+	border			: solid 1px blue;
+	box-shadow	:10px 10px 5px #888;
+	padding						: 5px;				
+	width             : 22em;
+	height						: 10em;
+
+}
+
+
+#scrnOverlay {
+	z-index						: 1;					
+	visibility				: hidden;
+
+	position 					:	fixed;		
+	top								: 0;
+	bottom						: 0;
+	left							: 0;
+	right							: 0;
+
+	background-color	: grey;
+  opacity						: 0.5;
+ }
