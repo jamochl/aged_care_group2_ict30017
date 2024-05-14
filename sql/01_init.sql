@@ -25,8 +25,6 @@ CREATE TABLE Inventory (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
     Purpose VARCHAR(255),
-    OwnerDetails VARCHAR(255),
-    OwnerType VARCHAR(255),
     Description TEXT,
     Quantity INT,
     ManagedLocationId INT

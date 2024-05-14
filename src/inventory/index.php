@@ -19,7 +19,7 @@
         <?php
             $table = "Inventory";
             // SQL query to select specific columns from the table and join with ManagedLocations table
-            $query = "SELECT i.Id, i.Name, i.Purpose, i.OwnerDetails, i.OwnerType, i.Description, i.Quantity, ml.Name AS ManagedLocationName
+            $query = "SELECT i.Id, i.Name, i.Purpose, i.Description, i.Quantity, ml.Name AS ManagedLocationName
                       FROM $table i
                       LEFT JOIN ManagedLocations ml ON i.ManagedLocationId = ml.Id
                       WHERE i.Quantity = 0";
@@ -64,7 +64,7 @@
         <?php
             $table = "Inventory";
             // SQL query to select specific columns from the table and join with ManagedLocations table
-            $query = "SELECT i.Id, i.Name, i.Purpose, i.OwnerDetails, i.OwnerType, i.Description, i.Quantity, ml.Name AS ManagedLocationName
+            $query = "SELECT i.Id, i.Name, i.Purpose, i.Description, i.Quantity, ml.Name AS ManagedLocationName
                       FROM $table i
                       LEFT JOIN ManagedLocations ml ON i.ManagedLocationId = ml.Id
                       WHERE i.Quantity > 0";

@@ -104,11 +104,9 @@
                     </div>
                 </a>
             </div>
-        </div>
         <?php endif?>
         <?php if ($_SESSION['role'] == 2 || $_SESSION['role'] == 1): ?>
         <!-- Admin and carers -->
-        <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
             <?php if ($_SESSION['role'] == 2): ?>
             <div class="col">
                 <a href="/members/my.php" class="card-link">
@@ -141,10 +139,8 @@
                 </a>
             </div>
             <?php endif?>
-        </div>
         <?php endif?>
         <?php if ($_SESSION['role'] == 1): ?>
-        <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
             <div class="col">
                 <a href="/rosters/index.php" class="card-link">
                     <div class="card bg-light">
@@ -164,10 +160,8 @@
                     </div>
                 </a>
             </div>
-        </div>
         <?php endif?>
         <?php if ($_SESSION['role'] == 1 || $_SESSION['role'] == 3): ?>
-        <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
             <!-- Admin and cleaners -->
             <div class="col">
                 <a href="/room/index.php" class="card-link">
@@ -199,11 +193,9 @@
                     </div>
                 </a>
             </div>
-        </div>
         <?php endif?>
         <!-- Accountants and admins -->
         <?php if ($_SESSION['role'] == 1 || $_SESSION['role'] == 4): ?>
-        <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
             <div class="col">
                 <a href="/billing/index.php" class="card-link">
                     <div class="card bg-light">
@@ -213,10 +205,8 @@
                     </div>
                 </a>
             </div>
-        </div>
         <?php endif?>
         <!-- everybody -->
-        <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
             <div class="col">
                 <a href="/docs/index.php" class="card-link">
                     <div class="card bg-light">
