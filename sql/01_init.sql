@@ -18,8 +18,12 @@ CREATE TABLE Members (
 CREATE TABLE Inventory (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
+    ItemCategory VARCHAR(255),
     Description TEXT,
-    Quantity INT
+    Quantity INT,
+    storageLocation VARCHAR(255),
+    supplier VARCHAR(255),
+    supplierNumber BIGINT
 );
 
 CREATE TABLE Staff (

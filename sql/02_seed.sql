@@ -18,22 +18,24 @@ INSERT INTO Members (Id, FirstName, LastName, DateOfBirth, Contact, FamilyContac
 (4, 'Michael', 'Brown', '1976-08-22', 'michael@example.com', 'Sophia Brown - 789-012-3456', 'Allergic to shellfish', 1500.00);
 
 -- Inventory
-INSERT INTO Inventory (name, description, quantity) VALUES
-('Wheelchair', 'Foldable wheelchair for mobility assistance.', 10),
-('Aspirin', 'Pain reliever and fever reducer.', 100),
-('Acetaminophen', 'Pain reliever and fever reducer.', 150),
-('Ibuprofen', 'Nonsteroidal anti-inflammatory drug (NSAID).', 120),
-('Loratadine', 'Antihistamine for allergies.', 80),
-('Omeprazole', 'Proton pump inhibitor for heartburn relief.', 90),
-('Walking Frames', 'Lightweight walking frames for stability support.', 15),
-('Incontinence Pads', 'Disposable incontinence pads for hygiene care.', 200),
-('Bedside Commodes', 'Portable commodes for bedside use.', 8),
-('Recliner Chairs', 'Comfortable recliner chairs for relaxation.', 12),
-('Hearing Aids', 'Digital hearing aids for hearing assistance.', 25),
-('Grab Bars', 'Safety grab bars for bathroom assistance.', 20),
-('Raised Toilet Seats', 'Toilet seats with raised height for accessibility.', 10),
-('Pill Organizers', 'Weekly pill organizers for medication management.', 30),
-('Electric Hoists', 'Electric hoists for transferring patients safely.', 5);
+INSERT INTO Inventory (Name, ItemCategory, Description, Quantity, storageLocation, supplier, supplierNumber) VALUES
+('Wheelchair', 'Mobility Equipment', 'Foldable wheelchair for mobility assistance.', 10, 'Storage A', 'Supplier X', 433500022),
+('Aspirin', 'Medication', 'Pain reliever and fever reducer.', 100, 'Storage B', 'Supplier Y', 433500001),
+('Acetaminophen', 'Medication', 'Pain reliever and fever reducer.', 150, 'Storage C', 'Supplier Z', 433500002),
+('Ibuprofen', 'Medication', 'Nonsteroidal anti-inflammatory drug (NSAID).', 120, 'Storage D', 'Supplier X', 433500003),
+('Loratadine', 'Medication', 'Antihistamine for allergies.', 80, 'Storage E', 'Supplier Y', 433500004),
+('Omeprazole', 'Medication', 'Proton pump inhibitor for heartburn relief.', 90, 'Storage F', 'Supplier Z', 433500005),
+('Walking Frames', 'Mobility Equipment', 'Lightweight walking frames for stability support.', 15, 'Storage G', 'Supplier X', 433500006),
+('Incontinence Pads', 'Healthcare Supplies', 'Disposable incontinence pads for hygiene care.', 200, 'Storage H', 'Supplier Y', 433500007),
+('Bedside Commodes', 'Mobility Equipment', 'Portable commodes for bedside use.', 8, 'Storage I', 'Supplier Z', 433500008),
+('Recliner Chairs', 'Furniture', 'Comfortable recliner chairs for relaxation.', 12, 'Storage J', 'Supplier X', 433500009),
+('Hearing Aids', 'Medical Devices', 'Digital hearing aids for hearing assistance.', 25, 'Storage K', 'Supplier Y', 0433500010),
+('Grab Bars', 'Bathroom Safety', 'Safety grab bars for bathroom assistance.', 20, 'Storage L', 'Supplier Z', 0433500012),
+('Raised Toilet Seats', 'Bathroom Safety', 'Toilet seats with raised height for accessibility.', 10, 'Storage M', 'Supplier X', 433500011),
+('Pill Organizers', 'Healthcare Supplies', 'Weekly pill organizers for medication management.', 30, 'Storage N', 'Supplier Y', 433500013),
+('Electric Hoists', 'Medical Equipment', 'Electric hoists for transferring patients safely.', 5, 'Storage O', 'Supplier Z', 43350000050);
+
+
 
 
 
