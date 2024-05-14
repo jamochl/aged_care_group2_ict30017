@@ -8,17 +8,8 @@
     <title>Add new member</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-</head>
-<body>
-    <div class="container mt-5">
-        <div>
-            <!-- Display the generated breadcrumbs -->
-            <?php generateBreadcrumbs(); ?>
-        </div>
-        <h1>Add new member</h1>
-        <hr>
 
-<style>
+    <style>
     .error-message {
         color: red;
         margin-left: 123px;
@@ -26,10 +17,22 @@
         
     }
 
-    .label {
-        width: 120px;
-    }
+    .wrapper{
+            max-width: 500px;
+            margin: 0 auto;
+        }
 </style>
+</head>
+<body>
+    <div class="wrapper p-3">
+        <div>
+            <!-- Display the generated breadcrumbs -->
+            <?php generateBreadcrumbs(); ?>
+        </div>
+        <h1>Add new member</h1>
+        <hr>
+
+
 <?php
 $checkerror = 0; 
 $memberId = "";
@@ -84,9 +87,10 @@ $pattern4 = "/[\w]+(@)[a-zA-Z]+?(\.[a-zA-Z]+)+/"; // validation pattern for emai
             }
         }
     ?>
-
+        <div class="form-group mb-3">
         <label class="label" for="memberId" > Member ID: </label>
-        <input required type="text" name="memberId" id="memberId" value="<?php echo $memberId; ?>"> <br><br>
+        <input required type="text" name="memberId" id="memberId" class="form-control" value="<?php echo $memberId; ?>">
+        </div>
 
         <?php
         if(!empty($_POST["submit"]))
@@ -108,8 +112,10 @@ $pattern4 = "/[\w]+(@)[a-zA-Z]+?(\.[a-zA-Z]+)+/"; // validation pattern for emai
         }
     ?>
  
+        <div class="form-group mb-3">
         <label class="label" for="fname"> First Name:  </label>
-        <input required type="text" name="fname" id="fname" value="<?php echo $fname; ?>"> <br><br>
+        <input required type="text" name="fname" id="fname" class="form-control" value="<?php echo $fname; ?>">
+        </div>
 
         <?php
         if(!empty($_POST["submit"]))
@@ -131,8 +137,10 @@ $pattern4 = "/[\w]+(@)[a-zA-Z]+?(\.[a-zA-Z]+)+/"; // validation pattern for emai
         }
     ?>
 
+        <div class="form-group mb-3">
         <label class="label" for="lname"> Last Name: </label>
-        <input required type="text" name="lname" id="lname" value="<?php echo $lname; ?>"> <br><br>
+        <input required type="text" name="lname" id="lname" class="form-control" value="<?php echo $lname; ?>">
+        </div>
 
         <?php
         if(!empty($_POST["submit"]))
@@ -153,9 +161,10 @@ $pattern4 = "/[\w]+(@)[a-zA-Z]+?(\.[a-zA-Z]+)+/"; // validation pattern for emai
             }
         }
     ?>
-
+        <div class="form-group mb-3">
         <label class="label" for="dob"> Date of Birth: </label>
-        <input required type="date" name="dob" id="dob" value=""> <br><br>
+        <input required type="date" name="dob" id="dob" class="form-control" value="">
+        </div>
 
         <?php
         if(!empty($_POST["submit"]))
@@ -176,9 +185,11 @@ $pattern4 = "/[\w]+(@)[a-zA-Z]+?(\.[a-zA-Z]+)+/"; // validation pattern for emai
             }
         }
     ?>
-    
+
+        <div class="form-group mb-3">
         <label class="label" for="contact"> Contact:</label>
-        <input required type="text" name="contact" id="contact" value="<?php echo $contact; ?>"> <br><br>
+        <input required type="text" name="contact" id="contact" class="form-control" value="<?php echo $contact; ?>">
+        </div>
 
         <?php
         if(!empty($_POST["submit"]))
@@ -195,8 +206,10 @@ $pattern4 = "/[\w]+(@)[a-zA-Z]+?(\.[a-zA-Z]+)+/"; // validation pattern for emai
         }
     ?>
     
+        <div class="form-group mb-3">
         <label class="label" for="fcontact"> Family Contact: </label>
-        <input required type="text" name="fcontact" id="fcontact" value="<?php echo $fcontact; ?>"> <br><br>
+        <input required type="text" name="fcontact" id="fcontact" class="form-control" value="<?php echo $fcontact; ?>">
+        </div>
 
         <?php
         if(!empty($_POST["submit"]))
@@ -213,8 +226,10 @@ $pattern4 = "/[\w]+(@)[a-zA-Z]+?(\.[a-zA-Z]+)+/"; // validation pattern for emai
         }
     ?>
 
+        <div class="form-group mb-3">
         <label class="label" for="medhistory"> Medical History:</label>
-        <textarea name="medhistory" id="medhistory" maxlength="260" width="300px" style="width: 300px; height: 100px;" ><?php echo $medhistory; ?></textarea> <br><br>
+        <textarea name="medhistory" id="medhistory" maxlength="260" width="300px" style="width: 300px; height: 100px;" class="form-control"><?php echo $medhistory; ?></textarea>
+        </div>
 
         <?php
         if(!empty($_POST["submit"]))
@@ -230,12 +245,15 @@ $pattern4 = "/[\w]+(@)[a-zA-Z]+?(\.[a-zA-Z]+)+/"; // validation pattern for emai
             }
         }
     ?>
-    
-        <label class="label" for="bpy"> Billing Per Year: </label>
-        <input required type="text" name="bpy" id="bpy" value="<?php echo $bpy; ?>"> <br><br>
 
-        <input required type="submit" name="submit" value="submit">
+        <div class="form-group mb-3">
+        <label class="label" for="bpy"> Billing Per Year: </label>
+        <input required type="text" name="bpy" id="bpy" class="form-control" value="<?php echo $bpy; ?>">
+        </div>
+
+        <input required type="submit" name="submit" class="btn btn-primary" value="submit">
     </form>
+    </div>
 
 </body>
 </html>
