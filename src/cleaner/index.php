@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Data</title>
+    <title>Clean Roster</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -15,12 +15,15 @@
             <!-- Display the generated breadcrumbs -->
             <?php generateBreadcrumbs(); ?>
         </div>
-        <h1>Staff</h1>
+        <h1>Cleaning Room</h1>
         <?php
 
-            $table = "Staff";
+            $table = "RoomClean";
             // SQL query to select all data from the table
-            $query = "SELECT * FROM $table";
+            $query = "SELECT rc.*, ml.Name AS ManagedLocationName, r.Name AS RoomName
+            FROM RoomClean rc
+            INNER JOIN ManagedLocations ml on rc.ManagedLocationId = ml.Id
+            INNER JOIN Room r on rc.RoomId = r.Id";
             // Execute query
             // Check if there are any rows returned
             $result = $mysqli->query($query);
@@ -32,39 +35,28 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Staff Name</th>
-                            <th>Birth Date</th>
-                            <th>Gender</th>
-                            <th>Immigration Status</th>
-                            <th>Phone Number</th>
-                            <th>Role</th>
+                            <th>Service Type</th>
+                            <th>Start Time</th>
+                            <th>EndTime</th>
+                            <th>Managed Location</th>
+                            <th>Room</th>
+                            <th>Note</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         // Display the data in the table rows
                         while ($row = $result->fetch_assoc()) {
-                            $birthdate = date('Y-m-d', strtotime($row['BirthDate']));
+
                             // Construct the URL with rosterId as query parameter
-                            $url = "/staff/view.php?id=" . $row['Id'];
-                            $urlEdit = "/staff/edit.php?id=" . $row['Id'];
                             echo "<tr>";
                             echo "<td>{$row['Id']}</td>";
-                            echo "<td>{$row['Name']}</td>";
-                            echo "<td>$birthdate</td>";
-                            echo "<td>{$row['Gender']}</td>";
-                            echo "<td>{$row['ImmigrationStatus']}</td>";
-                            echo "<td>{$row['PhoneNumber']}</td>";
-                            if ($row['RoleId'] == 1){
-                                echo "<td>Admin</td>";
-                            } else if ($row['RoleId'] == 2){
-                                echo "<td>Carer</td>";
-                            } else if ($row['RoleId'] == 3){
-                                echo "<td>Cleaner</td>";
-                            } else if ($row['RoleId'] == 4){
-                                echo "<td>Accountant</td>";
-                            }
-                            echo "<td><a href='{$url}' class='btn btn-primary add-button'>View</a><a href='{$urlEdit}' class='btn btn-primary add-button'>Edit</a></td>";
+                            echo "<td>{$row['ServiceType']}</td>";
+                            echo "<td>{$row['StartTime']}</td>";
+                            echo "<td>{$row['EndTime']}</td>";
+                            echo "<td>{$row['ManagedLocationName']}</td>";
+                            echo "<td>{$row['RoomName']}</td>";
+                            echo "<td>{$row['Notes']}</td>";
                             echo "</tr>";
                         }
 
@@ -85,7 +77,6 @@
         $mysqli->close();
         ?>
 
-        <a href="/staff/add.php" class="btn btn-primary add-button button-gap">Create Staff</a>
     </div>
 </body>
 </html>

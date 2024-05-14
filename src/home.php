@@ -60,17 +60,32 @@
 
 <body>
     <div class="container mt-5">
+        <?php
+        // Check if there is an error message and the requested page in the session variables
+        $error = isset($_SESSION['error']) ? $_SESSION['error'] : '';
+        $page = isset($_SESSION['requested_page']) ? $_SESSION['requested_page'] : '';
+
+        // Display error message if present
+        if ($error === 'unauthorized' && !empty($page)) {
+            echo '<div class="alert alert-danger" role="alert">You are not authorized to access the page: ' . htmlspecialchars($page) . '</div>';
+        }
+
+        // Unset session variables
+        unset($_SESSION['error']);
+        unset($_SESSION['requested_page']);
+        ?>
         <div class="container my-5">
+            <h1>Aged Care Management Software</h1>
             <div class="d-flex justify-content-between">
-                <h1>Welcome, <?=$staffName?>!</h1>
+                <h2>Welcome, <?=$staffName?>!</h2>
                 <form method="post">
                     <input class="btn btn-danger" type="submit" name="logout" value="Logout">
                 </form>
             </div>
         </div>
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-            <?php if ($_SESSION['role'] == 2): ?>
-            <!-- Carer Dashboard -->
+        <!-- Everything but accountant -->
+        <?php if ($_SESSION['role'] != 4): ?>
+        <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
             <div class="col">
                 <a href="/rosters/my.php" class="card-link">
                     <div class="card bg-light">
@@ -80,78 +95,31 @@
                     </div>
                 </a>
             </div>
+            <div class="col">
+                <a href="/service_records/my.php" class="card-link">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">My Services Records</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <?php endif?>
+        <?php if ($_SESSION['role'] == 2 || $_SESSION['role'] == 1): ?>
+        <!-- Admin and carers -->
+        <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
+            <?php if ($_SESSION['role'] == 2): ?>
             <div class="col">
                 <a href="/members/my.php" class="card-link">
                     <div class="card bg-light">
                         <div class="card-body">
-                            <h5 class="card-title">My Members</h5>
+                            <h5 class="card-title">My Member Details</h5>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="col">
-                <a href="/members" class="card-link">
-                    <div class="card bg-light">
-                        <div class="card-body">
-                            <h5 class="card-title">All Member Details</h5>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col">
-                <a href="/inventory" class="card-link">
-                    <div class="card bg-light">
-                        <div class="card-body">
-                            <h5 class="card-title">Inventory</h5>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <!-- Add more Carer specific content here -->
-            <?php elseif ($_SESSION['role'] == 3): ?>
-            <!-- Cleaner Dashboard -->
-            <div class="col">
-                <a href="/rosters/my.php" class="card-link">
-                    <div class="card bg-light">
-                        <div class="card-body">
-                            <h5 class="card-title">My Rosters and Availability</h5>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <!-- Add more Cleaner specific content here -->
-            <?php elseif ($_SESSION['role'] == 4): ?>
-            <!-- Accountant Dashboard -->
-            <div class="col">
-                <a href="/rosters/my.php" class="card-link">
-                    <div class="card bg-light">
-                        <div class="card-body">
-                            <h5 class="card-title">My Rosters and Availability</h5>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col">
-                <a href="/invoices/index.php" class="card-link">
-                    <div class="card bg-light">
-                        <div class="card-body">
-                            <h5 class="card-title">Invoices</h5>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <!-- Add more Accountant specific content here -->
-            <?php else: ?>
-            <!-- Default Dashboard for Admin or other roles -->
-            <div class="col">
-                <a href="/rosters/my.php" class="card-link">
-                    <div class="card bg-light">
-                        <div class="card-body">
-                            <h5 class="card-title">My Rosters and Availability</h5>
-                        </div>
-                    </div>
-                </a>
-            </div>
+            <?php endif?>
             <div class="col">
                 <a href="/members/index.php" class="card-link">
                     <div class="card bg-light">
@@ -161,6 +129,8 @@
                     </div>
                 </a>
             </div>
+            <!-- Admin only -->
+            <?php if ($_SESSION['role'] == 1): ?>
             <div class="col">
                 <a href="/staff/index.php" class="card-link">
                     <div class="card bg-light">
@@ -170,24 +140,56 @@
                     </div>
                 </a>
             </div>
+            <?php endif?>
+        </div>
+        <?php endif?>
+        <?php if ($_SESSION['role'] == 1): ?>
+        <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
             <div class="col">
                 <a href="/rosters/index.php" class="card-link">
                     <div class="card bg-light">
                         <div class="card-body">
-                            <h5 class="card-title">Rosters and availability</h5>
+                            <h5 class="card-title">All Rosters and availability</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- Admin only -->
+            <div class="col">
+                <a href="/service_records/index.php" class="card-link">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">All Services Records</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <?php endif?>
+        <?php if ($_SESSION['role'] == 1 || $_SESSION['role'] == 3): ?>
+        <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
+            <!-- Admin and cleaners -->
+            <div class="col">
+                <a href="/room/index.php" class="card-link">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">Rooms and bookings</h5>
                         </div>
                     </div>
                 </a>
             </div>
             <div class="col">
-                <a href="/facilities/index.php" class="card-link">
+                <a href="/cleaner/index.php" class="card-link">
                     <div class="card bg-light">
                         <div class="card-body">
-                            <h5 class="card-title">Facilities</h5>
+                            <h5 class="card-title">Cleaning Status</h5>
                         </div>
                     </div>
                 </a>
             </div>
+        <?php endif?>
+        <?php if ($_SESSION['role'] == 1 || $_SESSION['role'] == 2): ?>
+            <!-- Admin and carers -->
             <div class="col">
                 <a href="/inventory" class="card-link">
                     <div class="card bg-light">
@@ -197,8 +199,34 @@
                     </div>
                 </a>
             </div>
+        </div>
+        <?php endif?>
+        <!-- Accountants and admins -->
+        <?php if ($_SESSION['role'] == 1 || $_SESSION['role'] == 4): ?>
+        <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
+            <div class="col">
+                <a href="/billing/index.php" class="card-link">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">Billing</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <?php endif?>
+        <!-- everybody -->
+        <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
+            <div class="col">
+                <a href="/docs/index.php" class="card-link">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">Documentation</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
             <!-- Add more Admin specific content here -->
-            <?php endif; ?>
         </div>
     </div>
 </body>

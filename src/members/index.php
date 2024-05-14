@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Member Data</title>
+    <title>Members</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -15,48 +15,54 @@
             <!-- Display the generated breadcrumbs -->
             <?php generateBreadcrumbs(); ?>
         </div>
-        <h1>Members</h1>
-        <?php
-            $table = "Members";
-            // SQL query to select all data from the table
-            $query = "SELECT * FROM $table";
-            // Execute query
-            $result = $mysqli->query($query);
-            // Check if there are any rows returned
-            if ($result->num_rows > 0) {
-                // Display data in a table
-                echo "<table class='table'>";
-                echo "<thead><tr>";
-                // Fetch table column names
-                $field_names = $result->fetch_fields();
-                foreach ($field_names as $field) {
-                    echo "<th>$field->name</th>";
-                }
-                // Add an extra column for actions
-                echo "<th>Actions</th>";
-                echo "</tr></thead><tbody>";
-                // Fetch and display table data
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>";
-                    foreach ($row as $value) {
-                        echo "<td>$value</td>";
+        <h2>Members</h2>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Date of Birth</th>
+                        <th>Gender</th>
+                        <th>Medical History</th>
+                        <th>Is Still Member</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $sql = "SELECT Id, FirstName, LastName, DateOfBirth, Gender, PhoneNumber, Email, EmergencyContact, EmergencyRelationship, MedicalHistory, BillingPerYear, IsStillMember FROM Members";
+                    if ($result = $mysqli->query($sql)) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . $row['Id'] . "</td>";
+                            echo "<td>" . $row['FirstName'] . "</td>";
+                            echo "<td>" . $row['LastName'] . "</td>";
+                            echo "<td>" . $row['DateOfBirth'] . "</td>";
+                            echo "<td>" . $row['Gender'] . "</td>";
+                            echo "<td>" . $row['MedicalHistory'] . "</td>";
+                            echo "<td>" . ($row['IsStillMember'] == 1 ? "true" : "false") . "</td>";
+                            echo "<td>";
+                            echo "<a href='view.php?id=" . $row['Id'] . "' class='btn btn-primary mx-2'>View</a>";
+                            echo "<a href='/service_records/index.php?memberid=" . $row['Id'] . "' class='btn btn-primary ml-2'>Service History</a>";
+                            if ($_SESSION['role'] == 1) {
+                                echo "<a href='edit.php?id=" . $row['Id'] . "' class='mx-2 btn btn-primary'>Edit</a>";
+                            } else {
+                                echo "<a href='edit.php?id=" . $row['Id'] . "' class='mx-2 btn btn-primary disabled' aria-disabled>Edit</a>";
+                            }
+                            echo "</td>";
+                            echo "</tr>";
+                        }
+                        $result->free();
+                    } else {
+                        echo "Error: " . $mysqli->error;
                     }
-                    // Add view and edit buttons with links
-                    echo "<td><a href='/members/view.php?id={$row['Id']}' class='btn btn-primary'>View</a> <a href='/members/edit.php?id={$row['Id']}' class='btn btn-primary'>Edit</a></td>";
-                    echo "</tr>";
-                }
-                echo "</tbody></table>";
-            } else {
-                echo "No data available in $table";
-            }
-            // Free result set
-            $result->free();
-
-        // Close connection
-        $mysqli->close();
-        ?>
-
-        <a href="/members/add.php" class="btn btn-primary add-button button-gap">Create Member</a>
+                    ?>
+                </tbody>
+            </table>
+        </div>
+        <a href="add.php" class="btn btn-primary">Add New Member</a>
     </div>
 </body>
 </html>

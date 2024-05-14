@@ -102,6 +102,8 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : null;
             echo "<p>No service history for this roster or staff</p>";
         }
         ?>
+
+        <a href="/service_records/add.php" class="btn btn-primary add-button button-gap">Create Service Records</a>
     </div>
 </body>
 

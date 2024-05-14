@@ -1,6 +1,6 @@
 <?php include '../config.php'; ?>
 <?php
-// Get the staff ID from the query string
+// Get the staff ID from the session
 $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
 ?>
 
@@ -56,12 +56,9 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
                             echo "<td>{$row['EndTime']}</td>";
                             echo "<td>{$row['ManagedLocationName']}</td>";
                             echo "<td>{$row['Notes']}</td>";
-                            echo "<td><a href='{$url}' class='btn btn-primary add-button'>View Related Services</a></td>";
+                            echo "<td><a href='{$url}' class='btn btn-primary add-button'>View Services</a></td>";
                             echo "</tr>";
                         }
-
-                        // Close database connection
-                        // $mysqli->close();
                         ?>
                     </tbody>
                 </table>
@@ -73,13 +70,8 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
         ?>
 
         <?php
-        // Table names
-        $availabilitiesTable = "Availabilities";
-        ?>
-
-        <?php
         // SQL query to retrieve availabilities with staff names
-        $availabilitiesQuery = "SELECT Availabilities.Id, Availabilities.StartTime, Availabilities.EndTime, Availabilities.StaffId, Staff.Name AS StaffName FROM $availabilitiesTable JOIN Staff ON Availabilities.StaffId = Staff.Id WHERE StaffId = $staffId";
+        $availabilitiesQuery = "SELECT Availabilities.Id, Availabilities.StartTime, Availabilities.EndTime FROM Availabilities WHERE StaffId = $staffId";
 
         // Execute the availabilities query
         $availabilitiesResult = $mysqli->query($availabilitiesQuery);
@@ -88,7 +80,7 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
         <h1>Availabilities</h1>
 
         <?php
-        // Display availabilities with staff names in a table
+        // Display availabilities in a table
         if ($availabilitiesResult->num_rows > 0) {
             echo "<table class='table'>";
             echo "<thead><tr>";
@@ -100,7 +92,9 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
                 echo "<tr>";
                 echo "<td>{$row['StartTime']}</td>";
                 echo "<td>{$row['EndTime']}</td>";
-                echo "<td><a href='/availabilities/edit.php?id={$row['Id']}' class='btn btn-primary add-button'>Edit Availabilities</a></td>";
+
+                echo "<td><a href='/availabilities/edit.php?id={$row['Id']}' class='btn btn-primary add-button'>Edit</a>
+                <a class='btn btn-danger' href='/availabilities/delete.php?id={$row['Id']}'>Delete</a></td>";
                 echo "</tr>";
             }
             echo "</tbody></table>";
@@ -115,6 +109,7 @@ $staffId = isset($_SESSION['staffid']) ? intval($_SESSION['staffid']) : 1;
 
         <a href="/availabilities/add.php" class="btn btn-primary add-button button-gap">Add Availability</a>
     </div>
+
 </body>
 
 </html>

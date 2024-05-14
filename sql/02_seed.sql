@@ -1,35 +1,37 @@
 -- Roles
 INSERT INTO Roles (Id, Name, Description) VALUES
 (1, 'Admin', 'Administrator role with full access'),
-(2, 'Staff', 'Standard staff role'),
+(2, 'Carer', 'Standard carer role'),
 (3, 'Cleaner', 'Limited access role for guests'),
 (4, 'Accountant', 'Limited access role for guests');
 
 -- ManagedLocations
-INSERT INTO ManagedLocations (Id, Name, Address, Description) VALUES
-(1, 'Aged Care', '123 Main St, City', 'Main building for hosting multiple members'),
-(2, 'Brian Durings House', '456 Elm St, Town', 'Aged care in the member Brian home itself');
+INSERT INTO ManagedLocations (Id, Personal, Name, Address, Description) VALUES
+(1, 0, 'Aged Care', '123 Main St, City', 'Main building for hosting multiple members'),
+(2, 1, 'Brian Durings House', '456 Elm St, Town', 'Aged care in the member Brian home itself');
 
 -- Members
-INSERT INTO Members (Id, FirstName, LastName, DateOfBirth, Contact, FamilyContact, MedicalHistory, BillingPerYear) VALUES
-(1, 'John', 'Doe', '1980-05-15', 'john@example.com', 'Jane Doe - 123-456-7890', 'No significant medical history', 1000.00),
-(2, 'Alice', 'Smith', '1992-09-28', 'alice@example.com', 'Bob Smith - 987-654-3210', 'Allergic to penicillin', 1200.00),
-(3, 'Emma', 'Johnson', '1985-12-10', 'emma@example.com', 'George Johnson - 456-789-0123', 'None', 800.00),
-(4, 'Michael', 'Brown', '1976-08-22', 'michael@example.com', 'Sophia Brown - 789-012-3456', 'Allergic to shellfish', 1500.00);
+INSERT INTO Members (Id, FirstName, LastName, DateOfBirth, Gender, Email, PhoneNumber, Address, EmergencyContact, EmergencyRelationship, DateJoined, IsStillMember, MedicalHistory, BillingPerYear) VALUES
+(1, 'John', 'Doe', '1980-05-15', 'male', 'john@example.com', '123-456-7890', '123 Main St, Cityville', 'Jane Doe', 'Spouse', '2023-05-15', 1, 'No significant medical history', 1000.00),
+(2, 'Alice', 'Smith', '1992-09-28', 'female', 'alice@example.com', '987-654-3210', '456 Elm St, Townsville', 'Bob Smith', 'Parent', '2023-05-15', 1, 'Allergic to penicillin', 1200.00),
+(3, 'Emma', 'Johnson', '1985-12-10', 'female', 'emma@example.com', '456-789-0123', '789 Oak St, Villageton', 'George Johnson', 'Sibling', '2023-05-15', 1, "None", 800.00),
+(4, 'Michael', 'Brown', '1976-08-22', 'male', 'michael@example.com', '789-012-3456', '101 Pine St, Hamletville', 'Sophia Brown', 'Child', '2023-05-15', 1, 'Allergic to shellfish', 1500.00);
 
 -- Inventory
-INSERT INTO Inventory (Id, Name, Purpose, OwnerDetails, OwnerType, Description, Quantity, ManagedLocationId) VALUES
-(1, 'Laptop', 'General use', 'John Doe', 'Staff', 'Dell XPS 15', 5, 1),
-(2, 'Projector', 'Presentation', 'Alice Smith', 'Staff', 'Epson PowerLite 1781W', 2, 1),
-(3, 'Printer', 'Office use', 'Main Office', 'Organization', 'HP LaserJet Pro M402n', 3, 1),
-(4, 'Scanner', 'Document scanning', 'Main Office', 'Organization', 'Epson WorkForce ES-500W', 2, 1);
+INSERT INTO Inventory (Id, Name, Purpose, Description, Quantity, ManagedLocationId) VALUES
+(1, 'Oxygen Tank', 'Respiratory support', 'Portable oxygen tank, 5L capacity', 10, 1),
+(2, 'Insulin', 'Diabetes management', 'Humulin R Insulin, 10ml vial', 50, 1),
+(3, 'Blood Pressure Monitor', 'Vital sign monitoring', 'Digital blood pressure monitor', 20, 1),
+(4, 'Wheelchair', 'Mobility aid', 'Standard manual wheelchair', 15, 1),
+(5, 'Panadol', 'Fever management', 'For patient with fevers', 0, 1);
 
 -- Staff
-INSERT INTO Staff (Name, PasswordHash, Contact, BirthDate, Nationality, PhoneNumber, RoleId) VALUES
-('Admin', 'admin', 'admin@example.com', '1985-05-20', 'Brazillian', '0458234888', 1),
-('Staff', 'staff', 'staff@example.com', '1996-06-05', 'Polish', '0444888999',2),
-('Cleaner', 'cleaner', 'cleaner@example.com','1994-12-12', 'American', '0455222333', 3),
-('Accountant', 'accountant', 'accountant@example.com', '2004-04-07', 'Vietnamese', '0469696969', 4);
+INSERT INTO Staff (Name, PasswordHash, BirthDate, Gender, ImmigrationStatus, Contact, PhoneNumber, RoleId) VALUES
+('Admin1', 'admin1', '1985-05-20', 'Male', 'Permanent Work Visa', 'admin@example.com', '0458234888', 1),
+('Admin2', 'admin2', '1985-05-20', 'Male', 'Permanent Work Visa', 'admin@example.com', '0458234888', 1),
+('carer', 'carer', '1996-06-05', 'Female', 'Student Visa', 'carer@example.com', '0444888999', 2),
+('Cleaner', 'cleaner', '1994-12-12', 'Other', 'Permanent Resident', 'cleaner@example.com', '0455222333', 3),
+('Accountant', 'accountant', '2004-04-07', 'Male',  'Permanent Resident', 'accountant@example.com', '0469696969', 4);
 
 -- Availabilities
 INSERT INTO Availabilities (Id, StartTime, EndTime, StaffId) VALUES
@@ -40,10 +42,10 @@ INSERT INTO Availabilities (Id, StartTime, EndTime, StaffId) VALUES
 
 -- Room
 INSERT INTO Room (Id, Name, Description, Availability, BookedFor, MaintenanceStatus, ManagedLocationId) VALUES
-(1, 'Conference Room A', 'Spacious conference room', 'Available', NULL, 'Functional', 1),
-(2, 'Meeting Room B', 'Small meeting room', 'Available', NULL, 'Functional', 1),
-(3, 'Meeting Room C', 'Medium-sized meeting room', 'Available', NULL, 'Functional', 2),
-(4, 'Boardroom', 'Executive meeting space', 'Available', NULL, 'Functional', 2);
+(1, 'Patient Room 101', 'Single occupancy room with attached bathroom', 1, NULL, 'Functional', 1),
+(2, 'Patient Room 102', 'Single occupancy room with shared bathroom', 1, NULL, 'Functional', 1),
+(3, 'Patient Room 103', 'Double occupancy room with attached bathroom', 0, 2, 'Functional', 2),
+(4, 'Patient Room 104', 'Double occupancy room with shared bathroom', 1, NULL, 'Functional', 2);
 
 -- Utilities
 INSERT INTO Utilities (Id, Name, Description, Availability, BookedFor, MaintenanceStatus, ManagedLocationId) VALUES
@@ -52,8 +54,10 @@ INSERT INTO Utilities (Id, Name, Description, Availability, BookedFor, Maintenan
 (3, 'Printer', 'HP LaserJet Pro M402n', 'Available', NULL, 'Functional', 2),
 (4, 'Scanner', 'Epson WorkForce ES-500W', 'Available', NULL, 'Functional', 2);
 
-INSERT INTO Rosters (Id, StaffId, ServiceType, StartTime, EndTime, ManagedLocationId, Notes) VALUES
-(1, 1 , 'Checkup', '2024-03-25 10:00:00', '2024-03-25 11:00:00', 1, 'roster for staff');
+INSERT INTO Rosters (StaffId, ServiceType, StartTime, EndTime, ManagedLocationId, Notes) VALUES
+(1 , 'Checkup', '2024-03-25 10:00:00', '2024-03-25 11:00:00', 1, 'roster for staff'),
+(3, 'Clean Room', '2024-03-26 13:00:00', '2024-03-26 15:00:00', 1, 'roster for cleaner'),
+(3, 'Clean Room', '2024-03-28 13:00:00', '2024-03-28 15:00:00', 1, 'roster for cleaner');
 
 -- ServiceRecords
 INSERT INTO ServiceRecords (Id, RosterId, MemberId, StaffId, ServiceType, StartTime, EndTime, ManagedLocationId, Notes) VALUES
@@ -62,14 +66,19 @@ INSERT INTO ServiceRecords (Id, RosterId, MemberId, StaffId, ServiceType, StartT
 (3,1,3 ,2 , 'Checkup', '2024-03-26 10:00:00', '2024-03-26 11:00:00', 2, 'Routine checkup'),
 (4,1 , 4, 2, 'Consultation', '2024-03-26 14:00:00', '2024-03-26 15:00:00', 2, 'Discussing treatment options');
 
+-- Cleaner
+INSERT INTO RoomClean (Id, RosterId, RoomId, StaffId, ServiceType, StartTime, EndTime, ManagedLocationId, Notes) VALUES
+(1, 2, 2 ,3 , 'Clean Room', '2024-03-26 13:00:00', '2024-03-26 15:00:00', 1, 'Cleaning room 1'),
+(2, 3, 3 ,3 , 'Clean Room', '2024-03-28 13:00:00', '2024-03-28 15:00:00', 1, 'Cleaning room 1');
+
 -- BillingReports
-INSERT INTO BillingReports (Id, StartTime, EndTime, TransactionType, Amount) VALUES
-(1, '2024-03-01 00:00:00', '2024-03-31 23:59:59', 'Membership Fee', 100.00),
-(2, '2024-03-25 10:00:00', '2024-03-25 11:00:00', 'Membership Fee', 50.00),
-(3, '2024-03-25 14:00:00', '2024-03-25 15:00:00', 'Membership Fee', 75.00),
-(4, '2024-03-01 00:00:00', '2024-03-31 23:59:59', 'Membership Fee', 80.00),
-(5, '2024-03-26 10:00:00', '2024-03-26 11:00:00', 'Membership Fee', 40.00),
-(6, '2024-03-26 14:00:00', '2024-03-26 15:00:00', 'Membership Fee', 60.00);
+INSERT INTO BillingReports (Id, StartTime, EndTime, TransactionType) VALUES
+(1, '2024-03-01 00:00:00', '2024-03-31 23:59:59', 'Membership Fee'),
+(2, '2024-03-25 10:00:00', '2024-03-25 11:00:00', 'Membership Fee'),
+(3, '2024-03-25 14:00:00', '2024-03-25 15:00:00', 'Membership Fee'),
+(4, '2024-03-01 00:00:00', '2024-03-31 23:59:59', 'Membership Fee'),
+(5, '2024-03-26 10:00:00', '2024-03-26 11:00:00', 'Membership Fee'),
+(6, '2024-03-26 14:00:00', '2024-03-26 15:00:00', 'Membership Fee');
 
 -- BillingItem
 INSERT INTO BillingItem (Id, BillingReportId, MemberId, Amount) VALUES
