@@ -74,16 +74,13 @@ INSERT INTO Rosters (StaffId, ServiceType, StartTime, EndTime, ManagedLocationId
 (3, 'Clean Room', '2024-03-28 13:00:00', '2024-03-28 15:00:00', 1, 'roster for cleaner');
 
 -- ServiceRecords
-INSERT INTO ServiceRecords (Id, RosterId, MemberId, StaffId, ServiceType, StartTime, EndTime, ManagedLocationId, Notes) VALUES
-(1, 1,2 ,1 , 'Checkup', '2024-03-25 10:00:00', '2024-03-25 11:00:00', 1, 'Routine checkup'),
-(2,1 ,2 ,2 , 'Consultation', '2024-03-25 14:00:00', '2024-03-25 15:00:00', 1, 'Discussing treatment options'),
-(3,1,3 ,2 , 'Checkup', '2024-03-26 10:00:00', '2024-03-26 11:00:00', 2, 'Routine checkup'),
-(4,1 , 4, 2, 'Consultation', '2024-03-26 14:00:00', '2024-03-26 15:00:00', 2, 'Discussing treatment options');
+INSERT INTO ServiceRecords (Id, RosterId, MemberId, StaffId, ServiceType, StartTime, EndTime, ManagedLocationId, Notes, Progress) VALUES
+(1, 1,2 ,1 , 'Checkup', '2024-03-25 10:00:00', '2024-03-25 11:00:00', 1, 'Routine checkup', "0"),
+(2,1 ,2 ,2 , 'Consultation', '2024-03-25 14:00:00', '2024-03-25 15:00:00', 1, 'Discussing treatment options', "0"),
+(3,1,3 ,2 , 'Checkup', '2024-03-26 10:00:00', '2024-03-26 11:00:00', 2, 'Routine checkup', "0"),
+(4,1 , 4, 2, 'Consultation', '2024-03-26 14:00:00', '2024-03-26 15:00:00', 2, 'Discussing treatment options', "0");
 
--- Cleaner
-INSERT INTO RoomClean (Id, RosterId, RoomId, StaffId, ServiceType, StartTime, EndTime, ManagedLocationId, Notes) VALUES
-(1, 2, 2 ,3 , 'Clean Room', '2024-03-26 13:00:00', '2024-03-26 15:00:00', 1, 'Cleaning room 1'),
-(2, 3, 3 ,3 , 'Clean Room', '2024-03-28 13:00:00', '2024-03-28 15:00:00', 1, 'Cleaning room 1');
+
 
 -- BillingReports
 INSERT INTO BillingReports (Id, StartTime, EndTime, TransactionType) VALUES
