@@ -24,12 +24,12 @@ CREATE TABLE Members (
 CREATE TABLE Inventory (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(255),
-    Purpose VARCHAR(255),
-    OwnerDetails VARCHAR(255),
-    OwnerType VARCHAR(255),
+    ItemCategory VARCHAR(255),
     Description TEXT,
     Quantity INT,
-    ManagedLocationId INT
+    storageLocation VARCHAR(255),
+    supplier VARCHAR(255),
+    supplierNumber BIGINT
 );
 
 CREATE TABLE Staff (
@@ -129,7 +129,7 @@ CREATE TABLE BillingItem (
 
 ALTER TABLE Staff ADD FOREIGN KEY (RoleId) REFERENCES Roles(Id);
 
-ALTER TABLE Inventory ADD FOREIGN KEY (ManagedLocationId) REFERENCES ManagedLocations(Id);
+-- ALTER TABLE Inventory ADD FOREIGN KEY (ManagedLocationId) REFERENCES ManagedLocations(Id);
 
 ALTER TABLE Availabilities ADD FOREIGN KEY (StaffId) REFERENCES Staff(Id);
 

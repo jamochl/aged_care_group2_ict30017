@@ -1,4 +1,23 @@
-<?php include '../config.php'; ?>
+<?php
+include '../config.php';
+
+// Enable error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Fetch distinct categories for the dropdown filter
+$categoriesQuery = "SELECT DISTINCT ItemCategory FROM Inventory";
+$categoriesResult = $mysqli->query($categoriesQuery);
+
+// Fetch all inventory items
+$inventoryQuery = "SELECT Id, Name, ItemCategory, Description, Quantity, storageLocation, supplier, supplierNumber FROM Inventory";
+$inventoryResult = $mysqli->query($inventoryQuery);
+$inventoryItems = [];
+while ($row = $inventoryResult->fetch_assoc()) {
+    $inventoryItems[] = $row;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +26,8 @@
     <title>Inventory</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="container mt-5">
@@ -15,100 +36,153 @@
             <?php generateBreadcrumbs(); ?>
         </div>
         <h1>Inventory</h1>
-        <h2>Out of stock</h2>
-        <?php
-            $table = "Inventory";
-            // SQL query to select specific columns from the table and join with ManagedLocations table
-            $query = "SELECT i.Id, i.Name, i.Purpose, i.OwnerDetails, i.OwnerType, i.Description, i.Quantity, ml.Name AS ManagedLocationName
-                      FROM $table i
-                      LEFT JOIN ManagedLocations ml ON i.ManagedLocationId = ml.Id
-                      WHERE i.Quantity = 0";
-            // Execute query
-            $result = $mysqli->query($query);
-            // Check if there are any rows returned
-            if ($result->num_rows > 0) {
-                // Display data in a table
-                echo "<table class='table'>";
-                echo "<thead><tr>";
-                // Explicitly define table headers
-                echo "<th>Name</th>";
-                echo "<th>Purpose</th>";
-                echo "<th>Description</th>";
-                echo "<th>Quantity</th>";
-                echo "<th>Managed Location</th>";
-                echo "<th>Actions</th>";
-                echo "</tr></thead><tbody>";
-                // Fetch and display table data
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>";
-                    echo "<td>{$row['Name']}</td>";
-                    echo "<td>{$row['Purpose']}</td>";
-                    echo "<td>{$row['Description']}</td>";
-                    echo "<td>{$row['Quantity']}</td>";
-                    echo "<td>{$row['ManagedLocationName']}</td>";
-                    echo "<td>";
-                    echo "<a href='view.php?id=" . $row['Id'] . "' class='btn btn-primary ml-2'>View</a>";
-                    echo "<a href='edit.php?id=" . $row['Id'] . "' class='btn btn-primary'>Edit</a>";
-                    echo "</td>";
-                    echo "</tr>";
-                }
-                echo "</tbody></table>";
-            } else {
-                echo "No out-of-stock data available in $table";
-            }
-            // Free result set
-            $result->free();
-        ?>
+
+        <!-- Search and Filter Form -->
+        <form id="searchForm" class="mb-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" class="form-control" id="search" name="search" placeholder="Search...">
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select" id="category" name="category">
+                        <option value="">All Categories</option>
+                        <?php
+                        if ($categoriesResult->num_rows > 0) {
+                            while ($row = $categoriesResult->fetch_assoc()) {
+                                echo "<option value='{$row['ItemCategory']}'>{$row['ItemCategory']}</option>";
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+            </div>
+        </form>
+
+        <h2>Out of Stock</h2>
+        <div id="outOfStockTable">
+            <!-- Out of Stock table will be dynamically inserted here -->
+        </div>
+
         <hr>
-        <h2>In stock</h2>
-        <?php
-            $table = "Inventory";
-            // SQL query to select specific columns from the table and join with ManagedLocations table
-            $query = "SELECT i.Id, i.Name, i.Purpose, i.OwnerDetails, i.OwnerType, i.Description, i.Quantity, ml.Name AS ManagedLocationName
-                      FROM $table i
-                      LEFT JOIN ManagedLocations ml ON i.ManagedLocationId = ml.Id
-                      WHERE i.Quantity > 0";
-            // Execute query
-            $result = $mysqli->query($query);
-            // Check if there are any rows returned
-            if ($result->num_rows > 0) {
-                // Display data in a table
-                echo "<table class='table'>";
-                echo "<thead><tr>";
-                // Explicitly define table headers
-                echo "<th>Name</th>";
-                echo "<th>Purpose</th>";
-                echo "<th>Description</th>";
-                echo "<th>Quantity</th>";
-                echo "<th>Managed Location</th>";
-                echo "<th>Actions</th>";
-                echo "</tr></thead><tbody>";
-                // Fetch and display table data
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>";
-                    echo "<td>{$row['Name']}</td>";
-                    echo "<td>{$row['Purpose']}</td>";
-                    echo "<td>{$row['Description']}</td>";
-                    echo "<td>{$row['Quantity']}</td>";
-                    echo "<td>{$row['ManagedLocationName']}</td>";
-                    echo "<td>";
-                    echo "<a href='view.php?id=" . $row['Id'] . "' class='btn btn-primary ml-2'>View</a>";
-                    echo "<a href='edit.php?id=" . $row['Id'] . "' class='btn btn-primary'>Edit</a>";
-                    echo "</td>";
-                    echo "</tr>";
-                }
-                echo "</tbody></table>";
-            } else {
-                echo "No out-of-stock data available in $table";
-            }
-            // Free result set
-            $result->free();
 
-            // Close connection
-            $mysqli->close();
-        ?>
+        <h2>In Stock</h2>
+        <div id="inStockTable">
+            <!-- In Stock table will be dynamically inserted here -->
+        </div>
+
         <a href="/inventory/add.php" class="btn btn-primary add-button button-gap my-4">Add Item</a>
-    </div> 
+    </div>
 
+    <script>
+        $(document).ready(function() {
+            // Inventory data from PHP
+            const inventoryItems = <?php echo json_encode($inventoryItems); ?>;
+
+            // Function to render the tables
+            function renderTables(filteredItems) {
+                // Split items into out-of-stock and in-stock
+                const outOfStockItems = filteredItems.filter(item => item.Quantity == 0);
+                const inStockItems = filteredItems.filter(item => item.Quantity > 0);
+
+                // Function to generate table rows
+                function generateTableRows(items) {
+                    return items.map(item => `
+                        <tr>
+                            <td>${item.Name}</td>
+                            <td>${item.ItemCategory}</td>
+                            <td>${item.Description}</td>
+                            <td>${item.Quantity}</td>
+                            <td>${item.storageLocation}</td>
+                            <td>${item.supplier}</td>
+                            <td>${item.supplierNumber}</td>
+                            <td>
+                                <a href='view.php?id=${item.Id}' class='btn btn-primary ml-2'>View</a>
+                                <a href='edit.php?id=${item.Id}' class='btn btn-primary'>Edit</a>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+
+                // Generate and display out-of-stock table
+                if (outOfStockItems.length > 0) {
+                    $('#outOfStockTable').html(`
+                        <table class='table'>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>Storage Location</th>
+                                    <th>Supplier</th>
+                                    <th>Supplier Number</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${generateTableRows(outOfStockItems)}
+                            </tbody>
+                        </table>
+                    `);
+                } else {
+                    $('#outOfStockTable').html("No out-of-stock data available");
+                }
+
+                // Generate and display in-stock table
+                if (inStockItems.length > 0) {
+                    $('#inStockTable').html(`
+                        <table class='table'>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>Storage Location</th>
+                                    <th>Supplier</th>
+                                    <th>Supplier Number</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${generateTableRows(inStockItems)}
+                            </tbody>
+                        </table>
+                    `);
+                } else {
+                    $('#inStockTable').html("No in-stock data available");
+                }
+            }
+
+            // Function to filter items
+            function filterItems() {
+                const search = $('#search').val().toLowerCase();
+                const category = $('#category').val();
+
+                const filteredItems = inventoryItems.filter(item => {
+                    const matchesSearch = search === '' || item.Name.toLowerCase().includes(search) || item.Description.toLowerCase().includes(search) || item.ItemCategory.toLowerCase().includes(search) || item.storageLocation.toLowerCase().includes(search) || item.supplier.toLowerCase().includes(search) || item.supplierNumber.toString().includes(search);
+                    const matchesCategory = category === '' || item.ItemCategory === category;
+                    return matchesSearch && matchesCategory;
+                });
+
+                renderTables(filteredItems);
+            }
+
+            // Initial render
+            filterItems();
+
+            // Event listeners for search and category filter
+            $('#searchForm').on('submit', function(event) {
+                event.preventDefault();
+                filterItems();
+            });
+
+            $('#search').on('input', filterItems);
+            $('#category').on('change', filterItems);
+        });
+    </script>
 </body>
 </html>

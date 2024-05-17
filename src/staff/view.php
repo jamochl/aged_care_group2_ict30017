@@ -55,7 +55,7 @@ $stmt->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Member</title>
+    <title>View Staff</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -71,7 +71,7 @@ $stmt->close();
             <!-- Display the generated breadcrumbs -->
             <?php generateBreadcrumbs(); ?>
         </div>
-        <h2>View Member</h2>
+        <h2>View Staff</h2>
         <form action="#" method="post">
             <input required type="hidden" name="id" value="<?php echo $_GET["id"]; ?>">
             <div class="form-group mb-3">
@@ -102,7 +102,7 @@ $stmt->close();
                 <label>Role</label>
                 <input disabled type="text" name="role" class="form-control" value="<?php echo $role; ?>">
             </div>
-            <a href="edit.php?id=<?php echo $_GET["id"]; ?>" class="btn btn-primary">Edit Member</a>
+            <a href="/staff/edit.php?id=<?php echo $_GET["id"]; ?>" class="btn btn-primary">Edit Staff</a>
         </form>
     </div>
 </body>
