@@ -75,7 +75,7 @@
                        
                     }
                     // Add view and edit buttons with links
-                    echo "<td><a href='/room/view.php?id={$row['Id']}' class='btn btn-primary'>View</a> <a href='/staff/edit.php?id={$row['Id']}' class='btn btn-primary'>Edit</a></td>";
+                    echo "<td><a href='/room/view.php?id={$row['Id']}' class='btn btn-primary'>View</a> <a href='/room/edit.php?id={$row['Id']}' class='btn btn-primary'>Edit</a></td>";
                     echo "</tr>";
                 }
                 echo "</tbody></table>";
@@ -144,7 +144,7 @@
                        
                     }
                     // Add view and edit buttons with links
-                    echo "<td><a href='/room/view.php?id={$row['Id']}' class='btn btn-primary'>View</a> <a href='/staff/edit.php?id={$row['Id']}' class='btn btn-primary'>Edit</a></td>";
+                    echo "<td><a href='/room/view.php?id={$row['Id']}' class='btn btn-primary'>View</a> <a href='/room/edit.php?id={$row['Id']}' class='btn btn-primary'>Edit</a></td>";
                     echo "</tr>";
                 }
                 echo "</tbody></table>";
