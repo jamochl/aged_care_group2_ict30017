@@ -74,6 +74,7 @@ $authorizedPages = [
         '/availabilities/*',
         '/service_records/*',
         '/docs/*',
+        '/cleaner/*',
         '/room/*'
     ],
     // Accountant
