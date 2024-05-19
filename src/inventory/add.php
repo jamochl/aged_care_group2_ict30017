@@ -17,17 +17,8 @@ $pattern2 = "/^[a-zA-Z\s]+$/"; // validation pattern for only alphanumerics
     <title>Add new item</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-</head>
-<body>
-    <div class="container mt-5">
-        <div>
-            <!-- Display the generated breadcrumbs -->
-            <?php generateBreadcrumbs(); ?>
-        </div>
-        <h1>Add new item</h1>
-        <hr>
 
-<style>
+    <style>
     .error-message {
         color: red;
         margin-left: 123px;
@@ -38,9 +29,24 @@ $pattern2 = "/^[a-zA-Z\s]+$/"; // validation pattern for only alphanumerics
     .label {
         width: 120px;
     }
+
+    .wrapper{
+            max-width: 500px;
+            margin: 0 auto;
+        }
 </style>
 
+</head>
+<body>
+<div class = "wrapper p-3">
+        <div>
+            <!-- Display the generated breadcrumbs -->
+            <?php generateBreadcrumbs(); ?>
+        </div>
+        <h1>Add new item</h1>
+    
     <form action="/inventory/add.php" method="POST">
+
     
     <?php
         if(!empty($_POST["submit"]))
@@ -77,10 +83,10 @@ $pattern2 = "/^[a-zA-Z\s]+$/"; // validation pattern for only alphanumerics
             }
         }
     ?>
-
+        <div class="form-group mb-3">
         <label class="label" for="ItmId" > Item ID: </label>
-        <input required type="text" name="ItmId" id="ItmId" value="<?php echo $ItmId; ?>"> <br><br>
-
+        <input required type="text" name="ItmId" id="ItmId" class="form-control" value="<?php echo $ItmId; ?>">
+        </div>
         <?php
         if(!empty($_POST["submit"]))
         {  
@@ -101,8 +107,10 @@ $pattern2 = "/^[a-zA-Z\s]+$/"; // validation pattern for only alphanumerics
         }
     ?>
  
+        <div class="form-group mb-3">
         <label class="label" for="ItmName"> Item Name:  </label>
-        <input required type="text" name="ItmName" id="ItmName" value="<?php echo $ItmName; ?>"> <br><br>
+        <input required type="text" name="ItmName" id="ItmName" class="form-control" value="<?php echo $ItmName; ?>">
+        </div>
 
         <?php
         if(!empty($_POST["submit"]))
@@ -124,8 +132,10 @@ $pattern2 = "/^[a-zA-Z\s]+$/"; // validation pattern for only alphanumerics
         }
     ?>
 
+        <div class="form-group mb-3">
         <label class="label" for="Purpose"> Purpose: </label>
-        <input required type="text" name="Purpose" id="Purpose" value="<?php echo $Purpose; ?>"> <br><br>
+        <input required type="text" name="Purpose" id="Purpose" class="form-control" value="<?php echo $Purpose; ?>">
+        </div>
 
         <?php
         if(!empty($_POST["submit"]))
@@ -147,8 +157,10 @@ $pattern2 = "/^[a-zA-Z\s]+$/"; // validation pattern for only alphanumerics
         }
     ?>
 
+        <div class="form-group mb-3">
         <label class="label" for="OwnerDetails"> Owner details: </label>
-        <input required type="text" name="OwnerDetails" id="OwnerDetails" value="<?php echo $OwnerDetails; ?>"> <br><br>
+        <input required type="text" name="OwnerDetails" id="OwnerDetails" class="form-control" value="<?php echo $OwnerDetails; ?>">
+        </div>
 
         <?php
         if(!empty($_POST["submit"]))
@@ -170,8 +182,10 @@ $pattern2 = "/^[a-zA-Z\s]+$/"; // validation pattern for only alphanumerics
         }
     ?>
     
+        <div class="form-group mb-3">
         <label class="label" for="OwnerType"> Owner type:</label>
-        <input required type="text" name="OwnerType" id="OwnerType" value="<?php echo $OwnerType; ?>"> <br><br>
+        <input required type="text" name="OwnerType" id="OwnerType" class="form-control" value="<?php echo $OwnerType; ?>">
+        </div>
 
         <?php
         if(!empty($_POST["submit"]))
@@ -189,7 +203,7 @@ $pattern2 = "/^[a-zA-Z\s]+$/"; // validation pattern for only alphanumerics
     ?>
 
         <label class="label" for="Description"> Description:</label>
-        <textarea name="Description" id="Description" maxlength="260" width="300px" style="width: 300px; height: 100px;" ><?php echo $Description; ?></textarea> <br><br>
+        <textarea name="Description" id="Description" class="form-control" maxlength="260" width="300px" style="width: 300px; height: 100px;" ><?php echo $Description; ?></textarea>
 
         <?php
         if(!empty($_POST["submit"]))
@@ -212,7 +226,7 @@ $pattern2 = "/^[a-zA-Z\s]+$/"; // validation pattern for only alphanumerics
     ?>
  
         <label class="label" for="Quantity"> Quantity:  </label>
-        <input required type="text" name="Quantity" id="Quantity" value="<?php echo $Quantity; ?>"> <br><br>
+        <input required type="text" name="Quantity" id="Quantity" class="form-control" value="<?php echo $Quantity; ?>">
 
         <?php
         if(!empty($_POST["submit"]))
@@ -235,9 +249,10 @@ $pattern2 = "/^[a-zA-Z\s]+$/"; // validation pattern for only alphanumerics
     ?>
  
         <label class="label" for="ManagedLocationId"> Managed Location Id:  </label>
-        <input required type="text" name="ManagedLocationId" id="ManagedLocationId" value="<?php echo $ManagedLocationId; ?>"> <br><br>
+        <input required type="text" name="ManagedLocationId" id="ManagedLocationId" class="form-control" value="<?php echo $ManagedLocationId; ?>"><br>
 
-        <input required type="submit" name="submit" value="submit">
+        <input required type="submit" name="submit" class="btn btn-primary" value="submit">
+        </div>
     </form>
 
 </body>
