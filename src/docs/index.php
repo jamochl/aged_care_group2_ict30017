@@ -1,4 +1,4 @@
-<?php include 'config.php'; ?>
+<?php include '../config.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -97,10 +97,10 @@
           </div> 
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img src="images/staff_menu.png" class="d-block w-100" alt="staff_menu">
+                  <img src="/images/staff_menu.png" class="d-block w-100" alt="staff_menu">
                 </div>
                 <div class="carousel-item">
-                  <img src="images/staff_all.png" class="d-block w-100" alt="staff_all">
+                  <img src="/images/staff_all.png" class="d-block w-100" alt="staff_all">
                 </div>
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls2.1" data-bs-slide="prev">
@@ -125,10 +125,10 @@
               </div>   
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img src="images/staff_add.png" class="d-block w-100" alt="staff_add">
+                  <img src="/images/staff_add.png" class="d-block w-100" alt="staff_add">
                 </div>
                 <div class="carousel-item">
-                  <img src="images/staff_add_form.png" class="d-block w-100" alt="staff_add_form">
+                  <img src="/images/staff_add_form.png" class="d-block w-100" alt="staff_add_form">
                 </div>
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls2.2" data-bs-slide="prev">
@@ -153,10 +153,10 @@
             </div>   
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img src="images/staff_edit.png" class="d-block w-100" alt="staff_edit">
+                <img src="/images/staff_edit.png" class="d-block w-100" alt="staff_edit">
               </div>
               <div class="carousel-item">
-                <img src="images/staff_edit_form.png" class="d-block w-100" alt="staff_edit_form">
+                <img src="/images/staff_edit_form.png" class="d-block w-100" alt="staff_edit_form">
               </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls2.3" data-bs-slide="prev">
@@ -186,10 +186,10 @@
             </div> 
                 <div class="carousel-inner">
                   <div class="carousel-item active">
-                    <img src="images/member_menu.png" class="d-block w-100" alt="member_menu">
+                    <img src="/images/member_menu.png" class="d-block w-100" alt="member_menu">
                   </div>
                   <div class="carousel-item">
-                    <img src="images/member_all.png" class="d-block w-100" alt="member_all">
+                    <img src="/images/member_all.png" class="d-block w-100" alt="member_all">
                   </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls1.1" data-bs-slide="prev">
@@ -214,10 +214,10 @@
                 </div>   
                 <div class="carousel-inner">
                   <div class="carousel-item active">
-                    <img src="images/member_add.png" class="d-block w-100" alt="members_add">
+                    <img src="/images/member_add.png" class="d-block w-100" alt="members_add">
                   </div>
                   <div class="carousel-item">
-                    <img src="images/member_add_form.png" class="d-block w-100" alt="member_add_form">
+                    <img src="/images/member_add_form.png" class="d-block w-100" alt="member_add_form">
                   </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls1.2" data-bs-slide="prev">
@@ -242,10 +242,10 @@
               </div>   
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img src="images/member_edit.png" class="d-block w-100" alt="members_edit">
+                  <img src="/images/member_edit.png" class="d-block w-100" alt="members_edit">
                 </div>
                 <div class="carousel-item">
-                  <img src="images/member_edit_form.png" class="d-block w-100" alt="member_edit_form">
+                  <img src="/images/member_edit_form.png" class="d-block w-100" alt="member_edit_form">
                 </div>
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls1.3" data-bs-slide="prev">
@@ -270,10 +270,10 @@
             </div>   
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img src="images/member_history.png" class="d-block w-100" alt="member_history">
+                <img src="/images/member_history.png" class="d-block w-100" alt="member_history">
               </div>
               <div class="carousel-item">
-                <img src="images/members_history_view.png" class="d-block w-100" alt="member_history_view">
+                <img src="/images/members_history_view.png" class="d-block w-100" alt="member_history_view">
               </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls1.4" data-bs-slide="prev">
@@ -302,10 +302,10 @@
           </div> 
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img src="images/roster_menu.png" class="d-block w-100" alt="roster_menu">
+                  <img src="/images/roster_menu.png" class="d-block w-100" alt="roster_menu">
                 </div>
                 <div class="carousel-item">
-                  <img src="images/roster_view.png" class="d-block w-100" alt="roster_view">
+                  <img src="/images/roster_view.png" class="d-block w-100" alt="roster_view">
                 </div>
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls5.1" data-bs-slide="prev">
@@ -330,10 +330,10 @@
               </div>   
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img src="images/roster_add.png" class="d-block w-100" alt="roster_add">
+                  <img src="/images/roster_add.png" class="d-block w-100" alt="roster_add">
                 </div>
                 <div class="carousel-item">
-                  <img src="images/roster_add_form.png" class="d-block w-100" alt="roster_add_form">
+                  <img src="/images/roster_add_form.png" class="d-block w-100" alt="roster_add_form">
                 </div>
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls5.2" data-bs-slide="prev">
@@ -358,10 +358,10 @@
               </div>   
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img src="images/roster_past.png" class="d-block w-100" alt="roster_past">
+                  <img src="/images/roster_past.png" class="d-block w-100" alt="roster_past">
                 </div>
                 <div class="carousel-item">
-                  <img src="images/roster_past_view.png" class="d-block w-100" alt="roster_past_view">
+                  <img src="/images/roster_past_view.png" class="d-block w-100" alt="roster_past_view">
                 </div>
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls5.3" data-bs-slide="prev">
@@ -390,10 +390,10 @@
           </div> 
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img src="images/inventory_menu.png" class="d-block w-100" alt="inventory_menu">
+                  <img src="/images/inventory_menu.png" class="d-block w-100" alt="inventory_menu">
                 </div>
                 <div class="carousel-item">
-                  <img src="images/inventory_all.png" class="d-block w-100" alt="inventory_all">
+                  <img src="/images/inventory_all.png" class="d-block w-100" alt="inventory_all">
                 </div>
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls3.1" data-bs-slide="prev">
@@ -418,10 +418,10 @@
               </div>   
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img src="images/inventory_add.png" class="d-block w-100" alt="inventory_add">
+                  <img src="/images/inventory_add.png" class="d-block w-100" alt="inventory_add">
                 </div>
                 <div class="carousel-item">
-                  <img src="images/inventory_add_form.png" class="d-block w-100" alt="inventory_add_form">
+                  <img src="/images/inventory_add_form.png" class="d-block w-100" alt="inventory_add_form">
                 </div>
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls2" data-bs-slide="prev">
@@ -451,10 +451,10 @@
           </div> 
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img src="images/billing_menu.png" class="d-block w-100" alt="billing_menu">
+                  <img src="/images/billing_menu.png" class="d-block w-100" alt="billing_menu">
                 </div>
                 <div class="carousel-item">
-                  <img src="images/billing_all.png" class="d-block w-100" alt="billing_all">
+                  <img src="/images/billing_all.png" class="d-block w-100" alt="billing_all">
                 </div>
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls4.1" data-bs-slide="prev">
@@ -480,13 +480,13 @@
               </div>   
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img src="images/billing_generate.png" class="d-block w-100" alt="billing_generate">
+                  <img src="/images/billing_generate.png" class="d-block w-100" alt="billing_generate">
                 </div>
                 <div class="carousel-item">
-                  <img src="images/billing_generate_link.png" class="d-block w-100" alt="billing_generate_link">
+                  <img src="/images/billing_generate_link.png" class="d-block w-100" alt="billing_generate_link">
                 </div>
                 <div class="carousel-item">
-                  <img src="images/billing_generate_view.png" class="d-block w-100" alt="billing_generate_view">
+                  <img src="/images/billing_generate_view.png" class="d-block w-100" alt="billing_generate_view">
                 </div>
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls4.2" data-bs-slide="prev">
@@ -515,10 +515,10 @@
           </div> 
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img src="images/srecord_menu.png" class="d-block w-100" alt="srecord_menu">
+                  <img src="/images/srecord_menu.png" class="d-block w-100" alt="srecord_menu">
                 </div>
                 <div class="carousel-item">
-                  <img src="images/srecords_view.png" class="d-block w-100" alt="srecords_view">
+                  <img src="/images/srecords_view.png" class="d-block w-100" alt="srecords_view">
                 </div>
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls6.1" data-bs-slide="prev">
@@ -544,10 +544,10 @@
               </div>   
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img src="images/srecords_add.png" class="d-block w-100" alt="srecords_add">
+                  <img src="/images/srecords_add.png" class="d-block w-100" alt="srecords_add">
                 </div>
                 <div class="carousel-item">
-                  <img src="images/srecord_add_form.png" class="d-block w-100" alt="srecord_add_form">
+                  <img src="/images/srecord_add_form.png" class="d-block w-100" alt="srecord_add_form">
                 </div>
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls6.2" data-bs-slide="prev">
@@ -576,10 +576,10 @@
           </div> 
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img src="images/rooms_menu.png" class="d-block w-100" alt="rooms_menu">
+                  <img src="/images/rooms_menu.png" class="d-block w-100" alt="rooms_menu">
                 </div>
                 <div class="carousel-item">
-                  <img src="images/rooms_view.png" class="d-block w-100" alt="rooms_view">
+                  <img src="/images/rooms_view.png" class="d-block w-100" alt="rooms_view">
                 </div>
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls7.1" data-bs-slide="prev">
@@ -604,10 +604,10 @@
               </div>   
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img src="images/rooms_add.png" class="d-block w-100" alt="rooms_add">
+                  <img src="/images/rooms_add.png" class="d-block w-100" alt="rooms_add">
                 </div>
                 <div class="carousel-item">
-                  <img src="images/rooms_add_form.png" class="d-block w-100" alt="rooms_add_form">
+                  <img src="/images/rooms_add_form.png" class="d-block w-100" alt="rooms_add_form">
                 </div>
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls7.2" data-bs-slide="prev">
@@ -632,10 +632,10 @@
               </div>   
               <div class="carousel-inner">
                 <div class="carousel-item active">
-                  <img src="images/cleaning_menu.png" class="d-block w-100" alt="cleaning_menu">
+                  <img src="/images/cleaning_menu.png" class="d-block w-100" alt="cleaning_menu">
                 </div>
                 <div class="carousel-item">
-                  <img src="images/cleanining_view.png" class="d-block w-100" alt="cleanining_view">
+                  <img src="/images/cleanining_view.png" class="d-block w-100" alt="cleanining_view">
                 </div>
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls7.3" data-bs-slide="prev">
