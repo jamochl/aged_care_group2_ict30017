@@ -99,6 +99,7 @@ while ($row = $inventoryResult->fetch_assoc()) {
                             <td>${item.supplier}</td>
                             <td>${item.supplierNumber}</td>
                             <td>
+                                <a href='orderInventoryItem.php?id=${item.Id}' class='btn btn-success'>Order Item</a>
                                 <a href='view.php?id=${item.Id}' class='btn btn-primary ml-2'>View</a>
                                 <a href='edit.php?id=${item.Id}' class='btn btn-primary'>Edit</a>
                             </td>
