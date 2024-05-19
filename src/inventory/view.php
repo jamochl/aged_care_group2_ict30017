@@ -108,6 +108,8 @@ $mysqli->close();
                                     data-id="<?php echo $item['Id']; ?>"
                                     data-quantity="<?php echo $item['Quantity']; ?>">Edit Quantity</button> -->                                    
                                     <?php echo "<td><a href='/inventory/edit.php?id={$item['Id']}' class='btn btn-primary'>Edit</a></td>";?>
+
+                                    <?php echo "<td><a href='/inventory/orderInventoryItem.php?id={$item['Id']}' class='btn btn-success'>Order Item</a></td>";?>
                             </td>
                         </tr>
 
