@@ -293,3 +293,4 @@ $pattern2 = "/^[a-zA-Z\s]+$/"; // validation pattern for only alphanumerics
 
 ?>
 
+
