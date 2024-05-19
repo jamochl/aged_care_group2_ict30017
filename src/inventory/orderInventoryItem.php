@@ -1,5 +1,4 @@
 <?php include'../config.php'?>
-
 <?php 
 
 $success_msg = "";
@@ -73,7 +72,7 @@ $stmt->close();
             <script>
                 // Redirect back to login page after 3 seconds
                 setTimeout(function() {
-                    window.location.href = "view.php";
+                    window.location.href = "index.php";
                 }, 3000);
             </script>
 
